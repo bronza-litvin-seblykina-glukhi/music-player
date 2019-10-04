@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import * as md5 from 'md5';
+
+import { AuthInterface } from '../interfaces/auth.interface';
+import { RegisterInterface } from '../interfaces/register.interface';
 
 // ENTITIES
 import { UserAccountEntity } from '../entities/user-account.entity';
@@ -14,16 +18,28 @@ export class RepositoryLayer {
     @InjectRepository(AccessTokenEntity) private readonly accessTokenEntity: Repository<AccessTokenEntity>
   ) {  }
 
-  public authorizeUser(authData: object) {}
+  public async authorizeUser(authData: AuthInterface) {
+    const userId =  await this.userAccountEntity.findOne({
+      select: ['id'],
+      where: authData
+    });
 
-  public async registerUser(registerData: object): Promise<any> {
+    return await this.accessTokenEntity.findOne({
+      select: ['token'],
+      where: {
+        userId: userId.id
+      }
+    });
+  }
+
+  public async registerUser(registerData: RegisterInterface): Promise<any> {
     return await this.userAccountEntity.save(registerData)
-      .then(async (result: UserAccountEntity) => {
+      .then(async result => {
         const newAccessToken = {
-          token: '11111111111',
+          token: md5((result.id + Date.now()).toString()),
           user: result,
         };
-        await this.accessTokenEntity.save(newAccessToken);
+        return await this.accessTokenEntity.save(newAccessToken);
       })
       .catch(error => {
         console.log(error);

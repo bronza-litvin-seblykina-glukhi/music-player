@@ -24,6 +24,6 @@ export class UserAuthenticationController {
   @Post('authorize')
   @UsePipes(new AuthValidationPipe())
   async authorizeUser(@Body() body: AuthValidation) {
-    await this.auth.userAuthorize(body);
+    return await this.auth.userAuthorize(body);
   }
 }

@@ -22,7 +22,8 @@
     "one-line": false,
     "object-literal-shorthand": false,
     "align": false,
-    "ban-types": false
+    "ban-types": false,
+    "no-string-literal": false
   },
   "rulesDirectory": []
 }

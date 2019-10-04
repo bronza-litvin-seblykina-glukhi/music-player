@@ -8,6 +8,12 @@ import {
 
 export class RegisterValidation {
   @IsString()
+  firstName: string;
+
+  @IsString()
+  lastName: string;
+
+  @IsString()
   login: string;
 
   @IsString()
