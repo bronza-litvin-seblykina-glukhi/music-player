@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserAuthenticationModule } from './modules/user-authentication/user-authentication.module';
+import { CronService } from './modules/cron.service';
 
 import * as dbConfig from '../../../ormconfig.js';
 
@@ -11,6 +12,6 @@ import * as dbConfig from '../../../ormconfig.js';
     TypeOrmModule.forRoot(dbConfig)
   ],
   controllers: [],
-  providers: [],
+  providers: [ CronService ],
 })
 export class AppModule {}
