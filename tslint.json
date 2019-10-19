@@ -1,9 +1,6 @@
 {
   "defaultSeverity": "error",
   "extends": ["tslint:recommended"],
-  "jsRules": {
-    "no-unused-expression": true
-  },
   "rules": {
     "quotemark": [true, "single"],
     "member-access": [false],
@@ -17,7 +14,14 @@
     "object-literal-key-quotes": false,
     "no-empty": false,
     "no-consecutive-blank-lines": false,
-    "trailing-comma": false
+    "trailing-comma": false,
+    "no-console": false,
+    "one-line": false,
+    "object-literal-shorthand": false,
+    "align": false,
+    "ban-types": false,
+    "no-string-literal": false,
+    "no-unused-expression": false
   },
   "rulesDirectory": []
 }
