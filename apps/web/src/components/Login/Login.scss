@@ -1,0 +1,25 @@
+.login-page {
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .card {
+    display: flex;
+    min-width: 435px;
+    min-height: 250px;
+    box-shadow: 0 61px 45px -50px rgba(0, 0, 0, 0.34);
+    border-radius: 2px;
+
+    .login-form {
+      opacity: 0.8;
+      padding: 35px 32px 20px;
+      width: 435px;
+      background-color: #282c34;
+      caret-color: #ff9900;
+      border: 1px solid lawngreen;
+      color: red;
+    }
+  }
+}

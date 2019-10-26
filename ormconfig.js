@@ -3,7 +3,7 @@ module.exports = {
   host: 'localhost',
   port: 3306,
   username: 'root',
-  password: '',
+  password: '1',
   database: 'music_player',
   entities: ['apps/server/src/modules/**/**/*.entity.ts'],
   migrationsTableName: 'migration_table',
