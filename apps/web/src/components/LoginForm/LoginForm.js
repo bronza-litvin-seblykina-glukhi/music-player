@@ -75,16 +75,19 @@ export default class LoginForm extends Component {
       <div>
         <form onSubmit={() => {}}>
           <FormInput
+            className="login-field"
             field={login}
             type="text"
             placeholder="Login"
           />
           <FormInput
+            className="password-field"
             field={password}
             type="password"
             placeholder="Password"
           />
           <button
+            className="login-button"
             type="submit"
           >
             Sign In
@@ -94,42 +97,3 @@ export default class LoginForm extends Component {
     );
   }
 }
-
-// <div className="login-header">
-//           <h1>
-//             <span>Sign</span>
-//             {' '}
-//             in to
-//             {' '}
-//             {this.props.title}
-//           </h1>
-//           <p>Enter your <strong>login</strong> and <strong>password</strong> for authorization.</p>
-//         </div>
-//         <form onSubmit={this.props.handleSubmit(this.submit)}>
-//           <FormInput
-//             field={login}
-//             type="text"
-//             placeholder="Login"
-//           />
-//           <FormInput
-//             field={password}
-//             type={this.props.type}
-//             placeholder="Password"
-//             showHidePassword={this.props.showHidePassword}
-//           />
-//           <div className="login-control">
-//             <input ref={(e) => { this.rememberMe = e; }} className="login-check" type="checkbox" id="login-check" />
-//             <label htmlFor="login-check" className="login-check-text">Remember me</label>
-//             <a className="form-forgot" href="#/recovery">Forgot your password?</a>
-//           </div>
-//           <div className="form-group-lg">
-//             <button
-//               className="btn btn-success btn-lg btn-block"
-//               type="submit"
-//               disabled={this.props.submitting}
-//             >
-//
-//               Sign In
-//             </button>
-//           </div>
-//         </form>

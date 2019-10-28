@@ -20,6 +20,36 @@
       caret-color: #ff9900;
       border: 1px solid lawngreen;
       color: red;
+
+      .login-field {
+        width: 50%;
+        margin: 0 25% 20px 25%;
+        align-content: center;
+        height: 30px;
+        background-color: lightgoldenrodyellow;
+        border-width: 0;
+        border-radius: 15px;
+        outline: none;
+      }
+      .password-field {
+        width: 50%;
+        margin: 0 25% 20px 25%;
+        align-content: center;
+        height: 30px;
+        background-color: lightgoldenrodyellow;
+        border-width: 0;
+        border-radius: 15px;
+        outline: none;
+      }
+      .login-button {
+        width: 30%;
+        border-radius: 15px;
+        margin: 0 35% 20px 35%;
+        height: 30px;
+        background-color: black;
+        border-width: 0;
+        color: white;
+      }
     }
   }
 }
