@@ -16,42 +16,7 @@ const validate = (values, props) => {
     }
     return error;
   };
-  switch (true) {
-    case !password:
-      errors.password = 'Password is required';
-      break;
-    case commonValidate(password, /^.{5,}$/, true):
-      errors.password = 'Password must be more than 5 characters';
-      break;
-    case commonValidate(password, /^.{1,50}$/, true):
-      errors.password = 'Password must be no more than 50 characters';
-      break;
-    default:
-      break;
-  }
   
-  switch (true) {
-    case !login:
-      errors.login = 'Login is required';
-      break;
-    case commonValidate(login, /^.{5,}$/, true):
-      errors.login = 'Login must be more than 5 characters';
-      break;
-    case commonValidate(login, /^.{0,255}$/, true):
-      errors.login = 'Login must be no more than 255 characters';
-      break;
-    case commonValidate(login, /^[$&+,_:;=?@#|'<>.^*()%!a-zA-ZА0-9\s-]{0,255}$/, true):
-      errors.login = 'Login should have only Latin symbols';
-      break;
-    case commonValidate(login, /^[@\-_.a-zA-Z0-9\s-]{0,255}$/, true):
-      errors.login = 'Login shouldn\'t have special symbols';
-      break;
-    case commonValidate(login, /^[@-_.a-zA-ZА0-9,-]{0,255}$/, true):
-      errors.login = 'Login shouldn\'t have spaсes';
-      break;
-    default:
-      break;
-  }
   return errors;
 };
 
