@@ -1,26 +1,27 @@
 import React from 'react';
-import { Router, Route } from 'react-router';
-import { createBrowserHistory } from 'history';
+import {Router, Route} from 'react-router';
+import {createBrowserHistory} from 'history';
 import './App.css';
-import { LOGIN_ROUTE } from './routesConfig';
+import {AUTH_ROUTE, LOGIN_ROUTE} from './routesConfig';
 import Login from './components/Login/Login';
-import { createStore } from 'redux';
+import Registration from './components/registration/Registration'
+import {createStore} from 'redux';
 import reducer from './redux/reducer';
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 
 // const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(reducer);
 
 function App() {
-  console.log(111112);
-  return (
-    <Provider store={store}>
-      <Router history={createBrowserHistory()}>
-        <Route path={LOGIN_ROUTE} component={Login} />
-      </Router>
-    </Provider>
-  );
+    return (
+        <Provider store={store}>
+            <Router history={createBrowserHistory()}>
+                <Route path={LOGIN_ROUTE} exact component={Login}/>
+                <Route path={AUTH_ROUTE} component={Registration}/>
+            </Router>
+        </Provider>
+    );
 }
 
 export default App;
