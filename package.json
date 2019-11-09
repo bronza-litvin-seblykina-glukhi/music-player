@@ -5,7 +5,7 @@
   "author": "",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --mode development --open --hot --host 192.168.10.54",
+    "start": "webpack-dev-server --mode development --open --hot --host localhost",
     "build": "webpack --mode production",
     "format": "node_modules/.bin/prettier --write \\\"apps/server/src/modules/**/**/*.ts\\\"",
     "build:server": "node_modules/.bin/tsc -p apps/server/tsconfig.build.json",

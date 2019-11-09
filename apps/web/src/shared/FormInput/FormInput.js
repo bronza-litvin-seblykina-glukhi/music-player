@@ -7,28 +7,29 @@ const FormInput = ({
   field, placeholder, disabledInput, type, className, func, autoFocus,
   onRef, on, id, multiple, autoComplete
 }) => {
-  console.log(className);
-  // const isError = field.error && field.touched;
+  const isError = field.error && field.touched;
   const isType = type ? `${type}` : 'text';
   const onChangeParams = !func ? {} : { onChange: func };
-  // const shouldShowSuccessIcon = !field.error && field.valid && showSuccessIcon && field.touched;
   const inputClassName = className || '';
   
   return (
-    <input
-      id={id}
-      autoComplete={autoComplete}
-      ref={(c) => { onRef ? onRef(c) : null; }} // eslint-disable-line no-unused-expressions
-      type={isType}
-      className={inputClassName}
-      disabled={disabledInput}
-      {...reduxCleaner(field)}
-      placeholder={placeholder || ''}
-      {...onChangeParams}
-      {...on}
-      autoFocus={autoFocus}
-      multiple={multiple}
-    />
+    <div className="field-value">
+      <input
+        id={id}
+        autoComplete={autoComplete}
+        ref={(c) => { onRef ? onRef(c) : null; }} // eslint-disable-line no-unused-expressions
+        type={isType}
+        className={inputClassName}
+        disabled={disabledInput}
+        {...reduxCleaner(field)}
+        placeholder={placeholder || ''}
+        {...onChangeParams}
+        {...on}
+        autoFocus={autoFocus}
+        multiple={multiple}
+      />
+      {isError && <div className="text-danger">{field.error}</div>}
+    </div>
   );
 };
 FormInput.propTypes = {

@@ -58,3 +58,28 @@ export default function reducer(state = initialState, action = {}) {
       return state;
   }
 }
+
+export function login(username, password) {
+  return {
+    type: LOGIN,
+    username,
+    password
+  };
+}
+
+export function logining() {
+  return {
+    type: LOGINING
+  };
+}
+
+export function loginSuccess(oauth) {
+  return { type: LOGIN_SUCCESS, oauth };
+}
+
+export function loginFail(error) {
+  return {
+    type: LOGIN_FAIL,
+    error
+  };
+}
