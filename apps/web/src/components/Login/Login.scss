@@ -1,5 +1,8 @@
+@import '../../scss/transition';
+@import '../../scss/variables';
+
 .login-page {
-  color: white;
+  color: $color-white;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -9,17 +12,17 @@
     display: flex;
     min-width: 435px;
     min-height: 250px;
-    box-shadow: 0 61px 45px -50px rgba(0, 0, 0, 0.34);
+    box-shadow: 0 61px 45px -50px $color-black-rgba;
     border-radius: 2px;
 
     .login-form {
       opacity: 0.8;
       padding: 35px 32px 20px;
       width: 435px;
-      background-color: #282c34;
-      caret-color: #ff9900;
-      border: 1px solid lawngreen;
-      color: red;
+      background-color: $color-light-black;
+      caret-color: $color-orange;
+      border: 1px solid $color-green;
+      color: $color-red;
 
       .field-value{
         height: 48px;
@@ -28,7 +31,7 @@
           margin: 0 25% 0 25%;
           align-content: center;
           height: 30px;
-          background-color: lightgoldenrodyellow;
+          background-color: $color-light-goldenrod-yellow;
           border-width: 0;
           border-radius: 15px;
           outline: none;
@@ -44,9 +47,11 @@
         border-radius: 15px;
         margin: 10px 35% 10px 35%;
         height: 30px;
-        background-color: black;
+        background-color: $color-black;
         border-width: 0;
-        color: white;
+        color: $color-white;
+
+        @include transition(.3s);
       }
     }
     .forget-password-button {
@@ -54,7 +59,7 @@
       display: block;
       width: fit-content;
       margin-left: 30%;
-      color: grey;
+      color: $color-grey;
       text-decoration: none;
     }
     .create-account-button {
@@ -62,7 +67,7 @@
       text-align: center;
       margin: 5px 0 0 42.6%;
       width: fit-content;
-      color: grey;
+      color: $color-grey;
       text-decoration: none;
     }
   }
