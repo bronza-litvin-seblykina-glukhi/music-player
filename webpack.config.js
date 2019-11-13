@@ -11,7 +11,7 @@ module.exports = {
   },
   entry: ['babel-polyfill', './apps/web/src/index.js'],
   output: {
-    path: path.join(__dirname, '/dist'),
+    path: path.join(__dirname, '/dist/web'),
     filename: 'bundle.js',
     publicPath: '/'
   },

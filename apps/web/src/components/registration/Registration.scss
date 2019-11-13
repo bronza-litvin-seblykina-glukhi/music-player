@@ -1,0 +1,90 @@
+@mixin formField {
+  width: 80%;
+  margin: 0 10% 20px 8%;
+  align-content: center;
+  height: 30px;
+  background-color: rgb(218, 255, 194);
+  border-width: 0;
+  border-radius: 15px;
+  outline: none;
+  font-size: 90%;
+  padding-left: 5%;
+  &::placeholder {
+    color: black;
+  }
+}
+
+.auth-page {
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .card {
+    display: flex;
+    min-width: 435px;
+    min-height: 250px;
+    box-shadow: 0 61px 45px -50px rgba(0, 0, 0, 0.34);
+    border-radius: 2px;
+  }
+
+  .auth-form {
+    padding: 35px 32px 20px;
+    width: 435px;
+    background-color: rgba(0, 0, 0, 0.8);
+    caret-color: #ff9900;
+    border: 3px solid #1d5f07;
+    color: red;
+
+    .username-field {
+      @include formField()
+    }
+
+    .password-field {
+      @include formField()
+    }
+
+    .email-field {
+      @include formField()
+    }
+
+    .repeat-password-field {
+      @include formField();
+    }
+
+    .reg-login-link {
+      text-align: right;
+      margin-right: 30px;
+      color: white;
+
+      a {
+        &:hover {
+          text-decoration: underline;
+        }
+
+        text-decoration: none;
+        color: white;
+        opacity: 0.5;
+      }
+    }
+
+    .text-danger {
+      text-align: center;
+      font-weight: bold;
+      margin-top: -4%;
+
+    }
+
+    .reg-button {
+      font-size: 80%;
+      width: 30%;
+      border-radius: 15px;
+      margin: 0 35% 20px 35%;
+      height: 30px;
+      background-color: black;
+      border: 3px solid #1d5f07;
+      color: white;
+    }
+  }
+}
