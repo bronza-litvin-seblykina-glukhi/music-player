@@ -8,7 +8,7 @@ import 'reflect-metadata';
 async function bootstrap() {
   const instance = await NestFactory.create(AppModule);
   instance.use(compression());
-  await instance.listen(3001);
+  await instance.listen(process.env.PORT);
 }
 bootstrap().catch(error => {
   console.log('Application bootstrap error!', error);
