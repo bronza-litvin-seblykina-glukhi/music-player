@@ -7,11 +7,13 @@ import { CronService } from './modules/cron.service';
 
 import * as dbConfig from '../../../ormconfig.js';
 import { FrontendMiddleware } from './middlewares/frontend.middleware';
+import { AudioFilesModule } from './modules/audio-files/audio-files.module';
 
 @Module({
   imports: [
     UserAuthenticationModule,
     FrontendModule,
+    AudioFilesModule,
     TypeOrmModule.forRoot(dbConfig)
   ],
   controllers: [],
