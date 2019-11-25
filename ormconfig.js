@@ -7,13 +7,13 @@ module.exports = {
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  entities: ['apps/server/src/modules/**/**/*.entity.ts'],
+  entities: ['dist/server/modules/**/**/*.entity.js'],
   migrationsTableName: 'migration_table',
-  migrations: ['apps/server/src/migration/**/*.ts'],
+  migrations: ['dist/server/migration/*.js'],
   migrationsRun: false,
   synchronize: true,
   logging: true,
   cli: {
-    migrationsDir: 'migration'
+    migrationsDir: 'apps/server/src/migration'
   }
 };
