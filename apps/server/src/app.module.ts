@@ -5,7 +5,6 @@ import { UserAuthenticationModule } from './modules/user-authentication/user-aut
 import { FrontendModule } from './modules/frontend/frontend.module';
 import { CronService } from './modules/cron.service';
 
-import * as dbConfig from '../../../ormconfig.js';
 import { FrontendMiddleware } from './middlewares/frontend.middleware';
 import { AudioFilesModule } from './modules/audio-files/audio-files.module';
 
@@ -14,7 +13,7 @@ import { AudioFilesModule } from './modules/audio-files/audio-files.module';
     UserAuthenticationModule,
     FrontendModule,
     AudioFilesModule,
-    TypeOrmModule.forRoot(dbConfig)
+    TypeOrmModule.forRoot()
   ],
   controllers: [],
   providers: [ CronService ],

@@ -15,24 +15,11 @@ export class AddSongService {
   }
 
   protected async getBasicSongData(songFilePath: string) {
-    return await musicMetadata.parseFile(songFilePath)
-      .then(async (res: any) => {
-        const { common } = res;
-        const { artist, title, genre } = common;
+    const data = await this.getSongDetails('Warriors Of The World United', 'Manowar');
 
-        const lyrics = await this.getSongDetails(title, artist);
-        return {
-          title,
-          artist,
-          genre: genre[0],
-          url: '***cloud url***',
-          lyrics
-        };
-      })
-      .catch(err => {
-        console.error(err.message);
-      });
+    console.log(JSON.stringify(data));
   }
+
 
   protected async getSongDetails(title: string, artist: string) {
      return await this.http

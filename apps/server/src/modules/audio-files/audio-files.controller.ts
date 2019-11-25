@@ -21,11 +21,11 @@ export class AudioFilesController {
 
   @Get('songs')
   async getSongs() {
-    return await this.getDataService.getSongsFormStorage();
+    return await this.getDataService.getDefaultSongs();
   }
 
-  @Post('add-song')
-  async addSong(@Body() body) {
-    return await this.songsService.addNewSong(body);
-  }
+  // @Post('add-song')
+  // async addSong(@Body() body) {
+  //   return await this.songsService.addNewSong(body);
+  // }
 }

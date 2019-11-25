@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Storage } from '@google-cloud/storage';
+import { LayerService } from './layer.service';
 
 @Injectable()
 export class GetDataFromStorageService {
@@ -8,16 +9,15 @@ export class GetDataFromStorageService {
     projectId: this.projectId
   });
 
+  constructor(
+    private readonly layerService: LayerService
+  ) {}
+
+  public async getDefaultSongs() {
+    return await this.layerService.getDefaultSongsData();
+  }
+
   public async getSongsFormStorage() {
-    // return await this.storage
-    //   .getBuckets()
-    //   .then(result => {
-    //     const [buckets] = result;
-    //     return buckets.find(bucket => bucket.name === process.env.BUCKET_NAME);
-    //   })
-    //   .catch(err => {
-    //     console.error(err.message);
-    //   });
     return await this.storage
       .bucket(process.env.BUCKET_NAME)
       .getFiles()
