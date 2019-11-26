@@ -32,10 +32,24 @@
           align-content: center;
           height: 30px;
           background-color: $color-light-goldenrod-yellow;
-          border-width: 0;
+          border: 0;
           border-radius: 15px;
           outline: none;
           padding: 0 10px;
+
+          @include transition(.3s);
+
+          &::placeholder {
+            @include transition(.3s);
+            color: black;
+          }
+
+          &:focus {
+            background-color: $color-white;
+            &::placeholder {
+              color: transparent;
+            }
+          }
         }
 
         div {
@@ -43,15 +57,22 @@
         }
       }
       .login-button {
+        font-size: 80%;
         width: 30%;
         border-radius: 15px;
-        margin: 10px 35% 10px 35%;
+        margin: 0 35% 20px 35%;
         height: 30px;
-        background-color: $color-black;
-        border-width: 0;
-        color: $color-white;
+        background-color: #101010;
+        border: 3px solid #1d5f07;
+        color: white;
 
         @include transition(.3s);
+
+        &:hover {
+          border: 3px solid $color-green;
+          background-color: $color-black;
+          cursor: pointer;
+        }
       }
     }
     .forget-password-button {

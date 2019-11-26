@@ -1,3 +1,6 @@
+@import '../../scss/transition';
+@import '../../scss/variables';
+
 @mixin formField {
   width: 80%;
   margin: 0 10% 20px 8%;
@@ -9,13 +12,24 @@
   outline: none;
   font-size: 90%;
   padding-left: 5%;
+  @include transition(.3s);
+
   &::placeholder {
+    @include transition(.3s);
     color: black;
+  }
+
+  &:focus {
+    background-color: $color-white;
+
+    &::placeholder {
+      color: transparent;
+    }
   }
 }
 
 .auth-page {
-  color: white;
+  color: $color-white;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -56,7 +70,7 @@
     .reg-login-link {
       text-align: right;
       margin-right: 30px;
-      color: white;
+      color: $color-white;
 
       a {
         &:hover {
@@ -64,7 +78,7 @@
         }
 
         text-decoration: none;
-        color: white;
+        color: $color-white;
         opacity: 0.5;
       }
     }
@@ -82,9 +96,17 @@
       border-radius: 15px;
       margin: 0 35% 20px 35%;
       height: 30px;
-      background-color: black;
+      background-color: #101010;
       border: 3px solid #1d5f07;
-      color: white;
+      color: $color-white;
+
+      @include transition(.3s);
+
+      &:hover {
+        border: 3px solid $color-green;
+        background-color: $color-black;
+        cursor: pointer;
+      }
     }
   }
 }
