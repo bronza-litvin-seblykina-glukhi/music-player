@@ -124,21 +124,23 @@ const validate = (values, props) => {
 })
 
 export default class RegistreationForm extends Component {
-    onSubmit = (values) => {
+
+    onSubmit = async (values) => {
         this.props.dispatch(registration(values.username, values.password, values.email, values.rePasswordcc));
-        event.preventDefault();
-        fetch('', {
+        await fetch('http://localhost:3001/api/user/register', {
+            headers: {'Content-Type': 'application/json','Access-Control-Allow-Origin':'*'},
             method: 'post',
-            body: {
-                "firstName": this.props.fields.username,
-                // "lastName":
-                // "login" : string;
-                // "password": string,
-                // role: string,
-                // email: string,
-                // paidSubscription: boolean
-            }
-        })
+            body: JSON.stringify({
+                "firstName": values.firstName,
+                "lastName": values.lastName,
+                "login": values.username,
+                "password": values.password,
+                "role": 'client',
+                "email": values.email,
+                "paidSubscription": true
+            })
+        }).then(response=> console.log(response))
+            .catch(e=>console.log(e))
     };
 
     render() {
