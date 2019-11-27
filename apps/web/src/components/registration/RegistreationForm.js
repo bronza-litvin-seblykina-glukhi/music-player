@@ -128,7 +128,7 @@ export default class RegistreationForm extends Component {
     onSubmit = async (values) => {
         this.props.dispatch(registration(values.username, values.password, values.email, values.rePasswordcc));
         await fetch('http://localhost:3001/api/user/register', {
-            headers: {'Content-Type': 'application/json','Access-Control-Allow-Origin':'*'},
+            headers: {'Content-Type': 'application/json'},
             method: 'post',
             body: JSON.stringify({
                 "firstName": values.firstName,
