@@ -18,6 +18,20 @@ export class RepositoryLayer {
     @InjectRepository(AccessTokenEntity) private readonly accessTokenEntity: Repository<AccessTokenEntity>
   ) {  }
 
+  public async getUserAccountId(userToken: string) {
+    const user = await this.accessTokenEntity.findOne({
+      where: { token: userToken },
+      join: {
+        alias: 'userAccount',
+        innerJoinAndSelect: {
+          user: 'userAccount.user'
+        }
+      }
+    });
+
+    return user.user.id;
+  }
+
   public async authorizeUser(authData: AuthInterface) {
     const userId =  await this.userAccountEntity.findOne({
       select: ['id'],

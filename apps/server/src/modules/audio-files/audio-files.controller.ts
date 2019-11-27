@@ -1,11 +1,10 @@
 import {
+  Body,
   Controller,
   Get,
   Post,
-  Query,
-  Body,
   UploadedFile,
-  UseInterceptors
+  UseInterceptors,
 } from '@nestjs/common';
 import { AddSongService } from './services/add.song.service';
 import { GetDataFromStorageService } from './services/get-data-from-storage.service';
@@ -24,8 +23,9 @@ export class AudioFilesController {
     return await this.getDataService.getDefaultSongs();
   }
 
-  // @Post('add-song')
-  // async addSong(@Body() body) {
-  //   return await this.songsService.addNewSong(body);
-  // }
+  @Post('add-song')
+  @UseInterceptors(FileInterceptor('file'))
+  async addSong(@UploadedFile() file, @Body() body) {
+    return await this.songsService.addNewSong(file, body.userToken);
+  }
 }

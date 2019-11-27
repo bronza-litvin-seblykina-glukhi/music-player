@@ -42,7 +42,7 @@ export class SongEntity {
 
   @Column({
     type: 'longtext',
-    nullable: false
+    nullable: true
   })
   lyrics: string;
 
