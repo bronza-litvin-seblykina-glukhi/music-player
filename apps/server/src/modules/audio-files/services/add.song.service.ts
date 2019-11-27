@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/common';
-import * as musicMetaData from 'music-metadata-browser';
+import * as musicMetaData from 'music-metadata';
 import { SongDataInterface } from '../interfaces/song-data.interface';
 import { LayerService } from './layer.service';
 import { BadRequestException } from '@nestjs/common';
@@ -15,7 +15,7 @@ export class AddSongService {
   ) {}
 
   public async addNewSong(file: SongDataInterface, userToken: string) {
-    const { common } = await musicMetaData.parseBuffer(file.buffer);
+    const { common } = await musicMetaData.parseFile(file.path);
     const { title, artist, genre, album } = common;
 
     const { defaultSongs, userSongs } = await this.checkForDuplicates(title, userToken);
@@ -35,7 +35,7 @@ export class AddSongService {
     return {
       title,
       genre: genre[0],
-      url: 'any',
+      url: trackUrl,
       lyrics: trackLyrics,
       uploaded: Date.now(),
       isNew: true,
@@ -83,10 +83,31 @@ export class AddSongService {
   }
 
   protected async saveFileToCloud(file: SongDataInterface) {
-    const storage = new Storage();
+    return 'url';
 
-    await storage
-      .bucket(process.env.BUCKET_NAME)
-      .upload(file)
+    // const storage = new Storage();
+    // console.log(1);
+    // await storage
+    //   .bucket(process.env.BUCKET_NAME)
+    //   .upload(file.path, {
+    //     metadata: {
+    //       cacheControl: 'public, max-age=31536000'
+    //     }
+    //   });
+    //
+    // console.log(2);
+    // await storage
+    //   .bucket(process.env.BUCKET_NAME)
+    //   .file(file.filename)
+    //   .makePublic();
+    // console.log(3);
+    // return await storage
+    //   .bucket(process.env.BUCKET_NAME)
+    //   .getFiles()
+    //   .then(files => {
+    //     const addedFile = files[0].find(newFile => newFile.name === file.filename);
+    //
+    //     return addedFile.metadata.mediaLink;
+    //   });
   }
 }

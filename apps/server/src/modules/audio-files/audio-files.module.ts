@@ -9,6 +9,7 @@ import { RepositoryLayer } from '../user-authentication/services/repository-laye
 import { AUDIO_FILES_ENTITIES } from './entities';
 import { LayerService } from './services/layer.service';
 import { USER_ENTITIES } from '../user-authentication/entities';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   controllers: [ AudioFilesController ],
@@ -19,7 +20,10 @@ import { USER_ENTITIES } from '../user-authentication/entities';
       AUDIO_FILES_ENTITIES[1],
       USER_ENTITIES[0],
       USER_ENTITIES[1],
-    ])
+    ]),
+    MulterModule.register({
+      dest: './uploads'
+    }),
   ],
   providers: [
     RepositoryLayer,

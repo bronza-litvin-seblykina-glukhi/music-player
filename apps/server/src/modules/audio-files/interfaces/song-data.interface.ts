@@ -3,7 +3,9 @@ export interface SongDataInterface {
   originalname: string;
   encoding: string;
   mimetype: string;
-  buffer: any;
+  destination: string;
+  filename: string;
+  path: string;
   size: number;
 }
 
