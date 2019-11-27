@@ -3,12 +3,12 @@ import FormInput from '../../shared/FormInput/FormInput';
 import {reduxForm} from 'redux-form';
 import {registration} from '../../redux/modules/auth';
 
-const validateFormFields = ['username', 'email', 'password', 'rePassword'];
+const validateFormFields = ['firstName', 'lastName', 'username', 'email', 'password', 'rePassword'];
 
 const validate = (values, props) => {
     const errors = {};
 
-    const {username, email, password, rePassword} = values;
+    const {firstName, lastName, username, email, password, rePassword} = values;
 
     const commonValidate = (field, regexp, errMsg) => {
         let error;
@@ -67,6 +67,46 @@ const validate = (values, props) => {
     }
 
     switch (true) {
+        case !firstName:
+            errors.firstName = 'First name is required';
+            break;
+        case commonValidate(firstName, /^.{8,}$/, true):
+            errors.firstName = 'First name must be more than 8 characters';
+            break;
+        case commonValidate(firstName, /^[$&+,_:;=?@#|'<>.^*()%!a-zA-ZА0-9\s-]{0,255}$/, true):
+            errors.firstName = 'First name should have only Latin symbols';
+            break;
+        case commonValidate(firstName, /^[@\-_.a-zA-Z0-9\s-]{0,255}$/, true):
+            errors.firstName = 'First name shouldn\'t have special symbols';
+            break;
+        case commonValidate(firstName, /^[@-_.a-zA-ZА0-9,-]{0,255}$/, true):
+            errors.firstName = 'First name shouldn\'t have spaсes';
+            break;
+        default:
+            break;
+    }
+
+    switch (true) {
+        case !lastName:
+            errors.lastName = 'Last name is required';
+            break;
+        case commonValidate(lastName, /^.{8,}$/, true):
+            errors.lastName = 'Last name must be more than 8 characters';
+            break;
+        case commonValidate(lastName, /^[$&+,_:;=?@#|'<>.^*()%!a-zA-ZА0-9\s-]{0,255}$/, true):
+            errors.lastName = 'Last name should have only Latin symbols';
+            break;
+        case commonValidate(lastName, /^[@\-_.a-zA-Z0-9\s-]{0,255}$/, true):
+            errors.lastName = 'Last name shouldn\'t have special symbols';
+            break;
+        case commonValidate(lastName, /^[@-_.a-zA-ZА0-9,-]{0,255}$/, true):
+            errors.lastName = 'Last name shouldn\'t have spaсes';
+            break;
+        default:
+            break;
+    }
+
+    switch (true) {
         case rePassword !== password:
             errors.rePassword = "Passwords don't match";
             break;
@@ -86,6 +126,19 @@ const validate = (values, props) => {
 export default class RegistreationForm extends Component {
     onSubmit = (values) => {
         this.props.dispatch(registration(values.username, values.password, values.email, values.rePasswordcc));
+        event.preventDefault();
+        fetch('', {
+            method: 'post',
+            body: {
+                "firstName": this.props.fields.username,
+                // "lastName":
+                // "login" : string;
+                // "password": string,
+                // role: string,
+                // email: string,
+                // paidSubscription: boolean
+            }
+        })
     };
 
     render() {
@@ -93,10 +146,24 @@ export default class RegistreationForm extends Component {
         const email = this.props.fields.email;
         const password = this.props.fields.password;
         const rePassword = this.props.fields.rePassword;
+        const firstName = this.props.fields.firstName;
+        const lastName = this.props.fields.lastName;
 
         return (
             <div>
                 <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
+                    <FormInput
+                        className="first-name-field"
+                        field={firstName}
+                        type="text"
+                        placeholder="First name"
+                    />
+                    <FormInput
+                        className="last-name-field"
+                        field={lastName}
+                        type="text"
+                        placeholder="Last name"
+                    />
                     <FormInput
                         className="username-field"
                         field={username}
