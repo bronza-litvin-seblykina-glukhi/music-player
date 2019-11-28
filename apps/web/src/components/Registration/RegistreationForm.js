@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import FormInput from '../../shared/FormInput/FormInput';
 import {reduxForm} from 'redux-form';
 import {registration} from '../../redux/modules/auth';
+import history from '../../redux/history/history'
 
 const validateFormFields = ['firstName', 'lastName', 'username', 'email', 'password', 'rePassword'];
 
@@ -139,8 +140,12 @@ export default class RegistreationForm extends Component {
                 "email": values.email,
                 "paidSubscription": true
             })
-        }).then(response=> console.log(response))
-            .catch(e=>console.log(e))
+        }).then(response => {
+            console.log(response);
+            if (response.ok === true) {
+                history.push("/");
+            }
+        }).catch(e => console.log(e))
     };
 
     render() {

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {reduxForm} from 'redux-form';
 import FormInput from '../../shared/FormInput/FormInput';
 import {login as loginAction} from '../../redux/modules/auth';
+import history from "../../redux/history/history";
 
 const validateFormFields = ['password', 'login'];
 
@@ -80,12 +81,22 @@ export default class LoginForm extends Component {
         await fetch('http://localhost:3001/api/user/authorize', {
             headers: {'Content-Type': 'application/json'},
             method: 'post',
+            redirect: 'follow',
             body: JSON.stringify({
                 "loginData": values.login,
                 "password": values.password
             })
-        }).then(response => console.log(response))
-            .catch(e => console.log(e))
+        }).then(response => {
+            if (response.ok === true) {
+                return response.json();
+            } else {
+                return response;
+            }
+        }).then(response => {
+            if (response.token !== null) {
+                history.push("/")
+            }
+        }).catch(e => console.log(e))
     };
 
     render() {
@@ -114,8 +125,8 @@ export default class LoginForm extends Component {
                         Sign In
                     </button>
                 </form>
-                <a href="/registration" className="forget-password-button">{'> Forget your password?'}</a>
-                <a href="/restorePassword" className="create-account-button">{'> Create account'}</a>
+                <a href="/restorePassword" className="forget-password-button">{'> Forget your password?'}</a>
+                <a href="/registration" className="create-account-button">{'> Create account'}</a>
             </div>
         );
     }
