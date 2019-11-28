@@ -5,6 +5,7 @@ import { SongDataInterface } from '../interfaces/song-data.interface';
 import { LayerService } from './layer.service';
 import { BadRequestException } from '@nestjs/common';
 import { Storage } from '@google-cloud/storage';
+import { NewSongInterface } from '../interfaces/new-song.interface';
 
 @Injectable()
 export class AddSongService {
@@ -15,9 +16,10 @@ export class AddSongService {
   ) {}
 
   public async addNewSong(file: SongDataInterface, userToken: string) {
+    let trackUrl = '';
+
     const { common } = await musicMetaData.parseFile(file.path);
     const { title, artist, genre, album } = common;
-
     const { defaultSongs, userSongs } = await this.checkForDuplicates(title, userToken);
 
     if (defaultSongs) {
@@ -27,22 +29,34 @@ export class AddSongService {
       return new BadRequestException('You\'ve already added this song');
     }
 
+    const checkForSameSongsFromOtherUsers = await this.layerService.getSongLinkOfOtherUsers(title, album);
+
+    if (!checkForSameSongsFromOtherUsers) {
+      trackUrl  = await this.saveFileToCloud(file);
+    }
+    else {
+      trackUrl = checkForSameSongsFromOtherUsers;
+    }
+
+    const addedByData = await this.layerService.getUserData(userToken);
+    const artistData = await this.layerService.getArtist(artist);
     const trackId = await this.getSongDetails(title, artist);
     const trackLyrics = await this.getSongLyrics(trackId);
 
-    const trackUrl = await this.saveFileToCloud(file);
-
-    return {
-      title,
+    const songData: NewSongInterface = {
+      title: title,
       genre: genre[0],
       url: trackUrl,
       lyrics: trackLyrics,
       uploaded: Date.now(),
       isNew: true,
       countOfListening: 0,
-      artist,
-      album,
+      artist: artistData,
+      albumName: album,
+      addedBy: addedByData
     };
+
+    return await this.layerService.addNewSong(songData);
   }
 
   protected async getSongDetails(title: string, artist: string) {
@@ -83,31 +97,29 @@ export class AddSongService {
   }
 
   protected async saveFileToCloud(file: SongDataInterface) {
-    return 'url';
+    const storage = new Storage();
 
-    // const storage = new Storage();
-    // console.log(1);
-    // await storage
-    //   .bucket(process.env.BUCKET_NAME)
-    //   .upload(file.path, {
-    //     metadata: {
-    //       cacheControl: 'public, max-age=31536000'
-    //     }
-    //   });
-    //
-    // console.log(2);
-    // await storage
-    //   .bucket(process.env.BUCKET_NAME)
-    //   .file(file.filename)
-    //   .makePublic();
-    // console.log(3);
-    // return await storage
-    //   .bucket(process.env.BUCKET_NAME)
-    //   .getFiles()
-    //   .then(files => {
-    //     const addedFile = files[0].find(newFile => newFile.name === file.filename);
-    //
-    //     return addedFile.metadata.mediaLink;
-    //   });
+    await storage
+      .bucket(process.env.BUCKET_NAME)
+      .upload(file.path, {
+        metadata: {
+          contentType: file.mimetype,
+          cacheControl: 'public, max-age=31536000'
+        }
+      });
+
+
+    await storage
+      .bucket(process.env.BUCKET_NAME)
+      .file(file.filename)
+      .makePublic();
+
+    return await storage
+      .bucket(process.env.BUCKET_NAME)
+      .getFiles()
+      .then(files => {
+        const addedFile = files[0].find(newFile => newFile.name === file.filename);
+        return addedFile.metadata.mediaLink;
+      });
   }
 }

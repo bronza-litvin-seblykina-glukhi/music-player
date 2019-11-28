@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ArtistEntity } from '../entities/artist.entity';
 import { SongEntity } from '../entities/song.entity';
 import { RepositoryLayer } from '../../user-authentication/services/repository-layer';
+import { NewSongInterface } from '../interfaces/new-song.interface';
 
 @Injectable()
 export class LayerService {
@@ -49,6 +50,68 @@ export class LayerService {
             artist: 'artists.artist'
           }
         }
+      });
+  }
+
+  public async getArtist(artistName: string) {
+    return await this.artistEntity
+      .findOne({
+        where: { artist: artistName }
+      })
+      .then(async res => {
+        if (!res) {
+          return await this.addNewArtist(artistName);
+        }
+
+        return await res;
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
+
+  protected async addNewArtist(artistName: string) {
+    return await this.artistEntity
+      .save({
+        artist: artistName
+      })
+      .then(res => {
+        return res;
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
+
+  public async getSongLinkOfOtherUsers(songTitle: string, albumName: string) {
+    return this.songEntity.findOne({
+      select: ['url'],
+      where: {
+        title: songTitle,
+        albumName: albumName
+      }
+    })
+      .then(res => {
+        if (!res) {
+          return undefined;
+        }
+
+        return res.url;
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
+
+  public async getUserData(userToken: string) {
+    return await this.userLayer.getUserData(userToken);
+  }
+
+  public async addNewSong(songData: NewSongInterface) {
+    return await this.songEntity
+      .save(songData)
+      .catch(err => {
+        console.error(err);
       });
   }
 

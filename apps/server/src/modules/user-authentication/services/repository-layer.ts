@@ -9,6 +9,7 @@ import { RegisterInterface } from '../interfaces/register.interface';
 // ENTITIES
 import { UserAccountEntity } from '../entities/user-account.entity';
 import { AccessTokenEntity } from '../entities/access-token.entity';
+import { NewSongInterface } from '../../audio-files/interfaces/new-song.interface';
 
 @Injectable()
 export class RepositoryLayer {
@@ -60,4 +61,17 @@ export class RepositoryLayer {
       });
   }
 
+  public async getUserData(userToken: string) {
+    const user = await this.accessTokenEntity.findOne({
+      where: { token: userToken },
+      join: {
+        alias: 'userAccount',
+        innerJoinAndSelect: {
+          user: 'userAccount.user'
+        }
+      }
+    });
+
+    return user.user;
+  }
 }

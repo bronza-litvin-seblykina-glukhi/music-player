@@ -30,6 +30,7 @@
     "@types/bcrypt": "3.0.0",
     "@types/compression": "1.0.1",
     "@types/cron": "^1.7.1",
+    "ascii-encoding": "1.1.4",
     "axios": "^0.18.0",
     "bcrypt": "3.0.6",
     "bootstrap": "^4.3.1",

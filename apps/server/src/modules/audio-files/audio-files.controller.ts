@@ -26,8 +26,6 @@ export class AudioFilesController {
   @Post('add-song')
   @UseInterceptors(FileInterceptor('file'))
   async addSong(@UploadedFile() file, @Body() body) {
-    console.log(file);
-
     return await this.songsService.addNewSong(file, body.userToken);
   }
 }
