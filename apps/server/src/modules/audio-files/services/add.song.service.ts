@@ -6,13 +6,15 @@ import { LayerService } from './layer.service';
 import { BadRequestException } from '@nestjs/common';
 import { Storage } from '@google-cloud/storage';
 import { NewSongInterface } from '../interfaces/new-song.interface';
+import { GetDataFromStorageService } from './get-data-from-storage.service';
 
 @Injectable()
 export class AddSongService {
 
   constructor(
     private readonly http: HttpService,
-    private readonly layerService: LayerService
+    private readonly layerService: LayerService,
+    private readonly getSongsService: GetDataFromStorageService
   ) {}
 
   public async addNewSong(file: SongDataInterface, userToken: string) {
@@ -56,7 +58,9 @@ export class AddSongService {
       addedBy: addedByData
     };
 
-    return await this.layerService.addNewSong(songData);
+    await this.layerService.addNewSong(songData);
+
+    return await this.getSongsService.getSongs(userToken);
   }
 
   protected async getSongDetails(title: string, artist: string) {

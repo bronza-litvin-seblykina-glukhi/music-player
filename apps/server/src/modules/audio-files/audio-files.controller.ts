@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Post,
+  Query,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -19,8 +20,8 @@ export class AudioFilesController {
   ) {}
 
   @Get('songs')
-  async getSongs() {
-    return await this.getDataService.getDefaultSongs();
+  async getSongs(@Query('userToken') query) {
+    return await this.getDataService.getSongs(query);
   }
 
   @Post('add-song')

@@ -11,24 +11,9 @@ export class GetDataFromStorageService {
     private readonly layerService: LayerService
   ) {}
 
-  public async getDefaultSongs() {
-    await this.getSongsFormStorage();
-    return await this.layerService.getDefaultSongsData();
-  }
-
-  public async getSongsFormStorage() {
-    return await this.storage
-      .bucket(process.env.BUCKET_NAME)
-      .getFiles()
-      .then(res => {
-        const file = res[0].find(item => item.name === '08. Warriors Of The World United.mp3');
-
-        console.log(file.metadata.mediaLink);
-
-        return res;
-      })
-      .catch(err => {
-        console.error(err);
-      });
+  public async getSongs(userToken: string) {
+    const defaultSongs = await this.layerService.getDefaultSongsData();
+    const userSongsData = await this.layerService.getUserSongsData(userToken);
+    return { defaultSongs: defaultSongs, userSongs: userSongsData };
   }
 }

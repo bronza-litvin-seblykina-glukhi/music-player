@@ -44,6 +44,23 @@ export class LayerService {
     return await this.songEntity
       .find({
         select: ['title', 'albumName', 'url', 'isNew', 'uploaded', 'countOfListening'],
+        where: { addedBy: null },
+        join: {
+          alias: 'artists',
+          innerJoinAndSelect: {
+            artist: 'artists.artist'
+          }
+        }
+      });
+  }
+
+  public async getUserSongsData(userToken: string) {
+    const user = await this.userLayer.getUserData(userToken);
+
+    return await this.songEntity
+      .find({
+        select: ['title', 'albumName', 'url', 'isNew', 'uploaded', 'countOfListening'],
+        where: { addedBy: user },
         join: {
           alias: 'artists',
           innerJoinAndSelect: {
