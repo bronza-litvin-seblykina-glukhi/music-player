@@ -25,8 +25,11 @@ export class AudioFilesController {
   }
 
   @Get('songs-by-lyrics')
-  async getSongsByLyrics(@Query('lyricsPath') query) {
-    return await this.getDataService.getSongsByLyrics(query);
+  async getSongsByLyrics(
+    @Query('lyricsPath') lyrics,
+    @Query('userToken') userToken
+  ) {
+    return await this.getDataService.getSongsByLyrics(lyrics, userToken);
   }
 
   @Post('add-song')

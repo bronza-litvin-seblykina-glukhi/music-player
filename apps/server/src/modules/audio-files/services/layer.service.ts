@@ -132,11 +132,14 @@ export class LayerService {
       });
   }
 
-  public async getSongsDataByLyrics(lyricsPath: string) {
+  public async getDefaultSongsDataByLyrics(lyricsPath: string) {
     return await this.songEntity
       .find({
         select: ['title', 'albumName', 'url', 'isNew', 'uploaded', 'countOfListening'],
-        where: { lyrics: Like(`%${ lyricsPath }%`) },
+        where: {
+          addedBy: null,
+          lyrics: Like(`%${ lyricsPath }%`)
+        },
         join: {
           alias: 'artists',
           innerJoinAndSelect: {
@@ -146,6 +149,25 @@ export class LayerService {
       })
       .catch(err => {
         console.error(err);
+      });
+  }
+
+  public async getUserSongsDataByLerics(lyricsPath: string, userToken: string) {
+    const user = await this.userLayer.getUserData(userToken);
+
+    return await this.songEntity
+      .find({
+        select: ['title', 'albumName', 'url', 'isNew', 'uploaded', 'countOfListening'],
+        where: {
+          addedBy: user,
+          lyrics: Like(`%${ lyricsPath }%`)
+        },
+        join: {
+          alias: 'artists',
+          innerJoinAndSelect: {
+            artist: 'artists.artist'
+          }
+        }
       });
   }
 }
