@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { ArtistEntity } from '../entities/artist.entity';
@@ -132,4 +132,20 @@ export class LayerService {
       });
   }
 
+  public async getSongsDataByLyrics(lyricsPath: string) {
+    return await this.songEntity
+      .find({
+        select: ['title', 'albumName', 'url', 'isNew', 'uploaded', 'countOfListening'],
+        where: { lyrics: Like(`%${ lyricsPath }%`) },
+        join: {
+          alias: 'artists',
+          innerJoinAndSelect: {
+            artist: 'artists.artist',
+          }
+        }
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
 }

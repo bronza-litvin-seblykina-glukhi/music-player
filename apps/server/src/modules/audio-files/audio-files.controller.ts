@@ -8,7 +8,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { AddSongService } from './services/add.song.service';
-import { GetDataFromStorageService } from './services/get-data-from-storage.service';
+import { GetSongsDataService } from './services/get-songs-data.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('api/audio')
@@ -16,12 +16,17 @@ export class AudioFilesController {
 
   constructor(
     private readonly songsService: AddSongService,
-    private readonly getDataService: GetDataFromStorageService
+    private readonly getDataService: GetSongsDataService
   ) {}
 
   @Get('songs')
   async getSongs(@Query('userToken') query) {
     return await this.getDataService.getSongs(query);
+  }
+
+  @Get('songs-by-lyrics')
+  async getSongsByLyrics(@Query('lyricsPath') query) {
+    return await this.getDataService.getSongsByLyrics(query);
   }
 
   @Post('add-song')

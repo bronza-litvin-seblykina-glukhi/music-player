@@ -1,11 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { Storage } from '@google-cloud/storage';
 import { LayerService } from './layer.service';
 
 @Injectable()
-export class GetDataFromStorageService {
-  private projectId: string = process.env.GCLOUD_PROJECT_ID;
-  private storage = new Storage();
+export class GetSongsDataService {
 
   constructor(
     private readonly layerService: LayerService
@@ -15,5 +12,9 @@ export class GetDataFromStorageService {
     const defaultSongs = await this.layerService.getDefaultSongsData();
     const userSongsData = await this.layerService.getUserSongsData(userToken);
     return { defaultSongs: defaultSongs, userSongs: userSongsData };
+  }
+
+  public async getSongsByLyrics(lyricsPath: string) {
+    return await this.layerService.getSongsDataByLyrics(lyricsPath);
   }
 }

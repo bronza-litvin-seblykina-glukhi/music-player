@@ -3,7 +3,7 @@ import { AudioFilesController } from './audio-files.controller';
 import { AddSongService } from './services/add.song.service';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { GetDataFromStorageService } from './services/get-data-from-storage.service';
+import { GetSongsDataService } from './services/get-songs-data.service';
 import { RepositoryLayer } from '../user-authentication/services/repository-layer';
 
 import { AUDIO_FILES_ENTITIES } from './entities';
@@ -29,7 +29,7 @@ import { MulterModule } from '@nestjs/platform-express';
     RepositoryLayer,
     AddSongService,
     LayerService,
-    GetDataFromStorageService
+    GetSongsDataService
   ]
 })
 
