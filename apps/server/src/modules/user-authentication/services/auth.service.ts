@@ -20,4 +20,7 @@ export class AuthService {
     return await this.repositoryLayer.authorizeUser(authData);
   }
 
+  public async getUserData(userToken: string) {
+    return await this.repositoryLayer.getUserData(userToken);
+  }
 }
