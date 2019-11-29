@@ -3,7 +3,7 @@ import './Header.scss';
 import {getOauth} from "../../helpers/localStorage";
 import Status from "../Status/Status";
 
-export default class Registration extends React.Component {
+export default class Header extends React.Component {
 
     render() {
         return (

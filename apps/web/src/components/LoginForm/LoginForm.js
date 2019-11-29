@@ -3,7 +3,7 @@ import {reduxForm} from 'redux-form';
 import FormInput from '../../shared/FormInput/FormInput';
 import {login as loginAction} from '../../redux/modules/auth';
 import history from "../../redux/history/history";
-import {setOauth} from "../../helpers/localStorage";
+import {setToken} from "../../helpers/localStorage";
 
 const validateFormFields = ['password', 'login'];
 
@@ -95,8 +95,9 @@ export default class LoginForm extends Component {
             }
         }).then(response => {
             if (response.token !== null) {
-                setOauth(response);
-                history.push("/")
+                setToken(response);
+                window.location.reload(false);
+                history.push("/");
             }
         }).catch(e => console.log(e))
     };

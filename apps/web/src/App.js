@@ -23,7 +23,6 @@ function App() {
                 <Router history={history}>
                     <Route path={LOGIN_ROUTE} exact component={Login}/>
                     <Route path={AUTH_ROUTE} component={Registration}/>
-                    {/*<Route path={RESTORE_PASSWORD} component={Restore}/>*/}
                 </Router>
             </Provider>
         </div>
