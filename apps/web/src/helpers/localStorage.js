@@ -1,10 +1,9 @@
 import { fromJS } from 'immutable';
-import { handleOauthRequest } from './oauth';
 
 /* eslint import/prefer-default-export: 0 */
 export function setOauth(oauth) {
   try {
-    localStorage.setItem('oauth', JSON.stringify(handleOauthRequest(oauth)));
+    localStorage.setItem('oauth', JSON.stringify(oauth));
   } catch (e) {
     console.warn(e);
   }

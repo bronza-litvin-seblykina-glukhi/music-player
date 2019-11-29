@@ -3,6 +3,7 @@ import FormInput from '../../shared/FormInput/FormInput';
 import {reduxForm} from 'redux-form';
 import {registration} from '../../redux/modules/auth';
 import history from '../../redux/history/history'
+import {setOauth} from "../../helpers/localStorage";
 
 const validateFormFields = ['firstName', 'lastName', 'username', 'email', 'password', 'rePassword'];
 
@@ -141,9 +142,10 @@ export default class RegistreationForm extends Component {
                 "paidSubscription": true
             })
         }).then(response => {
-            console.log(response);
             if (response.ok === true) {
-                history.push("/");
+                history.push("/login")
+            } else {
+                return response;
             }
         }).catch(e => console.log(e))
     };
