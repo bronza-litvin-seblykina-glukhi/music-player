@@ -21,7 +21,7 @@ export function getOauth() {
 
 export function setToken(oauth) {
     try {
-        localStorage.setItem('token', JSON.stringify(oauth));
+        sessionStorage.setItem('token', JSON.stringify(oauth));
     } catch (e) {
         console.warn(e);
     }
@@ -29,7 +29,7 @@ export function setToken(oauth) {
 
 export function getToken() {
     try {
-        return fromJS(JSON.parse(localStorage.getItem('token')));
+        return fromJS(JSON.parse(sessionStorage.getItem('token')));
     } catch (e) {
         console.warn(e);
     }

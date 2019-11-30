@@ -1,6 +1,5 @@
 import React from 'react';
 import {Router, Route} from 'react-router';
-import {createBrowserHistory} from 'history';
 import './App.css';
 import {AUTH_ROUTE, LOGIN_ROUTE, RESTORE_PASSWORD} from './routesConfig';
 import Login from './components/Login/Login';

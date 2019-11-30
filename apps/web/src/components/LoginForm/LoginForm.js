@@ -89,15 +89,16 @@ export default class LoginForm extends Component {
             })
         }).then(response => {
             if (response.ok === true) {
+                console.log(response);
                 return response.json();
             } else {
                 return response;
             }
         }).then(response => {
             if (response.token !== null) {
+                console.log(response.token);
                 setToken(response);
-                window.location.reload(false);
-                history.push("/");
+                window.location = '/'
             }
         }).catch(e => console.log(e))
     };
