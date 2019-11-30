@@ -18,20 +18,3 @@ export function getOauth() {
     }
     return null;
 }
-
-export function setToken(oauth) {
-    try {
-        sessionStorage.setItem('token', JSON.stringify(oauth));
-    } catch (e) {
-        console.warn(e);
-    }
-}
-
-export function getToken() {
-    try {
-        return fromJS(JSON.parse(sessionStorage.getItem('token')));
-    } catch (e) {
-        console.warn(e);
-    }
-    return null;
-}

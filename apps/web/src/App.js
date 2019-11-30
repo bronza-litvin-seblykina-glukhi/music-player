@@ -8,7 +8,7 @@ import {createStore} from 'redux';
 import reducer from './redux/reducer';
 import {Provider} from 'react-redux';
 import Header from './components/Header/Header';
-import history from './redux/history/history'
+import {createBrowserHistory} from "history";
 
 // const sagaMiddleware = createSagaMiddleware();
 
@@ -18,8 +18,8 @@ function App() {
     return (
         <div>
             <Header/>
-            <Provider store={store}>
-                <Router history={history}>
+            <Provider store={store}>}>
+                <Router history={createBrowserHistory()}>
                     <Route path={LOGIN_ROUTE} exact component={Login}/>
                     <Route path={AUTH_ROUTE} component={Registration}/>
                 </Router>

@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import FormInput from '../../shared/FormInput/FormInput';
 import {reduxForm} from 'redux-form';
 import {registration} from '../../redux/modules/auth';
-import history from '../../redux/history/history'
-import {setOauth} from "../../helpers/localStorage";
 
 const validateFormFields = ['firstName', 'lastName', 'username', 'email', 'password', 'rePassword'];
 

@@ -1,22 +1,11 @@
 import React from 'react';
 import './Header.scss';
-import {getToken} from '../../helpers/localStorage';
+import {getToken} from '../../helpers/sessionStorage';
 import LoginTab from '../LoginTab/LoginTab';
 import UserIcon from '../UserIcon/UserIcon'
 
 
 export default class Header extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {token: getToken()};
-        this.onLoad = this.onLoad.bind(this);
-    }
-
-    onLoad = () => {
-        this.setState({
-            token: getToken()
-        });
-    };
 
     render() {
 
@@ -30,7 +19,7 @@ export default class Header extends React.Component {
                                     <input className="search-input" type="search" placeholder="Search"/>
                                 </form>
                             </li>
-                            {(this.state.token === null) ? <LoginTab/> : <UserIcon/>}
+                            {(getToken() === null) ? <LoginTab/> : <UserIcon/>}
                             <div className="headlines">
                                 <li>
                                     <a href="#">New Releases</a>

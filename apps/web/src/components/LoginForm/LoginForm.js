@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import {reduxForm} from 'redux-form';
 import FormInput from '../../shared/FormInput/FormInput';
 import {login as loginAction} from '../../redux/modules/auth';
-import history from "../../redux/history/history";
-import {setToken} from "../../helpers/localStorage";
+import {setToken, getToken} from "../../helpers/sessionStorage";
 
 const validateFormFields = ['password', 'login'];
 
@@ -96,7 +95,6 @@ export default class LoginForm extends Component {
             }
         }).then(response => {
             if (response.token !== null) {
-                console.log(response.token);
                 setToken(response);
                 window.location = '/'
             }
