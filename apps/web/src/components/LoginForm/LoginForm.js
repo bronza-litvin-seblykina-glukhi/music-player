@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {reduxForm} from 'redux-form';
 import FormInput from '../../shared/FormInput/FormInput';
 import {login as loginAction} from '../../redux/modules/auth';
-import {setToken, getToken} from "../../helpers/sessionStorage";
 
 const validateFormFields = ['password', 'login'];
 
@@ -12,6 +11,7 @@ const validate = (values, props) => {
     const {login, password} = values;
 
     const serverError = props.auth.getIn(['loginError']);
+    console.log(serverError);
 
     const commonValidate = (field, regexp, errMsg) => {
         let error;
@@ -58,9 +58,6 @@ const validate = (values, props) => {
             break;
         case (!commonValidate(login, /[@]/, true) && commonValidate(login, /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, true)):
             errors.login = 'Incorrect email address';
-            break;
-        case !!serverError:
-            errors.login = ' ';
             break;
         default:
             break;

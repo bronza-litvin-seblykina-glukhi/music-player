@@ -1,5 +1,5 @@
 import {put, call} from 'redux-saga/effects';
-import {loginSuccess} from '../modules/auth';
+import {loginSuccess, loginFail, login as loginAction} from '../modules/auth';
 import {setToken} from "../../helpers/sessionStorage";
 import history from '../history';
 
@@ -17,12 +17,16 @@ export function* login(action) {
                     "password": password
                 })
             });
+        const responseJson = yield response.json();
 
-        const token = yield response.json();
-        setToken(token);
-        yield put(loginSuccess(token));
-        history.push('/');
+        if (response.ok) {
+            setToken(responseJson);
+            yield put(loginSuccess(responseJson));
+            history.push('/');
+        } else {
+            yield put(loginFail(new Error(responseJson.message)))
+        }
     } catch (e) {
-        console.log(e);
+        yield put(loginFail(e));
     }
 }
