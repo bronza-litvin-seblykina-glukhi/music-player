@@ -4,21 +4,16 @@ import './App.css';
 import {AUTH_ROUTE, LOGIN_ROUTE, RESTORE_PASSWORD} from './routesConfig';
 import Login from './components/Login/Login';
 import Registration from './components/Registration/Registration';
-import {createStore} from 'redux';
-import reducer from './redux/reducer';
 import {Provider} from 'react-redux';
 import Header from './components/Header/Header';
 import {createBrowserHistory} from "history";
-
-// const sagaMiddleware = createSagaMiddleware();
-
-const store = createStore(reducer);
+import configureStore from './redux/store'
 
 function App() {
     return (
         <div>
             <Header/>
-            <Provider store={store}>}>
+            <Provider store={configureStore()}>}>
                 <Router history={createBrowserHistory()}>
                     <Route path={LOGIN_ROUTE} exact component={Login}/>
                     <Route path={AUTH_ROUTE} component={Registration}/>

@@ -76,29 +76,9 @@ const validate = (values, props) => {
     touchOnChange: true
 })
 export default class LoginForm extends Component {
-    onSubmit = async (values) => {
+    onSubmit = (values) => {
         this.props.dispatch(loginAction(values.login, values.password));
-        await fetch('http://localhost:3001/api/user/authorize', {
-            headers: {'Content-Type': 'application/json'},
-            method: 'post',
-            redirect: 'follow',
-            body: JSON.stringify({
-                "loginData": values.login,
-                "password": values.password
-            })
-        }).then(response => {
-            if (response.ok === true) {
-                console.log(response);
-                return response.json();
-            } else {
-                return response;
-            }
-        }).then(response => {
-            if (response.token !== null) {
-                setToken(response);
-                window.location = '/'
-            }
-        }).catch(e => console.log(e))
+        this.props.dispatch({type: 'LOGIN', username: values.login, password: values.password})
     };
 
     render() {

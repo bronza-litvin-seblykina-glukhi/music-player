@@ -85,6 +85,7 @@ export function logining() {
 }
 
 export function loginSuccess(oauth) {
+    console.log(oauth);
     return {type: LOGIN_SUCCESS, oauth};
 }
 
