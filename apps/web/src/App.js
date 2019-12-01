@@ -6,15 +6,15 @@ import Login from './components/Login/Login';
 import Registration from './components/Registration/Registration';
 import {Provider} from 'react-redux';
 import Header from './components/Header/Header';
-import {createBrowserHistory} from "history";
+import history from './redux/history';
 import configureStore from './redux/store'
 
 function App() {
     return (
         <div>
-            <Header/>
             <Provider store={configureStore()}>}>
-                <Router history={createBrowserHistory()}>
+                <Header/>
+                <Router history={history}>
                     <Route path={LOGIN_ROUTE} exact component={Login}/>
                     <Route path={AUTH_ROUTE} component={Registration}/>
                 </Router>

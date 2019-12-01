@@ -3,8 +3,16 @@ import './Header.scss';
 import {getToken} from '../../helpers/sessionStorage';
 import LoginTab from '../LoginTab/LoginTab';
 import UserIcon from '../UserIcon/UserIcon'
+import {connect} from "react-redux";
 
-
+@connect(
+    state => ({
+        auth: state.auth,
+    }),
+    dispatch => ({
+        dispatch
+    })
+)
 export default class Header extends React.Component {
 
     render() {
