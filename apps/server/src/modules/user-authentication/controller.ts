@@ -1,6 +1,8 @@
 import {
+  Get,
   Post,
   Body,
+  Query,
   UsePipes,
   Controller
 } from '@nestjs/common';
@@ -19,6 +21,11 @@ export class UserAuthenticationController {
   @UsePipes(new RegisterValidationPipe())
   async registerUser(@Body() body: RegisterValidation) {
     return await this.auth.userRegister(body);
+  }
+
+  @Get('user-data')
+  async getUserData(@Query('userToken') query) {
+    return await this.auth.getUserData(query);
   }
 
   @Post('authorize')

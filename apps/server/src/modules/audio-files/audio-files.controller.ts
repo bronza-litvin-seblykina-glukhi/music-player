@@ -1,14 +1,14 @@
 import {
+  Body,
   Controller,
   Get,
   Post,
   Query,
-  Body,
   UploadedFile,
-  UseInterceptors
+  UseInterceptors,
 } from '@nestjs/common';
 import { AddSongService } from './services/add.song.service';
-import { GetDataFromStorageService } from './services/get-data-from-storage.service';
+import { GetSongsDataService } from './services/get-songs-data.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('api/audio')
@@ -16,16 +16,25 @@ export class AudioFilesController {
 
   constructor(
     private readonly songsService: AddSongService,
-    private readonly getDataService: GetDataFromStorageService
+    private readonly getDataService: GetSongsDataService
   ) {}
 
   @Get('songs')
-  async getSongs() {
-    return await this.getDataService.getDefaultSongs();
+  async getSongs(@Query('userToken') query) {
+    return await this.getDataService.getSongs(query);
   }
 
-  // @Post('add-song')
-  // async addSong(@Body() body) {
-  //   return await this.songsService.addNewSong(body);
-  // }
+  @Get('songs-by-lyrics')
+  async getSongsByLyrics(
+    @Query('lyricsPath') lyrics,
+    @Query('userToken') userToken
+  ) {
+    return await this.getDataService.getSongsByLyrics(lyrics, userToken);
+  }
+
+  @Post('add-song')
+  @UseInterceptors(FileInterceptor('file'))
+  async addSong(@UploadedFile() file, @Body() body) {
+    return await this.songsService.addNewSong(file, body.userToken);
+  }
 }

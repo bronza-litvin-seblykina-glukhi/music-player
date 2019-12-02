@@ -6,6 +6,9 @@
 /.env
 /dist
 /out-tsc
+/uploads
+/test.html
+/test.js
 
 # dependencies
 /node_modules
@@ -36,6 +39,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+/music_player.dump.sql
 
 # System Files
 .DS_Store

@@ -1,4 +1,11 @@
 export interface SongDataInterface {
-  artist: string;
-  title: string;
+  fieldname: string;
+  originalname: string;
+  encoding: string;
+  mimetype: string;
+  destination: string;
+  filename: string;
+  path: string;
+  size: number;
 }
+
