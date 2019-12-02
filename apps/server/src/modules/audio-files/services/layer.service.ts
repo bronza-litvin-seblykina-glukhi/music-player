@@ -16,7 +16,7 @@ export class LayerService {
     private readonly userLayer: RepositoryLayer
   ) {  }
 
-  public async getDefaultSongTitles() {
+  public async getDefaultSongTitles(): Promise<any> {
     return await this.songEntity
       .find({
         select: ['title'],
@@ -30,7 +30,7 @@ export class LayerService {
       });
   }
 
-  public async getUserSongTitles(userToken: string) {
+  public async getUserSongTitles(userToken: string): Promise<any> {
     const userId = await this.userLayer.getUserAccountId(userToken);
 
     return await this.songEntity
@@ -46,7 +46,7 @@ export class LayerService {
       });
   }
 
-  public async getDefaultSongsData() {
+  public async getDefaultSongsData(): Promise<any> {
     return await this.songEntity
       .find({
         select: ['title', 'albumName', 'url', 'isNew', 'uploaded', 'countOfListening'],
@@ -63,7 +63,7 @@ export class LayerService {
       });
   }
 
-  public async getUserSongsData(userToken: string) {
+  public async getUserSongsData(userToken: string): Promise<any> {
     const user = await this.userLayer.getUserData(userToken);
 
     return await this.songEntity
@@ -82,7 +82,7 @@ export class LayerService {
       });
   }
 
-  public async getArtist(artistName: string) {
+  public async getArtist(artistName: string): Promise<any> {
     return await this.artistEntity
       .findOne({
         where: { artist: artistName }
@@ -99,7 +99,7 @@ export class LayerService {
       });
   }
 
-  protected async addNewArtist(artistName: string) {
+  protected async addNewArtist(artistName: string): Promise<any> {
     return await this.artistEntity
       .save({
         artist: artistName
@@ -112,7 +112,7 @@ export class LayerService {
       });
   }
 
-  public async getSongLinkOfOtherUsers(songTitle: string, albumName: string) {
+  public async getSongLinkOfOtherUsers(songTitle: string, albumName: string): Promise<any> {
     return this.songEntity.findOne({
       select: ['url'],
       where: {
@@ -132,7 +132,7 @@ export class LayerService {
       });
   }
 
-  public async getUserData(userToken: string) {
+  public async getUserData(userToken: string): Promise<any> {
     return await this.userLayer.getUserData(userToken);
   }
 
@@ -144,7 +144,7 @@ export class LayerService {
       });
   }
 
-  public async getDefaultSongsDataByLyrics(lyricsPath: string) {
+  public async getDefaultSongsDataByLyrics(lyricsPath: string): Promise<any> {
     return await this.songEntity
       .find({
         select: ['title', 'albumName', 'url', 'isNew', 'uploaded', 'countOfListening'],
@@ -164,7 +164,7 @@ export class LayerService {
       });
   }
 
-  public async getUserSongsDataByLerics(lyricsPath: string, userToken: string) {
+  public async getUserSongsDataByLerics(lyricsPath: string, userToken: string): Promise<any> {
     const user = await this.userLayer.getUserData(userToken);
 
     return await this.songEntity
