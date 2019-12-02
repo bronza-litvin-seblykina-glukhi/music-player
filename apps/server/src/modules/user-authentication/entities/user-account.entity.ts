@@ -2,10 +2,12 @@ import {
   Entity,
   Column,
   OneToOne,
+  OneToMany,
   PrimaryGeneratedColumn
 } from 'typeorm';
 import { RoleEnum } from '../enums';
 import { AccessTokenEntity } from './access-token.entity';
+import { SongEntity } from '../../audio-files/entities/song.entity';
 
 @Entity('userAccount')
 export class UserAccountEntity {
@@ -64,4 +66,7 @@ export class UserAccountEntity {
 
   @OneToOne(() => AccessTokenEntity, data => data.user)
   accessToken: AccessTokenEntity;
+
+  @OneToMany(() => SongEntity, data => data.addedBy)
+  song: SongEntity;
 }

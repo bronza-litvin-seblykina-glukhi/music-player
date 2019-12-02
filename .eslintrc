@@ -1,0 +1,149 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "jsx-a11y/no-static-element-interactions": 0,
+    "react/no-multi-comp": 0,
+    "forbid-prop-types": 0,
+    "import/default": 0,
+    "import/prefer-default-export": 0,
+    "import/no-duplicates": 0,
+    "import/no-absolute-path": 0,
+    "import/extesions": 0,
+    "import/named": 0,
+    "import/namespace": 0,
+    "import/no-unresolved": 0,
+    "import/no-named-as-default": 2,
+    "import/extensions": 0,
+    "comma-dangle": 0,  // not sure why airbnb turned this on. gross!
+    "indent": [2, 2, {"SwitchCase": 1}],
+    "no-console": 0,
+    "no-alert": 0,
+    "class-methods-use-this": 0,
+    "consistent-return": 0,
+    "arrow-body-style": 0,
+    "no-trailing-spaces": ["error", {"skipBlankLines": true}],
+    "camelcase": 0,
+    "arrow-parens": 0,
+    "react/jsx-space-before-closing": 0,
+    "react/prefer-stateless-function":0,
+    "react/no-children-prop": 0,
+    "global-require": 0,
+    "react/forbid-component-props": 0,
+    "react/forbid-prop-types": 0,
+    "react/prop-types": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/require-default-props" : 0,
+    "react/destructuring-assignment" : 0,
+    "react/button-has-type" : 0,
+    "react/jsx-one-expression-per-line" : 0,
+    "prefer-destructuring" : 0,
+    "no-multi-assign" : 0,
+    "operator-linebreack" : 0,
+    "implicit-arrow-linebreak" : 0,
+    "jsx-a11y/anchor-is-valid" : 0,
+    "jsx-a11y/click-events-have-key-events" : 0,
+    "jsx-a11y/media-has-caption": 0,
+    "jsx-a11y/label-has-for": 0,
+    "jsx-a11y/label-has-associated-control": 0,
+    "jsx-a11y/no-noninteractive-element-interactions": 0,
+    "import/no-cycle" : 0,
+    "react/sort-comp": ["error", {
+      "order": [
+        "static-methods",
+        "instance-variables",
+        "lifecycle",
+        "/^on.+$/",
+        "getters",
+        "setters",
+        "/^(get|set)(?!(InitialState$|DefaultProps$|ChildContext$)).+$/",
+        "instance-methods",
+        "everything-else",
+        "rendering"
+      ],
+      "groups": {
+        "lifecycle": [
+          "displayName",
+          "propTypes",
+          "contextTypes",
+          "childContextTypes",
+          "mixins",
+          "statics",
+          "defaultProps",
+          "constructor",
+          "getDefaultProps",
+          "getInitialState",
+          "state",
+          "getChildContext",
+          "componentWillMount",
+          "UNSAFE_componentWillMount",
+          "componentDidMount",
+          "componentWillReceiveProps",
+          "UNSAFE_componentWillReceiveProps",
+          "shouldComponentUpdate",
+          "UNSAFE_componentWillUpdate",
+          "componentWillUpdate",
+          "componentDidUpdate",
+          "componentWillUnmount"
+        ],
+        "rendering": [
+          "/^render.+$/",
+          "render"
+        ]
+      }
+    }],
+
+
+    "max-len":  [2, 130, 2, {
+      "ignoreUrls": true,
+      "ignoreComments": false
+    }],
+    "no-mixed-operators": [
+      "error",
+      {
+        "groups": [
+          ["+", "-", "*", "/", "%", "**"],
+          ["&", "|", "^", "~", "<<", ">>", ">>>"],
+          ["==", "!=", "===", "!==", ">", ">=", "<", "<="],
+          ["in", "instanceof"]
+        ],
+        "allowSamePrecedence": true
+      }
+    ],
+    "linebreak-style": ["off", "unix"]
+  },
+  "plugins": [
+    "react", "import"
+  ],
+  "settings": {
+    "import/parser": "babel-eslint",
+    "import/resolve": {
+      "moduleDirectory": ["node_modules", "src"]
+    }
+  },
+  "globals": {
+    "__DEBUG__": true,
+    "__CLIENT__": true,
+    "__SERVER__": true,
+    "__DISABLE_SSR__": true,
+    "__DEVTOOLS__": true,
+    "__REDUX_DEVTOOLS_EXTENSION__": true,
+    "__ANIMATION__": true,
+    "__ANALYZE_PERFORMANCE__": true,
+    "socket": true,
+    "webpackIsomorphicTools": true,
+    "sinon": true,
+    "expect": true
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "legacyDecorators": true
+    }
+  }
+}
