@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import FormInput from '../../shared/FormInput/FormInput';
 import {reduxForm} from 'redux-form';
 import {registration} from '../../redux/modules/auth';
+import registrationPost from '../../redux/sagas/registration';
 
 const validateFormFields = ['firstName', 'lastName', 'username', 'email', 'password', 'rePassword'];
 
@@ -126,26 +127,11 @@ const validate = (values, props) => {
 export default class RegistreationForm extends Component {
 
     onSubmit = async (values) => {
-        this.props.dispatch(registration(values.username, values.password, values.email, values.rePasswordcc));
-        await fetch('http://localhost:3001/api/user/register', {
-            headers: {'Content-Type': 'application/json'},
-            method: 'post',
-            body: JSON.stringify({
-                "firstName": values.firstName,
-                "lastName": values.lastName,
-                "login": values.username,
-                "password": values.password,
-                "role": 'client',
-                "email": values.email,
-                "paidSubscription": true
-            })
-        }).then(response => {
-            if (response.ok === true) {
-                history.push("/login")
-            } else {
-                return response;
-            }
-        }).catch(e => console.log(e))
+        this.props.dispatch(registration(values.firstName, values.lastName, values.username, values.password, values.email, values.rePassword));
+        this.props.dispatch({
+            type: 'REGISTRATION', firstName: values.firstName, lastName: values.lastName,
+            username: values.username, password: values.password, email: values.email
+        });
     };
 
     render() {
