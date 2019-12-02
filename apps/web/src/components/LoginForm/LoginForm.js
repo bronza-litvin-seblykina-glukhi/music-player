@@ -10,9 +10,6 @@ const validate = (values, props) => {
 
     const {login, password} = values;
 
-    const serverError = props.auth.getIn(['loginError']);
-    console.log(serverError);
-
     const commonValidate = (field, regexp, errMsg) => {
         let error;
         if (!regexp.test(field)) {
@@ -20,6 +17,7 @@ const validate = (values, props) => {
         }
         return error;
     };
+
     switch (true) {
         case !password:
             errors.password = 'Password is required';
@@ -32,9 +30,6 @@ const validate = (values, props) => {
             break;
         case commonValidate(password, /[A-Za-z]/, true):
             errors.password = 'Password must contain at least 1 letter';
-            break;
-        case !!serverError:
-            errors.password = 'Your Login or Password is incorrect, please try again';
             break;
         default:
             break;
@@ -104,6 +99,9 @@ export default class LoginForm extends Component {
                         Sign In
                     </button>
                 </form>
+                <div className="server-error">{(typeof (this.props.auth.getIn(['loginError'])) !== 'undefined' &&
+                    this.props.auth.getIn(['loginError']) !== null) ?
+                    'Your Login or Password is incorrect, please try again' : ''}</div>
                 <a href="/restorePassword" className="forget-password-button">{'> Forget your password?'}</a>
                 <a href="/registration" className="create-account-button">{'> Create account'}</a>
             </div>

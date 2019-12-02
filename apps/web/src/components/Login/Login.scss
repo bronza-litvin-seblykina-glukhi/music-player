@@ -24,6 +24,12 @@
       border: 1px solid $color-green;
       color: $color-red;
 
+      .server-error {
+        text-align: center;
+        font-weight: bold;
+        margin-top: -4%;
+      }
+
       .field-value{
         height: 48px;
         input {
