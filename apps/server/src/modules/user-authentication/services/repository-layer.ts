@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as md5 from 'md5';
@@ -19,8 +19,8 @@ export class RepositoryLayer {
     @InjectRepository(AccessTokenEntity) private readonly accessTokenEntity: Repository<AccessTokenEntity>
   ) {  }
 
-  public async getUserAccountId(userToken: string) {
-    const user = await this.accessTokenEntity.findOne({
+  public async getUserAccountId(userToken: string): Promise<void | number> {
+    return await this.accessTokenEntity.findOne({
       where: { token: userToken },
       join: {
         alias: 'userAccount',
@@ -28,22 +28,36 @@ export class RepositoryLayer {
           user: 'userAccount.user'
         }
       }
-    });
-
-    return user.user.id;
+    })
+      .then(user => {
+        return user.user.id;
+      });
   }
 
   public async authorizeUser(authData: AuthInterface) {
-    const userId =  await this.userAccountEntity.findOne({
-      select: ['id'],
+    const user =  await this.userAccountEntity.findOne({
       where: authData
+    }).catch(err => {
+      return new BadRequestException(err.massage).getResponse();
     });
 
     return await this.accessTokenEntity.findOne({
       select: ['token'],
       where: {
-        userId: userId.id
+        user: user
       }
+    })
+      .then(res => {
+        if (!res) {
+          return new UnauthorizedException(
+            'Authorization error: please, check your login data and password and try again'
+          ).getResponse();
+        }
+
+        return res;
+      })
+      .catch(err => {
+        return new BadRequestException(err.massage).getResponse();
     });
   }
 
@@ -56,13 +70,23 @@ export class RepositoryLayer {
         };
         return await this.accessTokenEntity.save(newAccessToken);
       })
-      .catch(error => {
-        console.log(error);
+      .catch(err => {
+        if (err.code === 'ER_DUP_ENTRY' && err.sqlMessage.indexOf(registerData.login) >= 0) {
+          return new BadRequestException(
+            `Nickname '${registerData.login}' already exists`
+          ).getResponse();
+        }
+
+        if (err.code === 'ER_DUP_ENTRY' && err.sqlMessage.indexOf(registerData.email) >= 0) {
+          return new BadRequestException(
+            `Email '${registerData.email}' already exists`
+          ).getResponse();
+        }
       });
   }
 
-  public async getUserData(userToken: string) {
-    const user = await this.accessTokenEntity.findOne({
+  public async getUserData(userToken: string): Promise<string | object> {
+    return await this.accessTokenEntity.findOne({
       where: { token: userToken },
       join: {
         alias: 'userAccount',
@@ -70,8 +94,12 @@ export class RepositoryLayer {
           user: 'userAccount.user'
         }
       }
-    });
-
-    return user.user;
+    })
+      .then(res => {
+        return res.user;
+      })
+      .catch(err => {
+        return new BadRequestException(err.massage).getResponse();
+      });
   }
 }

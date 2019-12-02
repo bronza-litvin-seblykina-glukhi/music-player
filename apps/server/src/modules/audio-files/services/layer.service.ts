@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Like, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -24,6 +24,9 @@ export class LayerService {
       })
       .then(res => {
         return res.map(item => item.title);
+      })
+      .catch(err => {
+        return new BadRequestException(err);
       });
   }
 
@@ -37,6 +40,9 @@ export class LayerService {
       })
       .then(res => {
         return res.map(item => item.title);
+      })
+      .catch(err => {
+        return new BadRequestException(err);
       });
   }
 
@@ -51,6 +57,9 @@ export class LayerService {
             artist: 'artists.artist'
           }
         }
+      })
+      .catch(err => {
+        return new BadRequestException(err);
       });
   }
 
@@ -67,6 +76,9 @@ export class LayerService {
             artist: 'artists.artist'
           }
         }
+      })
+      .catch(err => {
+        return new BadRequestException(err);
       });
   }
 
@@ -83,7 +95,7 @@ export class LayerService {
         return await res;
       })
       .catch(err => {
-        console.error(err);
+        return new BadRequestException(err);
       });
   }
 
@@ -96,7 +108,7 @@ export class LayerService {
         return res;
       })
       .catch(err => {
-        console.error(err);
+        return new BadRequestException(err);
       });
   }
 
@@ -116,7 +128,7 @@ export class LayerService {
         return res.url;
       })
       .catch(err => {
-        console.error(err);
+        return new BadRequestException(err);
       });
   }
 
@@ -128,7 +140,7 @@ export class LayerService {
     return await this.songEntity
       .save(songData)
       .catch(err => {
-        console.error(err);
+        return new BadRequestException(err);
       });
   }
 
@@ -148,7 +160,7 @@ export class LayerService {
         }
       })
       .catch(err => {
-        console.error(err);
+        return new BadRequestException(err);
       });
   }
 
@@ -168,6 +180,9 @@ export class LayerService {
             artist: 'artists.artist'
           }
         }
+      })
+      .catch(err => {
+        return new BadRequestException(err);
       });
   }
 }
