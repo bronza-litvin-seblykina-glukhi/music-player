@@ -1,8 +1,22 @@
 import React from 'react';
-import './Header.scss'
+import './Header.scss';
+import {getToken} from '../../helpers/sessionStorage';
+import LoginTab from '../LoginTab/LoginTab';
+import UserIcon from '../UserIcon/UserIcon'
+import {connect} from "react-redux";
 
-export default class Registration extends React.Component {
+@connect(
+    state => ({
+        auth: state.auth,
+    }),
+    dispatch => ({
+        dispatch
+    })
+)
+export default class Header extends React.Component {
+
     render() {
+
         return (
             <nav className="navbar">
                 <nav>
@@ -13,9 +27,7 @@ export default class Registration extends React.Component {
                                     <input className="search-input" type="search" placeholder="Search"/>
                                 </form>
                             </li>
-                            <li className="log-in">
-                                <a href="/login">Log In</a>
-                            </li>
+                            {(getToken() === null) ? <LoginTab/> : <UserIcon/>}
                             <div className="headlines">
                                 <li>
                                     <a href="#">New Releases</a>
