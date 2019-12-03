@@ -10,7 +10,6 @@ export function* registration(action) {
             {
                 headers: {'Content-Type': 'application/json'},
                 method: 'post',
-                redirect: 'follow',
                 body: JSON.stringify({
                     "firstName": firstName,
                     "lastName": lastName,
@@ -22,8 +21,9 @@ export function* registration(action) {
                 })
             });
 
-        if (response.ok) {
-            console.log(response);
+        const responseJson = yield response.json();
+
+        if (!!responseJson.token) {
             history.push('/');
         } else {
             yield put(registrationFail(new Error(responseJson.message)))

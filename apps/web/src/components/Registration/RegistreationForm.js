@@ -187,6 +187,7 @@ export default class RegistreationForm extends Component {
                     >
                         Join now!
                     </button>
+                    <div className="server-error">{this.props.auth.getIn(['registrationError'])}</div>
                     <div className="reg-login-link"><a href="/login">>Already have an account? Log in</a></div>
                 </form>
             </div>

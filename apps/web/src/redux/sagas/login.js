@@ -19,7 +19,7 @@ export function* login(action) {
             });
         const responseJson = yield response.json();
 
-        if (response.ok) {
+        if (!!responseJson.token) {
             setToken(responseJson);
             setUsername(username);
             yield put(loginSuccess(responseJson));
