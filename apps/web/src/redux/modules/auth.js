@@ -53,6 +53,11 @@ export default function reducer(state = initialState, action = {}) {
             return state.setIn(['oauth', 'logouting'], true);
         case LOGOUT_SUCCESS:
             return state.clear();
+        case 'LOAD_SUCCESS':
+            return state.merge({
+                defaultSongs: fromJS(action.songs.defaultSongs),
+                userSongs: fromJS(action.songs.userSongs),
+            });
         case LOGOUT_FAIL:
             return initialState;
         default:
@@ -68,7 +73,7 @@ export function login(username, password) {
     };
 }
 
-export function registration(username,email, password, rePassword) {
+export function registration(username, email, password, rePassword) {
     return {
         type: REGISTRATION,
         username,
@@ -94,4 +99,14 @@ export function loginFail(error) {
         type: LOGIN_FAIL,
         error
     };
+}
+
+export function loadSuccess(songs) {
+    console.log("fuck1");
+    console.log(songs);
+    console.log("fuck2");
+    return {
+        type: 'LOAD_SUCCESS',
+        songs
+    }
 }
