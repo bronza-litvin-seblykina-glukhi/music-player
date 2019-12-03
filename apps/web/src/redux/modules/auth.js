@@ -69,7 +69,7 @@ export function login(username, password) {
     };
 }
 
-export function registration(firstName,lastName, username, email, password, rePassword) {
+export function registration(firstName, lastName, username, email, password, rePassword) {
     return {
         type: REGISTRATION,
         firstName,

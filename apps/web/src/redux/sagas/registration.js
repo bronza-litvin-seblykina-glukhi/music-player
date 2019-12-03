@@ -23,6 +23,7 @@ export function* registration(action) {
             });
 
         if (response.ok) {
+            console.log(response);
             history.push('/');
         } else {
             yield put(registrationFail(new Error(responseJson.message)))
