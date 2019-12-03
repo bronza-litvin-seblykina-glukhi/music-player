@@ -1,0 +1,152 @@
+@import '../../scss/transition';
+
+.body {
+  display: flex;
+  flex-direction: row;
+}
+
+.menu {
+  margin-top: 130px;
+  transform: translateX(-380px);
+  @include transition(.3s);
+
+  &.show {
+    @include transition(.3s);
+    transform: translateX(-380px);
+  }
+}
+
+.round {
+  &-external {
+    position: relative;
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    border: 130px solid rgba(0, 0, 0, 0.83);
+    background-color: transparent;
+    box-shadow: 0 0 17px 15px limegreen;
+  }
+
+  &-internal {
+    @extend .round-external;
+    border: 0;
+    box-shadow: inset 0 0 17px 15px limegreen;
+  }
+}
+
+.icon {
+  position: absolute;
+
+  &:nth-child(1) {
+    top: -87px;
+    right: 115px;
+
+    &:after {
+      position: absolute;
+      content: '';
+      display: inline-block;
+      width: 132px;
+      height: 7px;
+      bottom: 0;
+      left: 40px;
+      background-color: limegreen;
+      transform: rotate(-58deg);
+    }
+
+    &:hover {
+      cursor: pointer;
+      .img-shadow {
+        filter: drop-shadow(0 0 7px limegreen);
+      }
+    }
+  }
+
+  &:nth-child(2) {
+    top: 10px;
+    right: -33px;
+
+    &:after {
+      position: absolute;
+      content: '';
+      display: inline-block;
+      width: 132px;
+      height: 7px;
+      bottom: -40px;
+      left: 8px;
+      background-color: limegreen;
+      transform: rotate(-22deg);
+    }
+
+    &:hover {
+      cursor: pointer;
+      .img-shadow {
+        filter: drop-shadow(0 0 7px limegreen);
+      }
+    }
+  }
+
+  &:nth-child(3) {
+    top: 190px;
+    right: -100px;
+
+    &:after {
+      position: absolute;
+      content: '';
+      display: inline-block;
+      width: 131px;
+      height: 7px;
+      bottom: -75px;
+      right: -11px;
+      background-color: limegreen;
+      transform: rotate(21deg);
+    }
+
+    &:hover {
+      cursor: pointer;
+      .img-shadow {
+        filter: drop-shadow(0 0 7px limegreen);
+      }
+    }
+  }
+
+  &:nth-child(4) {
+    top: 380px;
+    right: -30px;
+
+    &:after {
+      position: absolute;
+      content: '';
+      display: inline-block;
+      width: 132px;
+      height: 7px;
+      bottom: -19px;
+      right: 24px;
+      background-color: limegreen;
+      transform: rotate(58deg);
+    }
+
+    &:hover {
+      cursor: pointer;
+      .img-shadow {
+        filter: drop-shadow(0 0 7px limegreen);
+      }
+    }
+  }
+
+  &:nth-child(5) {
+    top: 470px;
+    right: 105px;
+
+    &:hover {
+      cursor: pointer;
+      .img-shadow {
+        filter: drop-shadow(0 0 7px limegreen);
+      }
+    }
+  }
+}
+
+.img-shadow {
+  @include transition(.3s);
+  filter: drop-shadow(0 0 4px limegreen);
+}
