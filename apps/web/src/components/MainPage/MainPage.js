@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './MainPage.scss';
-import MainPageForm from './MainPageForm';
+import Panel from './Panel';
+import MusicList from './MusicList';
 
-export default class MainPage extends React.Component {
+export default class MainPage extends Component {
   render() {
     return(
       <div className="body">
-        <MainPageForm/>
+        <Panel/>
+        <MusicList/>
       </div>
     )
   }

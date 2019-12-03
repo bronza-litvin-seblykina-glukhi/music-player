@@ -16,9 +16,9 @@ function App() {
             <Provider store={configureStore()}>}>
                 <Header/>
                 <Router history={history}>
-                    <Route path={LOGIN_ROUTE} exact component={Login}/>
+                    <Route path={LOGIN_ROUTE} component={Login}/>
                     <Route path={AUTH_ROUTE} component={Registration}/>
-                    <Route path={MAIN_PAGE} component={MainPage}/>
+                    <Route exact path={MAIN_PAGE} component={MainPage}/>
                 </Router>
             </Provider>
         </div>
