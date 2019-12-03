@@ -1,23 +1,25 @@
 import React, { Component } from 'react';
 
 export default class MusicList extends Component {
-  getMusic = async () => {
-    await fetch('http://localhost:3001/api/audio/songs', {
-      headers: {'Content-Type': 'application/json'},
-      method: 'get',
-      params: { userToken: '' }
-    })
-      .then(response => {
-        if(response.ok) {
-          return response;
+  async getSongsData() {
+    const response =
+      await fetch("http://localhost:3001/api/audio/songs",
+        {
+          headers: {'Content-Type': 'application/json'},
+          params: { userToken: '' }
         }
-      })
-      .catch((e) => {
-        console.log(e);
-      })
-  };
+      );
+    return await response.json();
+  }
 
   render() {
+    const music = this.getSongsData()
+      .then(res => {
+        return res;
+      });
+
+    console.log(music);
+
     return(
       <div className="music-panel">
         <div className="panels">
@@ -26,11 +28,24 @@ export default class MusicList extends Component {
           </div>
 
           <div className="panels-right">
-            <div className="audio">
-              <span className="player-button">
-                <img className="player-icon" src={require('../../images/iconfinder_icon-play_211876.png')} alt=""/>
-              </span>
-            </div>
+            {
+              music.defaultSongs.map(item => {
+                return(
+                  <React.Fragment>
+                    <div className="audio">
+                      <span className="player-button">
+                        <img className="player-icon" src={require('../../images/iconfinder_icon-play_211876.png')} alt=""/>
+                      </span>
+
+                      <div className="audio-artist-title">
+                        <h3>{ item.artist.artist }</h3>
+                        <h3>{ item.title }</h3>
+                      </div>
+                    </div>
+                  </React.Fragment>
+                )
+              })
+            }
           </div>
         </div>
       </div>
