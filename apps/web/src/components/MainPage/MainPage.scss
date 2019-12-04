@@ -260,8 +260,17 @@
   }
 
   &-icon {
+    display: inline-block;
+    margin-top: 10px;
     background-color: transparent;
     filter: drop-shadow(0 0 7px limegreen);
+
+    &-stop {
+      @extend .player-icon;
+      margin-left: -5px;
+      margin-right: 5px;
+      display: none;
+    }
 
     &:hover {
       cursor: pointer;
@@ -269,6 +278,7 @@
   }
 }
 
-h3 {
+h2, h3 {
   font-family: 'Cabin', 'sans-serif';
+  color: white;
 }

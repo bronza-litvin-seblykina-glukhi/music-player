@@ -1,5 +1,5 @@
 import {put, call} from 'redux-saga/effects';
-import {loadSuccess} from "../modules/auth";
+import {loadSuccess} from "../modules/songslist";
 
 export function* loadList(action) {
 
@@ -12,7 +12,6 @@ export function* loadList(action) {
                 headers: {'Content-Type': 'application/json'},
             });
         const responseJson = yield response.json();
-        console.log(responseJson);
 
         if (!!responseJson.defaultSongs) {
             yield put(loadSuccess(responseJson));

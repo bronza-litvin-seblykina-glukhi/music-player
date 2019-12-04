@@ -64,6 +64,7 @@
     "react-scripts": "0.9.5",
     "read-directory": "3.0.2",
     "redux": "^4.0.4",
+    "redux-devtools-extension": "2.13.8",
     "redux-form": "~5.3.6",
     "redux-logger": "^3.0.6",
     "redux-promise": "^0.6.0",
