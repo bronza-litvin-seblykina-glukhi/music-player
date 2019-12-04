@@ -3,8 +3,8 @@ import { fromJS } from 'immutable';
 export const SET_PLAY_TRACK_INFO = 'songs/SET_PLAY_TRACK_INFO';
 
 const initialState = fromJS({
-  loaded: false,
-  trackInfo: null
+  index: null,
+  songs: null
 });
 
 export default function songsReducer(state = initialState, action = {}) {

@@ -48,7 +48,7 @@ export default class MusicList extends React.Component {
                                   <div className="audio">
                                     <span className="player-button">
                                       <img id={'playIcon' + i} className="player-icon"
-                                           onClick={(e) => this.startPlay(i, arr.length, e)}
+                                           onClick={(e) => this.startPlay(i, this.props.defaultSongs.length, e)}
                                            src={require('../../images/iconfinder_icon-play_211876.png')}
                                            alt=""/>
                                     </span>
