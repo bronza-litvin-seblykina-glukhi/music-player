@@ -12,6 +12,7 @@ export const LOGOUT = 'auth/LOGOUT';
 export const LOGOUT_SUCCESS = 'auth/LOGOUT_SUCCESS';
 const LOGOUT_FAIL = 'auth/LOGOUT_FAIL';
 const REGISTRATION = 'auth/REGISTRATION';
+const REGISTRATION_FAIL = 'auth/REGISTRATION_FAIL';
 
 const initialState = fromJS({
     loaded: false,
@@ -55,6 +56,10 @@ export default function reducer(state = initialState, action = {}) {
             return state.clear();
         case LOGOUT_FAIL:
             return initialState;
+        case REGISTRATION_FAIL:
+            return state.merge({
+                registrationError: action.error.message
+            });
         default:
             return state;
     }
@@ -68,13 +73,22 @@ export function login(username, password) {
     };
 }
 
-export function registration(username,email, password, rePassword) {
+export function registration(firstName, lastName, username, email, password, rePassword) {
     return {
         type: REGISTRATION,
+        firstName,
+        lastName,
         username,
         email,
         password,
         rePassword
+    };
+}
+
+export function registrationFail(error) {
+    return {
+        type: REGISTRATION_FAIL,
+        error
     };
 }
 

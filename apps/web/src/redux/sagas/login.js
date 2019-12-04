@@ -1,6 +1,6 @@
 import {put, call} from 'redux-saga/effects';
 import {loginSuccess, loginFail, login as loginAction} from '../modules/auth';
-import {setToken} from "../../helpers/sessionStorage";
+import {setToken, setUsername} from "../../helpers/sessionStorage";
 import history from '../history';
 
 export function* login(action) {
@@ -19,8 +19,9 @@ export function* login(action) {
             });
         const responseJson = yield response.json();
 
-        if (response.ok) {
+        if (!!responseJson.token) {
             setToken(responseJson);
+            setUsername(username);
             yield put(loginSuccess(responseJson));
             history.push('/');
         } else {
