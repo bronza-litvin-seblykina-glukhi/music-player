@@ -102,7 +102,7 @@ export default class LoginForm extends Component {
                 <div className="server-error">{(typeof (this.props.auth.getIn(['loginError'])) !== 'undefined' &&
                     this.props.auth.getIn(['loginError']) !== null) ?
                     'Your Login or Password is incorrect, please try again' : ''}</div>
-                <a href="/restorePassword" className="forget-password-button">{'> Forget your password?'}</a>
+                <a href="/resetPassword" className="forget-password-button">{'> Forget your password?'}</a>
                 <a href="/registration" className="create-account-button">{'> Create account'}</a>
             </div>
         );
