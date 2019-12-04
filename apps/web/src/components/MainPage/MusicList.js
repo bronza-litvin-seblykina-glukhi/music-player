@@ -1,6 +1,8 @@
 import React from 'react';
+import songslist from "../../redux/modules/songslist";
 
 export default class MusicList extends React.Component {
+
 
     startPlay = (index, songsCount) => {
       this.props.dispatch({ type: 'SET_PLAY_TRACK_INFO', i: index, songs: songsCount });
@@ -24,62 +26,53 @@ export default class MusicList extends React.Component {
       doc.pause();
     };
 
+
     componentDidMount() {
-        this.props.dispatch({type: 'LOAD_LIST'})
+        this.props.dispatch({type: 'LOAD_LIST'});
     }
 
     render() {
-      console.log(this.props);
 
-      let arr = [];
-      const defaultSongs = this.props.songslist;
+        return (
+            <div className="music-panel">
+                <div className="panels">
+                    <div className="panels-left">
+                        <h2>Track info here</h2>
+                    </div>
 
-      if(!!defaultSongs) {
-        defaultSongs.map(el => {
-          arr.push(el);
-        });
-      }
+                    <div className="panels-right">
+                        {
+                            this.props.defaultSongs.map((item, i) => {
+                              return(
+                                <React.Fragment>
+                                  <div className="audio">
+                                    <span className="player-button">
+                                      <img id={'playIcon' + i} className="player-icon"
+                                           onClick={(e) => this.startPlay(i, arr.length, e)}
+                                           src={require('../../images/iconfinder_icon-play_211876.png')}
+                                           alt=""/>
+                                    </span>
+                                    <span className="player-button">
+                                      <img id={'stopIcon' + i} className="player-icon-stop"
+                                           onClick={(e) => this.stopPlay(i, e)}
+                                           src={require('../../images/iconfinder_icon-ios7-pause_211791.png')}
+                                           alt=""/>
+                                    </span>
 
-      return (
-          <div className="music-panel">
-            <div className="panels">
-              <div className="panels-left">
-                <h2>Track info here</h2>
-              </div>
+                                    <div className="audio-artist-title">
+                                      <h3 className="title">{item.artist.artist}</h3>
+                                      <h3 className="title">{item.title}</h3>
+                                    </div>
+                                  </div>
 
-              <div className="panels-right">
-                {
-                  arr.map((item, i) => {
-                    return(
-                      <React.Fragment>
-                        <div className="audio">
-                          <span className="player-button">
-                            <img id={'playIcon' + i} className="player-icon"
-                                 onClick={(e) => this.startPlay(i, arr.length, e)}
-                                 src={require('../../images/iconfinder_icon-play_211876.png')}
-                                 alt=""/>
-                          </span>
-                          <span className="player-button">
-                            <img id={'stopIcon' + i} className="player-icon-stop"
-                                 onClick={(e) => this.stopPlay(i, e)}
-                                 src={require('../../images/iconfinder_icon-ios7-pause_211791.png')}
-                                 alt=""/>
-                          </span>
-
-                          <div className="audio-artist-title">
-                            <h3 className="title">{item.artist.artist}</h3>
-                            <h3 className="title">{item.title}</h3>
-                          </div>
-                        </div>
-
-                        <audio id={'audio' + i} src={item.url}></audio>
-                      </React.Fragment>
-                    )
-                  })
-                }
-              </div>
+                                  <audio id={'audio' + i} src={item.url}></audio>
+                                </React.Fragment>
+                              )
+                            })
+                        }
+                    </div>
+                </div>
             </div>
-          </div>
         )
-      }
+    }
 }

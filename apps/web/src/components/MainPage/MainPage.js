@@ -5,11 +5,12 @@ import MusicList from './MusicList';
 import {connect} from "react-redux";
 
 @connect(
-    state => ({
-        auth: state.auth,
-        songs: state.songs,
-        songslist: state.songslist
-    }),
+    state => {
+        return ({
+            defaultSongs: state.songslist.defaultSongs,
+            userSongs: state.songslist.userSongs
+        });
+    },
     dispatch => ({
         dispatch
     })
@@ -19,8 +20,7 @@ export default class MainPage extends Component {
     return(
       <div className="body">
         <Panel/>
-        <MusicList dispatch={this.props.dispatch} auth={this.props.auth} songs={this.props.songs}
-        songslist={this.props.songslist}/>
+        <MusicList dispatch={this.props.dispatch} defaultSongs={this.props.defaultSongs} userSongs={this.props.userSongs}/>
       </div>
     )
   }

@@ -1,29 +1,27 @@
-import { fromJS } from 'immutable';
+import {fromJS} from 'immutable';
 
-export const LOAD_LIST = 'songslist/LOAD_LIST';
+export const LOAD_SUCCESS = 'songslist/LOAD_SUCCESS';
 
-const initialState = fromJS({
-  loaded: false,
-  defaultSongs: [],
-  userSongs: []
-});
+const initialState = {
+    defaultSongs: [],
+    userSongs: []
+};
 
 export default function songsListReducer(state = initialState, action = {}) {
-  switch (action.type) {
-    case LOAD_LIST:
-      return state.merge({
-        defaultSongs: action.songs.defaultSongs,
-        userSongs: action.songs.userSongs,
-      });
-      
-    default:
-      return state;
-  }
+    switch (action.type) {
+        case LOAD_SUCCESS:
+            return {
+                defaultSongs: action.songsInfo.defaultSongs,
+                userSongs: action.songsInfo.userSongs
+            };
+        default:
+            return state;
+    }
 }
 
-export function loadSuccess(songs) {
-  return {
-    type: LOAD_LIST,
-    songs
-  }
+export function loadSuccess(songsInfo) {
+    return {
+        type: LOAD_SUCCESS,
+        songsInfo
+    }
 }
