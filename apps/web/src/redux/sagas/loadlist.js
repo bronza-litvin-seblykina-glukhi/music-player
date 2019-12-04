@@ -1,7 +1,7 @@
 import {put, call} from 'redux-saga/effects';
 import {loadSuccess} from "../modules/songslist";
 
-export function* loadList(action) {
+export function* loadList() {
 
     //const token = getToken() then use in request params
 
