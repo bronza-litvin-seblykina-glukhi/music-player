@@ -28,6 +28,11 @@ export class UserAuthenticationController {
     return await this.auth.getUserData(query);
   }
 
+  @Get('user-token')
+  async getAccessTokenByEmailAndLogin(@Query('userEmail') userEmail, @Query('userName') userName){
+    return await this.auth.getAccessTokenByEmailAndLogin(userEmail, userName);
+  }
+
   @Post('authorize')
   @UsePipes(new AuthValidationPipe())
   async authorizeUser(@Body() body: AuthValidation) {

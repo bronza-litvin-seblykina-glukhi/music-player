@@ -23,4 +23,8 @@ export class AuthService {
   public async getUserData(userToken: string) {
     return await this.repositoryLayer.getUserData(userToken);
   }
+
+  public async getAccessTokenByEmailAndLogin(userEmail: string, userName: string){
+    return await this.repositoryLayer.getAccessTokenByEmailAndLogin(userName, userEmail);
+  }
 }
