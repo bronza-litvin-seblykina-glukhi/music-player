@@ -4,10 +4,12 @@ import {getToken} from '../../helpers/sessionStorage';
 import LoginTab from '../LoginTab/LoginTab';
 import UserIcon from '../UserIcon/UserIcon'
 import {connect} from "react-redux";
+import RegistrationTab from '../RegistrationTab/RegistrationTab';
 
 @connect(
     state => ({
         auth: state.auth,
+        view: state.view
     }),
     dispatch => ({
         dispatch
@@ -27,7 +29,9 @@ export default class Header extends React.Component {
                                     <input className="search-input" type="search" placeholder="Search"/>
                                 </form>
                             </li>
-                            {(getToken() === null) ? <LoginTab/> : <UserIcon/>}
+                            { (getToken() === null) ?
+                                ((!this.props.view.isLoginPage)?<LoginTab/>: <RegistrationTab/>)
+                                : <UserIcon/>}
                             <div className="headlines">
                                 <li>
                                     <a href="#">New Releases</a>

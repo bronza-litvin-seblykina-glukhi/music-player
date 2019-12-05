@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {reduxForm} from 'redux-form';
 import FormInput from '../../shared/FormInput/FormInput';
 import {login as loginAction} from '../../redux/modules/auth';
+import {IS_LOGIN_PAGE} from '../../redux/modules/view';
 
 const validateFormFields = ['password', 'login'];
 
@@ -72,6 +73,10 @@ export default class LoginForm extends Component {
         this.props.dispatch(loginAction(values.login, values.password));
         this.props.dispatch({type: 'LOGIN', username: values.login, password: values.password})
     };
+
+    componentDidMount() {
+        this.props.dispatch({type: IS_LOGIN_PAGE})
+    }
 
     render() {
         const login = this.props.fields.login;
