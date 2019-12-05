@@ -53,8 +53,6 @@ export default function reducer(state = initialState, action = {}) {
                 loginError: fromJS(action.error)
             });
         case LOGOUT:
-            return state.setIn(['oauth', 'logouting'], true);
-        case LOGOUT_SUCCESS:
             return state.clear();
         case LOGOUT_FAIL:
             return initialState;
