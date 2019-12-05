@@ -29,7 +29,7 @@ export default class Header extends React.Component {
                                     <input className="search-input" type="search" placeholder="Search"/>
                                 </form>
                             </li>
-                            { (getToken() === null) ?
+                            { (getToken() !== null) ?
                                 ((!this.props.view.isLoginPage)?<LoginTab/>: <RegistrationTab/>)
                                 : <UserIcon/>}
                             <div className="headlines">

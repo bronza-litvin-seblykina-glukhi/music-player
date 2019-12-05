@@ -21,6 +21,7 @@
 
   &:focus {
     background-color: $color-white;
+
     &::placeholder {
       color: transparent;
     }
@@ -28,8 +29,9 @@
 }
 
 .navbar {
-  width:100%;
+  width: 100%;
   position: absolute;
+
   .search-input {
     @include formField()
   }
@@ -39,15 +41,15 @@
     margin-left: 12%;
   }
 
-  .headlines{
+  .headlines {
     margin-right: 30%;
   }
 
-  .log-in{
+  .log-in {
     margin-right: 3%;
   }
 
-  .reg-tab{
+  .reg-tab {
     margin-right: 3%;
   }
 
@@ -68,8 +70,37 @@
     margin-right: 2%;
   }
 
+  .logout {
+    color: $color-white;
+    //padding: 14px 16px;
+    margin-right: 2%;
+    display: none;
+  }
+
+  .status {
+    @include transition(.5s);
+  }
+
+  .status:hover {
+
+    .logout {
+      display: inherit;
+    }
+
+    .user-icon {
+      display: none;
+      cursor: none;
+    }
+
+    .user-name {
+      display: none;
+      cursor: pointer;
+    }
+  }
+
   li {
     float: right;
+
     & a {
       position: relative;
       display: block;
