@@ -4,7 +4,8 @@ export const SET_PLAY_TRACK_INFO = 'songs/SET_PLAY_TRACK_INFO';
 
 const initialState = fromJS({
   index: null,
-  songs: null
+  songs: null,
+  songPrivacy: null
 });
 
 export default function songsReducer(state = initialState, action = {}) {
