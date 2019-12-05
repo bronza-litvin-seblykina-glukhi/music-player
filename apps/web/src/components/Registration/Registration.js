@@ -3,7 +3,6 @@ import './Registration.scss';
 import RegistreationForm from './RegistreationForm';
 import {connect} from "react-redux";
 
-
 @connect(
     state => ({
         auth: state.auth,

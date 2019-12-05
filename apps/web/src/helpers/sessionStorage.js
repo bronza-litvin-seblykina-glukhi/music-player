@@ -33,3 +33,20 @@ export function getUsername() {
     }
     return null;
 }
+
+export function setTemporaryToken(token) {
+    try {
+        sessionStorage.setItem('tokenTmp', JSON.stringify(token));
+    } catch (e) {
+        console.warn(e);
+    }
+}
+
+export function getTemporaryToken() {
+    try {
+        return fromJS(JSON.parse(sessionStorage.getItem('tokenTmp')));
+    } catch (e) {
+        console.warn(e);
+    }
+    return null;
+}

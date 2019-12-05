@@ -6,5 +6,5 @@ import {resetCheck} from "./resetCheck";
 export default function* watchRequests() {
     yield takeEvery('LOGIN', login);
     yield takeEvery('REGISTRATION', registration);
-    yield takeEvery('VALIDATE_USER_DATA', resetCheck)
+    yield takeEvery('RESET_CHECK', resetCheck)
 }

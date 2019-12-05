@@ -28,7 +28,7 @@ export class UserAuthenticationController {
     return await this.auth.getUserData(query);
   }
 
-  @Get('user-token')
+  @Get('token')
   async getAccessTokenByEmailAndLogin(@Query('userEmail') userEmail, @Query('userName') userName){
     return await this.auth.getAccessTokenByEmailAndLogin(userEmail, userName);
   }

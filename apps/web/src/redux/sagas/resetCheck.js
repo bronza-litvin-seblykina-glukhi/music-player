@@ -1,32 +1,29 @@
-import {setToken, setUsername} from "../../helpers/sessionStorage";
-import {loginFail, loginSuccess} from "../modules/auth";
+import {put, call} from 'redux-saga/effects';
+import {setTemporaryToken} from "../../helpers/sessionStorage";
+import {resetPasswordFail} from "../modules/auth";
 import history from "../history";
 
 export function* resetCheck(action) {
     try {
-        const {username, email} = action;
+        const {login, email} = action;
 
-        const response = yield call(fetch, 'http://localhost:3001/api/user/authorize',
+        const url = 'http://localhost:3001/api/user/token?userName=' +
+            login + '&userEmail=' + email;
+
+        const response = yield call(fetch, url,
             {
                 headers: {'Content-Type': 'application/json'},
-                method: 'post',
-                redirect: 'follow',
-                body: JSON.stringify({
-                    "loginData": username,
-                    "password": password
-                })
+                method: 'get'
             });
         const responseJson = yield response.json();
 
-        // if (!!responseJson.token) {
-        //     setToken(responseJson);
-        //     setUsername(username);
-        //     yield put(loginSuccess(responseJson));
-        //     history.push('/');
-        // } else {
-        //     yield put(loginFail(new Error(responseJson.message)))
-        // }
+        if (!!responseJson.token) {
+            setTemporaryToken(responseJson);
+            history.push('/submitReset')
+        } else {
+            yield put(resetPasswordFail(new Error(responseJson.message)))
+        }
     } catch (e) {
-        yield put(loginFail(e));
+        yield put(resetPasswordFail(e));
     }
 }
