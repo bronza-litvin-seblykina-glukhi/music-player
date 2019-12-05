@@ -6,6 +6,7 @@ import LoginForm from '../LoginForm/LoginForm';
 @connect(
   state => ({
     auth: state.auth,
+    view: state.view
   }),
   dispatch => ({
     dispatch
@@ -20,6 +21,7 @@ export default class Login extends React.Component {
             <LoginForm
               dispatch={this.props.dispatch}
               auth={this.props.auth}
+              view={this.props.view}
             />
           </div>
         </div>
