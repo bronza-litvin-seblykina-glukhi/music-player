@@ -178,6 +178,7 @@
     display: flex;
     flex-direction: row;
     margin-bottom: 20px;
+    align-items: center;
 
     &:after {
 
@@ -313,10 +314,74 @@ h2, h3 {
 
 .music-list {
   &-default {
-    display: none;
+    display: inline-block;
+
+    .disable-default {
+      display: none;
+    }
   }
 
   &-user {
-    display: inline-block;
+    display: none;
+
+    .disable-user {
+      display: inline-block;
+    }
+  }
+}
+
+.lists {
+  position: relative;
+}
+
+.navigation {
+  position: absolute;
+  top: 130px;
+  right: 140px;
+
+  &-button {
+    outline: 0;
+    border: 0;
+    background-color: grey;
+    height: 25px;
+    width: 100px;
+
+    &:first-child {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+
+    &:last-child {
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.active {
+  background-color: #1d5f07;
+
+  @include transition(.3s);
+
+  &:hover {
+    background-color: limegreen;
+  }
+}
+
+.non-active {
+  background-color: grey;
+}
+
+.btn-text {
+  padding: 5px;
+  color: white;
+  font-family: 'Cabin', 'sans-serif';
+
+  &:hover {
+    cursor: pointer;
   }
 }

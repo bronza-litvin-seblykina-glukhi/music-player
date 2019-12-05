@@ -20,6 +20,27 @@ import { connect } from "react-redux";
     })
 )
 export default class MainPage extends Component {
+
+  changeSongsListToUser() {
+    const defaultSongs = document.getElementById('defaultSongs');
+    const userSongs = document.getElementById('userSongs');
+
+    defaultSongs.style.display = 'none';
+    userSongs.style.display = 'inline-block';
+    document.getElementById('defaultButton').classList.remove('active');
+    document.getElementById('userButton').classList.add('active')
+  }
+
+  changeSongsListToDefault() {
+    const userSongs = document.getElementById('userSongs');
+    const defaultSongs = document.getElementById('defaultSongs');
+
+    userSongs.style.display = 'none';
+    defaultSongs.style.display = 'inline-block';
+    document.getElementById('userButton').classList.remove('active');
+    document.getElementById('defaultButton').classList.add('active')
+  }
+
   render() {
     return(
       <div className="body">
@@ -28,8 +49,17 @@ export default class MainPage extends Component {
                songsCount={this.props.songsCount}
                songPrivacy={this.props.songPrivacy}
         />
-        <div>
-          <span className="music-list-default">
+        <div className="lists">
+           <span className="navigation">
+            <button id="defaultButton" className="navigation-button active" onClick={(e) => this.changeSongsListToDefault(e)}>
+              <span className="btn-text">Default songs</span>
+            </button>
+
+            <button id="userButton" className="navigation-button" onClick={(e) => this.changeSongsListToUser(e)}>
+              <span className="btn-text">User Songs</span>
+            </button>
+          </span>
+          <span className="music-list-default" id="defaultSongs">
             <DefaultSongsList dispatch={this.props.dispatch}
                               defaultSongs={this.props.defaultSongs}
                               songId={this.props.songId}
@@ -38,7 +68,7 @@ export default class MainPage extends Component {
             />
           </span>
 
-          <span className="music-list-user">
+          <span className="music-list-user" id="userSongs">
             <UserSongsList dispatch={this.props.dispatch}
                            defaultSongs={this.props.defaultSongs}
                            userSongs={this.props.userSongs}

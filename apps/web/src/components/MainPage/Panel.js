@@ -14,15 +14,12 @@ export default class Panel extends Component {
     } else {
 
       if (songPrivacy === 'default') {
-        this.defaultMusicList.startPlay(songId, songCount);
+        this.defaultMusicList.startPlay(songId, songCount, songPrivacy);
       }
 
       if (songPrivacy === 'user') {
-        this.userMusicList.startPlay(songId, songCount);
+        this.userMusicList.startPlay(songId, songCount, songPrivacy);
       }
-
-      document.getElementById('panelPlay').style.display = 'none';
-      document.getElementById('panelPause').style.display = 'inline-block';
     }
   };
 
@@ -36,9 +33,6 @@ export default class Panel extends Component {
     if (songPrivacy === 'user') {
       this.userMusicList.stopPlay(songId);
     }
-
-    document.getElementById('panelPause').style.display = 'none';
-    document.getElementById('panelPlay').style.display = 'inline-block';
   };
 
   render() {
