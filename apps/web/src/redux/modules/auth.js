@@ -13,6 +13,8 @@ export const LOGOUT_SUCCESS = 'auth/LOGOUT_SUCCESS';
 const LOGOUT_FAIL = 'auth/LOGOUT_FAIL';
 const REGISTRATION = 'auth/REGISTRATION';
 const REGISTRATION_FAIL = 'auth/REGISTRATION_FAIL';
+const VALIDATE_RESET_PASSWORD = 'auth/VALIDATE_RESET_PASSWORD';
+const VALIDATE_SUBMIT_RESET_PASSWORD = 'auth/VALIDATE_SUBMIT_RESET_PASSWORD';
 
 const initialState = fromJS({
     loaded: false,
@@ -107,5 +109,21 @@ export function loginFail(error) {
     return {
         type: LOGIN_FAIL,
         error
+    };
+}
+
+export function validateResetPassword(login, email) {
+    return {
+        type: VALIDATE_RESET_PASSWORD,
+        login,
+        email
+    };
+}
+
+export function validateSubmitResetPassword(password, rePassword) {
+    return {
+        type: VALIDATE_SUBMIT_RESET_PASSWORD,
+        password,
+        rePassword
     };
 }
