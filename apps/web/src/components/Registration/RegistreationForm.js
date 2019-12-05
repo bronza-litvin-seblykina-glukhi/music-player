@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import FormInput from '../../shared/FormInput/FormInput';
 import {reduxForm} from 'redux-form';
 import {registration} from '../../redux/modules/auth';
-import registrationPost from '../../redux/sagas/registration';
 
 const validateFormFields = ['firstName', 'lastName', 'username', 'email', 'password', 'rePassword'];
 
@@ -126,7 +125,7 @@ const validate = (values, props) => {
 
 export default class RegistreationForm extends Component {
 
-    onSubmit = async (values) => {
+    onSubmit = (values) => {
         this.props.dispatch(registration(values.firstName, values.lastName, values.username, values.password, values.email, values.rePassword));
         this.props.dispatch({
             type: 'REGISTRATION', firstName: values.firstName, lastName: values.lastName,

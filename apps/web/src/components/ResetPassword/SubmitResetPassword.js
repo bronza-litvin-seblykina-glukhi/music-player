@@ -1,6 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import DataVerifyForm from './ResetPasswordForm';
+import SubmitResetPasswordForm from './SubmitResetPasswordForm';
 import './ResetPassword.scss';
 
 export default class Login extends React.Component {
@@ -9,7 +8,7 @@ export default class Login extends React.Component {
             <div className="reset-page">
                 <div className="card">
                     <div className="reset-form">
-                        <DataVerifyForm/>
+                        <SubmitResetPasswordForm/>
                     </div>
                 </div>
             </div>
