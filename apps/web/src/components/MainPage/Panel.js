@@ -1,25 +1,42 @@
 import React, { Component } from 'react';
-import MusicList from './MusicList';
+import DefaultSongsList from './DefaultSongsList';
+import UserSongsList from './UserSongsList';
 
 export default class Panel extends Component {
-  musicList = new MusicList(this.props);
+  defaultMusicList = new DefaultSongsList(this.props);
+  userMusicList = new UserSongsList(this.props);
 
   panelStartPlay = () => {
-    const { songId, songCount } = this.props;
+    const { songId, songCount, songPrivacy } = this.props;
 
     if(!songId) {
       alert('Please, start listen music in menu');
     } else {
-      this.musicList.startPlay(songId, songCount);
+
+      if (songPrivacy === 'default') {
+        this.defaultMusicList.startPlay(songId, songCount);
+      }
+
+      if (songPrivacy === 'user') {
+        this.userMusicList.startPlay(songId, songCount);
+      }
+
       document.getElementById('panelPlay').style.display = 'none';
       document.getElementById('panelPause').style.display = 'inline-block';
     }
   };
 
   panelPausePlay = () => {
-    const { songId } = this.props;
+    const { songId, songPrivacy } = this.props;
 
-    this.musicList.stopPlay(songId);
+    if (songPrivacy === 'default') {
+      this.defaultMusicList.stopPlay(songId);
+    }
+
+    if (songPrivacy === 'user') {
+      this.userMusicList.stopPlay(songId);
+    }
+
     document.getElementById('panelPause').style.display = 'none';
     document.getElementById('panelPlay').style.display = 'inline-block';
   };

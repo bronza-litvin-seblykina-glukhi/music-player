@@ -2,11 +2,9 @@ import React from 'react';
 import songslist from "../../redux/modules/songslist";
 import songs from '../../redux/modules/songs';
 
-export default class MusicList extends React.Component {
+export default class DefaultSongsList extends React.Component {
 
   startPlay(index, countOfSons) {
-      console.log(this.props);
-
       const { songId } = this.props;
       this.props.dispatch({ type: 'SET_PLAY_TRACK_INFO', i: index, songs: countOfSons, songPrivacy: 'default' });
 
@@ -64,6 +62,9 @@ export default class MusicList extends React.Component {
     render() {
       return (
         <div className="music-panel">
+          <div className="music-panel__header">
+            <span className="header-text">Default songs</span>
+          </div>
           <div className="panels">
             <div className="panels-left">
               <h2>Track info here</h2>

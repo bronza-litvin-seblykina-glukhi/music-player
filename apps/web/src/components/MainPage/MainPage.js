@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './MainPage.scss';
 import Panel from './Panel';
-import MusicList from './MusicList';
+import DefaultSongsList from './DefaultSongsList';
+import UserSongsList from './UserSongsList';
 import { connect } from "react-redux";
 
 @connect(
@@ -23,19 +24,30 @@ export default class MainPage extends Component {
     return(
       <div className="body">
         <Panel dispatch={this.props.dispatch}
-               defaultSongs={this.props.defaultSongs}
-               userSongs={this.props.userSongs}
                songId={this.props.songId}
                songsCount={this.props.songsCount}
                songPrivacy={this.props.songPrivacy}
         />
-        <MusicList dispatch={this.props.dispatch}
-                   defaultSongs={this.props.defaultSongs}
-                   userSongs={this.props.userSongs}
-                   songId={this.props.songId}
-                   songsCount={this.props.songsCount}
-                   songPrivacy={this.props.songPrivacy}
-        />
+        <div>
+          <span className="music-list-default">
+            <DefaultSongsList dispatch={this.props.dispatch}
+                              defaultSongs={this.props.defaultSongs}
+                              songId={this.props.songId}
+                              songsCount={this.props.songsCount}
+                              songPrivacy={this.props.songPrivacy}
+            />
+          </span>
+
+          <span className="music-list-user">
+            <UserSongsList dispatch={this.props.dispatch}
+                           defaultSongs={this.props.defaultSongs}
+                           userSongs={this.props.userSongs}
+                           songId={this.props.songId}
+                           songsCount={this.props.songsCount}
+                           songPrivacy={this.props.songPrivacy}
+            />
+          </span>
+        </div>
       </div>
     )
   }
