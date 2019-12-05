@@ -64,6 +64,7 @@ const validate = (values, props) => {
 export default class LoginForm extends Component {
     onSubmit = (values) => {
         this.props.dispatch(validateResetPassword(values.login,values.email));
+        this.props.dispatch({type: 'VALIDATE_USER_DATA', login: values.login, email: values.email});
         history.push('/submitReset')
     };
 

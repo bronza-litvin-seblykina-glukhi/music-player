@@ -54,8 +54,6 @@ export default function reducer(state = initialState, action = {}) {
             });
         case LOGOUT:
             return state.clear();
-        case LOGOUT_FAIL:
-            return initialState;
         case REGISTRATION_FAIL:
             return state.merge({
                 registrationError: action.error.message
