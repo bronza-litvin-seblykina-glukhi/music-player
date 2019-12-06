@@ -79,13 +79,13 @@ export default class UserSongsList extends Component {
                         <span className="player-button">
                           <img id={'userPlayIcon' + (i + 1)} className="player-icon"
                                onClick={(e) => this.startPlay(i + 1, this.props.defaultSongs.length, e)}
-                               src={require('../../images/iconfinder_icon-play_211876.png')}
+                               src={require('../../images/iconfinder-playlist-play-icon_5172493.png')}
                                alt=""/>
                         </span>
                       <span className="player-button">
                           <img id={'userStopIcon' + (i + 1)} className="player-icon-stop"
                                onClick={(e) => this.stopPlay(i + 1, e)}
-                               src={require('../../images/iconfinder_icon-ios7-pause_211791.png')}
+                               src={require('../../images/iconfinder-playlist-pause-icon_2270301.png')}
                                alt=""/>
                         </span>
 

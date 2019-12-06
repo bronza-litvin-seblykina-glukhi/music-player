@@ -18,21 +18,33 @@ export default class DefaultSongsList extends React.Component {
         document.getElementById(oldPlayIcon).style.display = 'inline-block';
       }
 
-      const doc = document.getElementById('audio' + index);
+      const track = document.getElementById('audio' + index);
+      const playhead = document.getElementById('playhead');
+      const timeline = document.getElementById('timeline');
+      const duration = track.duration;
+
+      let timeLineWidth = timeline.offsetWidth - playhead.offsetWidth;
+
+      function timeUpdate() {
+        let playPercent =  timeLineWidth * (track.currentTime / duration);
+        playhead.style.width = playPercent + 'px';
+      }
+
       document.getElementById('playIcon' + index).style.display = 'none';
       document.getElementById('stopIcon' + index).style.display = 'inline-block';
       document.getElementById('panelPlay').style.display = 'none';
       document.getElementById('panelPause').style.display = 'inline-block';
 
-      doc.play();
-      doc.addEventListener('ended', () => {
-        doc.currentTime = 0;
-        this.stopPlay(index);
-        this.playNext(index);
-      });
+    track.play();
+    track.addEventListener('timeupdate',  timeUpdate, false);
+    track.addEventListener('ended', () => {
+      track.currentTime = 0;
+      this.stopPlay(index);
+      this.playNext(index);
+    });
 
-      return null;
-    };
+    return null;
+  };
 
     playNext(index) {
       const { songId, songsCount } = this.props;
@@ -46,13 +58,13 @@ export default class DefaultSongsList extends React.Component {
     };
 
     stopPlay (index) {
-      const doc = document.getElementById('audio' + index);
+      const track = document.getElementById('audio' + index);
       document.getElementById('playIcon' + index).style.display = 'inline-block';
       document.getElementById('stopIcon' + index).style.display = 'none';
       document.getElementById('panelPause').style.display = 'none';
       document.getElementById('panelPlay').style.display = 'inline-block';
 
-      doc.pause();
+      track.pause();
     };
 
     componentDidMount() {
@@ -67,7 +79,13 @@ export default class DefaultSongsList extends React.Component {
           </div>
           <div className="panels">
             <div className="panels-left">
-              <h2>Track info here</h2>
+              <div className="track-info">
+                <img className="track-info__image" src={require('../../images/image-sample.png')} alt="" />
+              </div>
+
+              <div id="timeline" className="timeline">
+                <div id="playhead" className="playhead"></div>
+              </div>
             </div>
 
             <div className="panels-right">
@@ -79,13 +97,13 @@ export default class DefaultSongsList extends React.Component {
                         <span className="player-button">
                           <img id={'playIcon' + (i + 1)} className="player-icon"
                                onClick={(e) => this.startPlay(i + 1, this.props.defaultSongs.length, e)}
-                               src={require('../../images/iconfinder_icon-play_211876.png')}
+                               src={require('../../images/iconfinder-playlist-play-icon_5172493.png')}
                                alt=""/>
                         </span>
                         <span className="player-button">
                           <img id={'stopIcon' + (i + 1)} className="player-icon-stop"
                                onClick={(e) => this.stopPlay(i + 1, e)}
-                               src={require('../../images/iconfinder_icon-ios7-pause_211791.png')}
+                               src={require('../../images/iconfinder-playlist-pause-icon_2270301.png')}
                                alt=""/>
                         </span>
 
