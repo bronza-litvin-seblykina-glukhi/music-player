@@ -5,55 +5,80 @@ import songs from '../../redux/modules/songs';
 export default class DefaultSongsList extends React.Component {
 
   startPlay(index, countOfSons) {
-      const { songId } = this.props;
-      this.props.dispatch({ type: 'SET_PLAY_TRACK_INFO', i: index, songs: countOfSons, songPrivacy: 'default' });
+    const { songId } = this.props;
+    this.props.dispatch({ type: 'SET_PLAY_TRACK_INFO', i: index, songs: countOfSons, songPrivacy: 'default' });
 
-      if (songId && songId !== index) {
-        const oldAudio = `audio${songId}`;
-        const oldPlayIcon = `playIcon${songId}`;
-        const oldStopIcon = `stopIcon${songId}`;
+    if (songId && songId !== index) {
+      const oldAudio = `audio${songId}`;
+      const oldPlayIcon = `playIcon${songId}`;
+      const oldStopIcon = `stopIcon${songId}`;
 
-        document.getElementById(oldAudio).pause();
-        document.getElementById(oldStopIcon).style.display = 'none';
-        document.getElementById(oldPlayIcon).style.display = 'inline-block';
+      document.getElementById(oldAudio).pause();
+      document.getElementById(oldStopIcon).style.display = 'none';
+      document.getElementById(oldPlayIcon).style.display = 'inline-block';
+    }
+
+    const track = document.getElementById('audio' + index);
+    const playhead = document.getElementById('playhead');
+    const timeline = document.getElementById('timeline');
+    const duration = track.duration;
+
+    let timeLineWidth = timeline.offsetWidth - playhead.offsetWidth;
+
+    function timeUpdate() {
+      let playPercent =  timeLineWidth * (track.currentTime / duration);
+      playhead.style.width = playPercent + 'px';
+    }
+
+    document.getElementById('playIcon' + index).style.display = 'none';
+    document.getElementById('stopIcon' + index).style.display = 'inline-block';
+    document.getElementById('panelPlay').style.display = 'none';
+    document.getElementById('panelPause').style.display = 'inline-block';
+
+    function clickPercent(event) {
+      return (event.clientX - getPosition(timeline)) / timeLineWidth;
+    }
+
+    function movePlayHead(event) {
+      let newWidth = event.clientX - getPosition(timeline);
+
+      if (newWidth <= 0) {
+        playhead.style.width = '1px';
+      } else {
+        playhead.style.width = newWidth + 'px';
       }
 
-      const track = document.getElementById('audio' + index);
-      const playhead = document.getElementById('playhead');
-      const timeline = document.getElementById('timeline');
-      const duration = track.duration;
+      track.currentTime = duration * clickPercent(event);
+      track.addEventListener('timeupdate', timeUpdate, false);
+    }
 
-      let timeLineWidth = timeline.offsetWidth - playhead.offsetWidth;
+    function getPosition(el) {
+      console.log(el.getBoundingClientRect().left);
+      return el.getBoundingClientRect().left
+    }
 
-      function timeUpdate() {
-        let playPercent =  timeLineWidth * (track.currentTime / duration);
-        playhead.style.width = playPercent + 'px';
-      }
-
-      document.getElementById('playIcon' + index).style.display = 'none';
-      document.getElementById('stopIcon' + index).style.display = 'inline-block';
-      document.getElementById('panelPlay').style.display = 'none';
-      document.getElementById('panelPause').style.display = 'inline-block';
+    timeline.addEventListener('click', (event) => {
+      movePlayHead(event)
+    }, false);
 
     track.play();
     track.addEventListener('timeupdate',  timeUpdate, false);
     track.addEventListener('ended', () => {
       track.currentTime = 0;
       this.stopPlay(index);
-      this.playNext(index);
     });
 
     return null;
   };
 
     playNext(index) {
-      const { songId, songsCount } = this.props;
+      const { songsCount } = this.props;
 
       if(index === songsCount) {
         return this.stopPlay(index);
       }
       else {
-        return this.startPlay(songId + 1, songsCount);
+        return this.startPlay(index + 1, songsCount);
       }
     };
 

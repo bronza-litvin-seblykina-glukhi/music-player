@@ -412,6 +412,10 @@ h2, h3 {
   height: 3px;
   border-radius: 1px;
   background: grey;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .playhead {
