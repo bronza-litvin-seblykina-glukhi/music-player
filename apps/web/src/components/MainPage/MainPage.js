@@ -21,17 +21,32 @@ import { connect } from "react-redux";
 )
 export default class MainPage extends Component {
 
+  defaultSongsList = new DefaultSongsList(this.props);
+  userSongsList = new UserSongsList(this.props);
+
   changeSongsListToUser() {
+    const { songId, songPrivacy } = this.props;
+
+    if(songPrivacy === 'default') {
+      this.defaultSongsList.stopPlay(songId)
+    }
+
     const defaultSongs = document.getElementById('defaultSongs');
     const userSongs = document.getElementById('userSongs');
 
     defaultSongs.style.display = 'none';
     userSongs.style.display = 'inline-block';
     document.getElementById('defaultButton').classList.remove('active');
-    document.getElementById('userButton').classList.add('active')
+    document.getElementById('userButton').classList.add('active');
   }
 
   changeSongsListToDefault() {
+    const { songId, songPrivacy } = this.props;
+
+    if(songPrivacy === 'user') {
+      this.userSongsList.stopPlay(songId)
+    }
+
     const userSongs = document.getElementById('userSongs');
     const defaultSongs = document.getElementById('defaultSongs');
 

@@ -5,8 +5,6 @@ import songs from '../../redux/modules/songs';
 export default class UserSongsList extends Component {
 
   startPlay(index, countOfSons) {
-    console.log(this.props);
-
     const { songId } = this.props;
     this.props.dispatch({ type: 'SET_PLAY_TRACK_INFO', i: index, songs: countOfSons, songPrivacy: 'user' });
 
