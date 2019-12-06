@@ -12,6 +12,7 @@ import { AuthValidationPipe } from '../../pipes/auth-validation.pipe';
 import { RegisterValidation } from '../../validation/register-validation';
 import { RegisterValidationPipe } from '../../pipes/register-validation.pipe';
 import {ResetInterface} from './interfaces/reset.interface';
+import {ResetValidationPipe} from '../../pipes/reset-validation.pipe';
 
 @Controller('api/user')
 export class UserAuthenticationController {
@@ -41,6 +42,7 @@ export class UserAuthenticationController {
   }
 
   @Post('reset')
+  @UsePipes(new ResetValidationPipe())
   async updateUserPassword(@Body() body: ResetInterface){
     return await this.auth.updateUserPassword(body);
   }

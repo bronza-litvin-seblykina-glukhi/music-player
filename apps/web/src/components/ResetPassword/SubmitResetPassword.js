@@ -1,14 +1,23 @@
 import React from 'react';
 import SubmitResetPasswordForm from './SubmitResetPasswordForm';
 import './ResetPassword.scss';
+import {connect} from "react-redux";
 
-export default class Login extends React.Component {
+@connect(
+    state => ({
+        auth: state.auth,
+    }),
+    dispatch => ({
+        dispatch
+    })
+)
+export default class SubmitResetPassword extends React.Component {
     render() {
         return (
             <div className="reset-page">
                 <div className="card">
                     <div className="reset-form">
-                        <SubmitResetPasswordForm/>
+                        <SubmitResetPasswordForm auth={this.props.auth}/>
                     </div>
                 </div>
             </div>

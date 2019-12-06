@@ -2,9 +2,11 @@ import {takeEvery} from 'redux-saga/effects';
 import {login} from './login';
 import {registration} from './registration';
 import {resetCheck} from "./resetCheck";
+import {resetSubmit} from "./resetSubmit";
 
 export default function* watchRequests() {
     yield takeEvery('LOGIN', login);
     yield takeEvery('REGISTRATION', registration);
-    yield takeEvery('RESET_CHECK', resetCheck)
+    yield takeEvery('RESET_CHECK', resetCheck);
+    yield takeEvery('SUBMIT_RESET', resetSubmit)
 }

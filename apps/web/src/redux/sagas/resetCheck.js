@@ -18,7 +18,7 @@ export function* resetCheck(action) {
         const responseJson = yield response.json();
 
         if (!!responseJson.token) {
-            setTemporaryToken(responseJson);
+            setTemporaryToken(responseJson.token);
             history.push('/submitReset')
         } else {
             yield put(resetPasswordFail(new Error(responseJson.message)))

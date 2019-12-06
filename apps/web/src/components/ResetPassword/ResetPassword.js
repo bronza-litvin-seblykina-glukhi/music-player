@@ -11,7 +11,7 @@ import {connect} from "react-redux";
         dispatch
     })
 )
-export default class Login extends React.Component {
+export default class ResetPassword extends React.Component {
     render() {
         return (
             <div className="reset-page">

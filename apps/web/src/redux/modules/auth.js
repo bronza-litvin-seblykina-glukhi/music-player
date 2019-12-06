@@ -16,10 +16,12 @@ const REGISTRATION_FAIL = 'auth/REGISTRATION_FAIL';
 const VALIDATE_RESET_PASSWORD = 'auth/VALIDATE_RESET_PASSWORD';
 const VALIDATE_SUBMIT_RESET_PASSWORD = 'auth/VALIDATE_SUBMIT_RESET_PASSWORD';
 const RESET_FAIL = 'auth/RESET_FAIL';
+const SUBMIT_RESET_FAIL = 'auth/SUBMIT_RESET_FAIL';
 
 const initialState = fromJS({
     loaded: false,
-    resetError: false
+    resetError: false,
+    isSubmitResetFail: false
 });
 
 export default function reducer(state = initialState, action = {}) {
@@ -61,6 +63,8 @@ export default function reducer(state = initialState, action = {}) {
             });
         case RESET_FAIL:
             return state.set('resetError', true);
+        case SUBMIT_RESET_FAIL:
+            return state.set('isSubmitResetFail',true);
         default:
             return state;
     }
@@ -130,6 +134,13 @@ export function validateSubmitResetPassword(password, rePassword) {
 export function resetPasswordFail(error) {
     return {
         type: RESET_FAIL,
+        error
+    };
+}
+
+export function submitResetPasswordFail(error) {
+    return {
+        type: SUBMIT_RESET_FAIL,
         error
     };
 }
