@@ -18,15 +18,27 @@ export default class UserSongsList extends Component {
       document.getElementById(oldPlayIcon).style.display = 'inline-block';
     }
 
-    const doc = document.getElementById('userAudio' + index);
+    const track = document.getElementById('userAudio' + index);
+    const timeline = document.getElementById('userTimeline');
+    const playhead = document.getElementById('userPlayhead');
+    const duration = track.duration;
+
+    let timelineWidth = timeline.offsetWidth - playhead.offsetWidth;
+
+    function timeUpdate() {
+      const playPercent = timelineWidth * (track.currentTime / duration);
+      playhead.style.width = playPercent + 'px';
+    }
+
     document.getElementById('userPlayIcon' + index).style.display = 'none';
     document.getElementById('userStopIcon' + index).style.display = 'inline-block';
     document.getElementById('panelPlay').style.display = 'none';
     document.getElementById('panelPause').style.display = 'inline-block';
 
-    doc.play();
-    doc.addEventListener('ended', () => {
-      doc.currentTime = 0;
+    track.play();
+    track.addEventListener('timeupdate', timeUpdate, false);
+    track.addEventListener('ended', () => {
+      track.currentTime = 0;
       this.stopPlay(index);
       this.playNext(index);
     });
@@ -46,13 +58,13 @@ export default class UserSongsList extends Component {
   };
 
   stopPlay (index) {
-    const doc = document.getElementById('userAudio' + index);
+    const track = document.getElementById('userAudio' + index);
     document.getElementById('userPlayIcon' + index).style.display = 'inline-block';
     document.getElementById('userStopIcon' + index).style.display = 'none';
     document.getElementById('panelPause').style.display = 'none';
     document.getElementById('panelPlay').style.display = 'inline-block';
 
-    doc.pause();
+    track.pause();
   };
 
   componentDidMount() {
@@ -67,7 +79,13 @@ export default class UserSongsList extends Component {
         </div>
         <div className="panels">
           <div className="panels-left">
-            <h2>Track info here</h2>
+            <div className="track-info">
+              <img className="track-info__image" src={require('../../images/image-sample.png')} alt="" />
+            </div>
+
+            <div id="userTimeline" className="timeline">
+              <div id="userPlayhead" className="playhead"></div>
+            </div>
           </div>
 
           <div className="panels-right">
