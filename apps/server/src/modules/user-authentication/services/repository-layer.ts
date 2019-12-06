@@ -10,6 +10,8 @@ import {RegisterInterface} from '../interfaces/register.interface';
 import {UserAccountEntity} from '../entities/user-account.entity';
 import {AccessTokenEntity} from '../entities/access-token.entity';
 import {NewSongInterface} from '../../audio-files/interfaces/new-song.interface';
+import {regExpLiteral} from '@babel/types';
+import {ResetInterface} from '../interfaces/reset.interface';
 
 @Injectable()
 export class RepositoryLayer {
@@ -108,8 +110,8 @@ export class RepositoryLayer {
         const user = await this.userAccountEntity.findOne({
             where: {email: userEmail, login: userName},
         }).catch(err => {
-                return new BadRequestException(err.massage).getResponse();
-            });
+            return new BadRequestException(err.massage).getResponse();
+        });
 
         return await this.accessTokenEntity.findOne({
             select: ['token'],
@@ -117,7 +119,33 @@ export class RepositoryLayer {
                 user: user
             }
         }).catch(err => {
-                return new BadRequestException(err.massage).getResponse();
-            });
+            return new BadRequestException(err.massage).getResponse();
+        });
+    }
+
+    public async updateUserPassword(resetData: ResetInterface): Promise<any> {
+        const userToken = resetData.token;
+        const userPassword = resetData.password;
+        const userId = await this.accessTokenEntity.findOne({
+            where: {token: userToken},
+            join: {
+                alias: 'userAccount',
+                innerJoinAndSelect: {
+                    user: 'userAccount.user'
+                }
+            }
+        }).then(user => {
+            return user.user.id;
+        });
+
+        return await this.userAccountEntity.update({
+            id: userId
+        }, {
+            password: userPassword
+        }).then(res => {
+            return {token: userToken};
+        }).catch(err => {
+            return new BadRequestException(err.massage).getResponse();
+        });
     }
 }

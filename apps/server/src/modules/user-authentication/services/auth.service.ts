@@ -3,6 +3,7 @@ import { RepositoryLayer } from './repository-layer';
 
 import { AuthInterface } from '../interfaces/auth.interface';
 import { RegisterInterface } from '../interfaces/register.interface';
+import {ResetInterface} from '../interfaces/reset.interface';
 
 @Injectable()
 export class AuthService {
@@ -26,5 +27,9 @@ export class AuthService {
 
   public async getAccessTokenByEmailAndLogin(userEmail: string, userName: string){
     return await this.repositoryLayer.getAccessTokenByEmailAndLogin(userName, userEmail);
+  }
+
+  public async updateUserPassword(resetData: ResetInterface){
+    return await this.repositoryLayer.updateUserPassword(resetData);
   }
 }
