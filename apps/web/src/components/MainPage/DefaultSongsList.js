@@ -4,6 +4,18 @@ import songs from '../../redux/modules/songs';
 
 export default class DefaultSongsList extends React.Component {
 
+  timeLine(track, timeline, playhead) {
+    const duration = track.duration;
+    const timelineWidth = timeline.offsetWidth - playhead.offsetWidth;
+
+    function updateTime() {
+      const playTime = timelineWidth * (track.currentTime / duration);
+      return playhead.style.width = playTime + 'px';
+    }
+
+    track.addEventListener('timeupdate', updateTime, false);
+  }
+
   startPlay(index, countOfSons) {
     const { songId } = this.props;
     this.props.dispatch({ type: 'SET_PLAY_TRACK_INFO', i: index, songs: countOfSons, songPrivacy: 'default' });
@@ -19,50 +31,18 @@ export default class DefaultSongsList extends React.Component {
     }
 
     const track = document.getElementById('audio' + index);
-    const playhead = document.getElementById('playhead');
     const timeline = document.getElementById('timeline');
-    const duration = track.duration;
-
-    let timeLineWidth = timeline.offsetWidth - playhead.offsetWidth;
-
-    function timeUpdate() {
-      let playPercent =  timeLineWidth * (track.currentTime / duration);
-      playhead.style.width = playPercent + 'px';
-    }
+    const playhead = document.getElementById('playhead');
 
     document.getElementById('playIcon' + index).style.display = 'none';
     document.getElementById('stopIcon' + index).style.display = 'inline-block';
     document.getElementById('panelPlay').style.display = 'none';
     document.getElementById('panelPause').style.display = 'inline-block';
 
-    function clickPercent(event) {
-      return (event.clientX - getPosition(timeline)) / timeLineWidth;
-    }
-
-    function movePlayHead(event) {
-      let newWidth = event.clientX - getPosition(timeline);
-
-      if (newWidth <= 0) {
-        playhead.style.width = '1px';
-      } else {
-        playhead.style.width = newWidth + 'px';
-      }
-
-      track.currentTime = duration * clickPercent(event);
-      track.addEventListener('timeupdate', timeUpdate, false);
-    }
-
-    function getPosition(el) {
-      console.log(el.getBoundingClientRect().left);
-      return el.getBoundingClientRect().left
-    }
-
-    timeline.addEventListener('click', (event) => {
-      movePlayHead(event)
-    }, false);
-
     track.play();
-    track.addEventListener('timeupdate',  timeUpdate, false);
+    this.timeLine(track, timeline, playhead);
+
+
     track.addEventListener('ended', () => {
       track.currentTime = 0;
       this.stopPlay(index);
@@ -71,18 +51,7 @@ export default class DefaultSongsList extends React.Component {
     return null;
   };
 
-    playNext(index) {
-      const { songsCount } = this.props;
-
-      if(index === songsCount) {
-        return this.stopPlay(index);
-      }
-      else {
-        return this.startPlay(index + 1, songsCount);
-      }
-    };
-
-    stopPlay (index) {
+  stopPlay (index) {
       const track = document.getElementById('audio' + index);
       document.getElementById('playIcon' + index).style.display = 'inline-block';
       document.getElementById('stopIcon' + index).style.display = 'none';
@@ -91,6 +60,17 @@ export default class DefaultSongsList extends React.Component {
 
       track.pause();
     };
+
+  playNext(index) {
+    const { songsCount } = this.props;
+
+    if(index === songsCount) {
+      return this.stopPlay(index);
+    }
+    else {
+      return this.startPlay(index + 1, songsCount);
+    }
+  };
 
     componentDidMount() {
         this.props.dispatch({type: 'LOAD_LIST'});
