@@ -61,10 +61,9 @@ const validate = (values, props) => {
     validate,
     touchOnChange: true
 })
-export default class LoginForm extends Component {
+export default class ResetPasswordForm extends Component {
     onSubmit = (values) => {
-        this.props.dispatch(validateResetPassword(values.login,values.email));
-        history.push('/submitReset')
+        this.props.dispatch({type: 'RESET_CHECK', login: values.login, email: values.email});
     };
 
     render() {
@@ -93,6 +92,7 @@ export default class LoginForm extends Component {
                     >
                         Reset Lost Password
                     </button>
+                    <div className="server-error">{(this.props.auth.getIn(['resetError']))?'Incorrect data':''}</div>
                 </form>
             </div>
         );
