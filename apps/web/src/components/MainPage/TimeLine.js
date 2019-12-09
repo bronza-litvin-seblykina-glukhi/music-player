@@ -1,15 +1,42 @@
-export default class TimeLine {
-  constructor(track, timeline, playhead) {
-    this.track = track;
-    this.timeline = timeline;
-    this.playhead = playhead;
-    this.duration = track.duration;
-    this.timelineWidth = this.timeline.offsetWidth - this.playhead.offsetWidth;
-    this.currentTime = track.currentTime;
+export function TrackTimeLine(track) {
+  const playHead = document.getElementById('playhead');
+  const duration = track.duration;
+
+  function timeUpdate() {
+    const playPercent = (track.currentTime * 100) / duration;
+    playHead.style.width = playPercent + '%';
   }
 
-  updateTime() {
-    let playPercent = this.timelineWidth * (this.currentTime / this.duration);
-    this.playhead.style.width = playPercent + 'px';
-  }
+  track.addEventListener('timeupdate', timeUpdate, false);
+
+  track.addEventListener('ended', () => {
+    playHead.style.width = '1px';
+  }, false);
 }
+
+export function ChangePlayTime(props, event) {
+  const { songId } = props;
+  const { songPrivacy } = props;
+
+  if (!songId) {
+    alert('Please, start listen the music in playlist');
+    return;
+  }
+
+  const trackId = songPrivacy === 'default' ? 'audio' + songId : '';
+  const track = document.getElementById(trackId);
+  const timeline = document.getElementById('timeline');
+  const playHead = document.getElementById('playhead');
+  const duration = track.duration;
+
+  const newPlayHeadWidth = event.clientX - getPosition(timeline);
+  const playPercent = newPlayHeadWidth / timeline.offsetWidth;
+
+  playHead.style.width = newPlayHeadWidth + 'px';
+  track.currentTime = duration * playPercent;
+}
+
+function getPosition(el) {
+  return el.getBoundingClientRect().left;
+}
+

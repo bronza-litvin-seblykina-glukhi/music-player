@@ -1,23 +1,13 @@
 import React from 'react';
 import songslist from "../../redux/modules/songslist";
 import songs from '../../redux/modules/songs';
+import { TrackTimeLine, ChangePlayTime } from './TimeLine';
 
 export default class DefaultSongsList extends React.Component {
 
-  timeLine(track, timeline, playhead) {
-    const duration = track.duration;
-    const timelineWidth = timeline.offsetWidth - playhead.offsetWidth;
-
-    function updateTime() {
-      const playTime = timelineWidth * (track.currentTime / duration);
-      return playhead.style.width = playTime + 'px';
-    }
-
-    track.addEventListener('timeupdate', updateTime, false);
-  }
-
   startPlay(index, countOfSons) {
     const { songId } = this.props;
+    const timeline = document.getElementById('timeline');
     this.props.dispatch({ type: 'SET_PLAY_TRACK_INFO', i: index, songs: countOfSons, songPrivacy: 'default' });
 
     if (songId && songId !== index) {
@@ -31,8 +21,6 @@ export default class DefaultSongsList extends React.Component {
     }
 
     const track = document.getElementById('audio' + index);
-    const timeline = document.getElementById('timeline');
-    const playhead = document.getElementById('playhead');
 
     document.getElementById('playIcon' + index).style.display = 'none';
     document.getElementById('stopIcon' + index).style.display = 'inline-block';
@@ -40,19 +28,22 @@ export default class DefaultSongsList extends React.Component {
     document.getElementById('panelPause').style.display = 'inline-block';
 
     track.play();
-    this.timeLine(track, timeline, playhead);
+    TrackTimeLine(track);
 
+    timeline.addEventListener('click', (event) => {
+      ChangePlayTime(this.props, event)
+    }, false);
 
     track.addEventListener('ended', () => {
       track.currentTime = 0;
       this.stopPlay(index);
     });
-
-    return null;
   };
 
-  stopPlay (index) {
+  stopPlay(index) {
       const track = document.getElementById('audio' + index);
+      const timeline = document.getElementById('timeline');
+
       document.getElementById('playIcon' + index).style.display = 'inline-block';
       document.getElementById('stopIcon' + index).style.display = 'none';
       document.getElementById('panelPause').style.display = 'none';
@@ -60,17 +51,6 @@ export default class DefaultSongsList extends React.Component {
 
       track.pause();
     };
-
-  playNext(index) {
-    const { songsCount } = this.props;
-
-    if(index === songsCount) {
-      return this.stopPlay(index);
-    }
-    else {
-      return this.startPlay(index + 1, songsCount);
-    }
-  };
 
     componentDidMount() {
         this.props.dispatch({type: 'LOAD_LIST'});
