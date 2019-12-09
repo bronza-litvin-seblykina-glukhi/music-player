@@ -2,11 +2,23 @@ import { put, call } from 'redux-saga/effects';
 import { loadTrackInfo } from '../modules/songs';
 
 export function* loadTrack(action) {
-  const { i, songs, songPrivacy } = action;
+  const {
+    i,
+    songs,
+    songPrivacy,
+    title,
+    artist,
+    album,
+    genre
+  } = action;
 
   yield put(loadTrackInfo({
     index: i,
     songs: songs,
-    songPrivacy: songPrivacy
+    songPrivacy: songPrivacy,
+    title: title,
+    artist: artist,
+    album: album,
+    genre: genre
   }))
 }

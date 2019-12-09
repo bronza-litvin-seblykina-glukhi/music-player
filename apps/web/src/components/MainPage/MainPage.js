@@ -11,6 +11,10 @@ import { connect } from "react-redux";
           songId: state.songsReducer.index,
           songsCount: state.songsReducer.songs,
           songPrivacy: state.songsReducer.songPrivacy,
+          title: state.songsReducer.title,
+          artist: state.songsReducer.artist,
+          album: state.songsReducer.album,
+          genre: state.songsReducer.genre,
           defaultSongs: state.songslist.defaultSongs,
           userSongs: state.songslist.userSongs
         });
@@ -79,6 +83,10 @@ export default class MainPage extends Component {
                               defaultSongs={this.props.defaultSongs}
                               songId={this.props.songId}
                               songsCount={this.props.songsCount}
+                              title={this.props.title}
+                              artist={this.props.artist}
+                              album={this.props.album}
+                              genre={this.props.genre}
                               songPrivacy={this.props.songPrivacy}
             />
           </span>
@@ -89,6 +97,10 @@ export default class MainPage extends Component {
                            userSongs={this.props.userSongs}
                            songId={this.props.songId}
                            songsCount={this.props.songsCount}
+                           title={this.props.title}
+                           artist={this.props.artist}
+                           album={this.props.album}
+                           genre={this.props.genre}
                            songPrivacy={this.props.songPrivacy}
             />
           </span>

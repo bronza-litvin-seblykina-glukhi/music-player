@@ -40,3 +40,9 @@ function getPosition(el) {
   return el.getBoundingClientRect().left;
 }
 
+
+export function GetTrackTime(track) {
+  const { duration } = track;
+
+  return `${Math.floor(Math.round(duration) / 60)}:${Math.round(duration) % 60}`;
+}

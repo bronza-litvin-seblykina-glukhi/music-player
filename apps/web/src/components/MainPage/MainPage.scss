@@ -346,8 +346,8 @@ h2, h3 {
 
 .navigation {
   position: absolute;
-  top: 130px;
-  right: 140px;
+  top: 205px;
+  right: 190px;
 
   &-button {
     outline: 0;
@@ -404,10 +404,28 @@ h2, h3 {
   &__image {
     width: 250px;
   }
+
+  &__name {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+  }
+
+  &__duration {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 5px;
+  }
+
+  &__album-genre {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+  }
 }
 
 .timeline {
-  margin-top: 110px;
+  margin-top: 30px;
   width: 100%;
   height: 3px;
   border-radius: 1px;
@@ -430,5 +448,56 @@ h2, h3 {
 
   &:hover {
     cursor: pointer;
+  }
+}
+
+.track {
+  &__name {
+    text-align: left;
+    color: white;
+    font-size: 23px;
+  }
+
+  &__artist {
+    text-align: left;
+    color: grey;
+    font-size: 17px;
+  }
+
+  &__start {
+    text-align: left;
+    color: grey;
+  }
+
+  &__end {
+    text-align: right;
+    color: grey;
+  }
+
+  &__album {
+    text-align: left;
+    font-size: 15px;
+    color: grey;
+
+    &-value {
+      color: white;
+      margin-left: 8px;
+    }
+  }
+
+  &__genre {
+    position: relative;
+    text-align: left;
+    font-size: 15px;
+    color: grey;
+    max-width: 300px;
+    width: 600px;
+    text-overflow: ellipsis;
+    margin-top: 8px;
+
+    &-value {
+      color: white;
+      margin-left: 8px;
+    }
   }
 }
