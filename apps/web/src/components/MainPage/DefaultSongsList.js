@@ -2,32 +2,12 @@ import React from 'react';
 import {
   TrackTimeLine,
   ChangePlayTime,
-  GetTrackTime
+  GetTrackTime,
+  getCurrentPlayTime
 } from './TimeLine';
 
 export default class DefaultSongsList extends React.Component {
-  playStart = '0:00';
   trackDuration = '0:00';
-
-  getCurrentPlayTime() {
-    const { songId } = this.props;
-
-    if (!songId) {
-      return '0:00';
-    }
-
-    const track = document.getElementById('audio' + songId);
-    track.addEventListener('timeupdate', () => {
-      const { currentTime } = track;
-
-      const seconds = (Math.round(currentTime) % 60)
-        .toString().length === 1 ?
-        '0' + (Math.round(currentTime) % 60)
-        : (Math.round(currentTime) % 60);
-
-      this.playStart = `${Math.floor(Math.round(currentTime) / 60)}:${seconds}`;
-    }, false);
-  }
 
   startPlay(index, countOfSons, trackInfo) {
     const { title, artist, albumName, genre } = trackInfo;
@@ -65,7 +45,7 @@ export default class DefaultSongsList extends React.Component {
 
     track.play();
     this.trackDuration = GetTrackTime(track);
-    this.getCurrentPlayTime(track);
+    getCurrentPlayTime(track, this.props);
 
     TrackTimeLine(track);
 
@@ -118,7 +98,7 @@ export default class DefaultSongsList extends React.Component {
               </div>
 
               <div className="track-info__duration">
-                <span className="track__start">{ this.playStart }</span>
+                <span className="track__start">{ this.props.currentPlayTime || '0:00' }</span>
                 <span className="track__end">{ this.trackDuration }</span>
               </div>
 

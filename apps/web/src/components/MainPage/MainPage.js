@@ -16,7 +16,8 @@ import { connect } from "react-redux";
           album: state.songsReducer.album,
           genre: state.songsReducer.genre,
           defaultSongs: state.songslist.defaultSongs,
-          userSongs: state.songslist.userSongs
+          userSongs: state.songslist.userSongs,
+          currentPlayTime: state.currentTrackTimeReducer.currentTime
         });
     },
     dispatch => ({
@@ -88,6 +89,7 @@ export default class MainPage extends Component {
                               album={this.props.album}
                               genre={this.props.genre}
                               songPrivacy={this.props.songPrivacy}
+                              currentPlayTime={this.props.currentPlayTime}
             />
           </span>
 
@@ -102,6 +104,7 @@ export default class MainPage extends Component {
                            album={this.props.album}
                            genre={this.props.genre}
                            songPrivacy={this.props.songPrivacy}
+                           currentPlayTime={this.props.currentPlayTime}
             />
           </span>
         </div>

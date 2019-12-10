@@ -46,3 +46,16 @@ export function GetTrackTime(track) {
 
   return `${Math.floor(Math.round(duration) / 60)}:${Math.round(duration) % 60}`;
 }
+
+export function getCurrentPlayTime(track, props) {
+  track.addEventListener('timeupdate', () => {
+    const { currentTime } = track;
+    const seconds = `${Math.round(currentTime) % 60}`;
+    const secondsValue = seconds.length === 1 ? '0' + seconds : seconds;
+
+    props.dispatch({
+      type: 'SET_CURRENT_PLAY_TIME',
+      currentTrackTime: `${Math.floor(Math.round(currentTime) / 60)}:${secondsValue}`
+    })
+  }, false);
+}

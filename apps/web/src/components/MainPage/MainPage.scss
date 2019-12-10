@@ -222,6 +222,7 @@
       @include transition(.3s);
 
       &:hover {
+        @include transition(.3s);
         background: #2ea82e;
       }
     }
@@ -518,14 +519,33 @@ h2, h3 {
     text-align: left;
     font-size: 15px;
     color: grey;
-    max-width: 300px;
-    width: 600px;
+    height: 37px;
+    overflow-y: scroll;
     text-overflow: ellipsis;
     margin-top: 8px;
 
     &-value {
       color: white;
       margin-left: 8px;
+    }
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #248424;
+      border-radius: 5px;
+      @include transition(.3s);
+
+      &:hover {
+        @include transition(.3s);
+        background: #2ea82e;
+      }
     }
   }
 }

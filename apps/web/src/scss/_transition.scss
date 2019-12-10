@@ -4,8 +4,8 @@
   -o-transition-duration: $time;
   transition-duration: $time;
 
-  -webkit-transition-property: background-color, color, font-size, border, filter, transform, width;
-  -moz-transition-property: background-color, color, font-size, border, filter, transform, width;
-  -o-transition-property: background-color, color, font-size, border, filter, transform, width;
-  transition-property: background-color, color, font-size, border, filter, transform, width;
+  -webkit-transition-property: background-color, color, font-size, border, filter, transform, width, background;
+  -moz-transition-property: background-color, color, font-size, border, filter, transform, width, background;
+  -o-transition-property: background-color, color, font-size, border, filter, transform, width, background;
+  transition-property: background-color, color, font-size, border, filter, transform, width, background;
 }
