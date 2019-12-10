@@ -49,10 +49,12 @@ export default class DefaultSongsList extends React.Component {
       const oldPlayIcon = `playIcon${songId}`;
       const oldStopIcon = `stopIcon${songId}`;
 
-      document.getElementById(oldAudio).pause();
+      this.stopPlay(songId);
       document.getElementById(oldStopIcon).style.display = 'none';
       document.getElementById(oldPlayIcon).style.display = 'inline-block';
     }
+
+    document.getElementById(index).classList.toggle('audio__active');
 
     const track = document.getElementById('audio' + index);
 
@@ -78,6 +80,8 @@ export default class DefaultSongsList extends React.Component {
   };
 
   stopPlay(index) {
+      document.getElementById(index).classList.toggle('audio__active');
+
       const track = document.getElementById('audio' + index);
 
       document.getElementById('playIcon' + index).style.display = 'inline-block';
@@ -133,7 +137,7 @@ export default class DefaultSongsList extends React.Component {
                 this.props.defaultSongs.map((item, i) => {
                   return(
                     <React.Fragment>
-                      <div className="audio">
+                      <div className="audio" id={i + 1}>
                         <span className="player-button">
                           <img id={'playIcon' + (i + 1)} className="player-icon"
                                onClick={
