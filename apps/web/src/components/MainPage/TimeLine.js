@@ -23,10 +23,10 @@ export function ChangePlayTime(props, event) {
     return;
   }
 
-  const trackId = songPrivacy === 'default' ? 'audio' + songId : '';
+  const trackId = songPrivacy === 'default' ? 'audio' + songId : 'userAudio' + songId;
   const track = document.getElementById(trackId);
-  const timeline = document.getElementById('timeline');
-  const playHead = document.getElementById('playhead');
+  const timeline = songPrivacy === 'default' ? document.getElementById('timeline') : document.getElementById('userTimeline');
+  const playHead = songPrivacy === 'default' ? document.getElementById('playhead') : document.getElementById('userPlayhead');
   const duration = track.duration;
 
   const newPlayHeadWidth = event.clientX - getPosition(timeline);
@@ -42,8 +42,10 @@ function getPosition(el) {
 
 export function GetTrackTime(track) {
   const { duration } = track;
+  const seconds = `${Math.round(duration) % 60}`;
+  const secondsValue = seconds.length === 1 ? '0' + seconds : seconds;
 
-  return `${Math.floor(Math.round(duration) / 60)}:${Math.round(duration) % 60}`;
+  return `${Math.floor(Math.round(duration) / 60)}:${secondsValue}`;
 }
 
 export function getCurrentPlayTime(track, props) {

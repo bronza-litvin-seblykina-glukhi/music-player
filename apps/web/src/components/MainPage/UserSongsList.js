@@ -1,34 +1,48 @@
 import React, { Component } from 'react'
-import songslist from "../../redux/modules/songslist";
-import songs from '../../redux/modules/songs';
+import {
+  TrackTimeLine,
+  ChangePlayTime,
+  GetTrackTime,
+  getCurrentPlayTime
+} from './TimeLine';
 
 export default class UserSongsList extends Component {
+  trackDuration = '0:00';
 
-  startPlay(index, countOfSons) {
+  getNonPlayedTrackDuration(duration) {
+    const seconds = `${Math.round(duration) % 60}`;
+    const secondsValue = seconds.length === 1 ? '0' + seconds : seconds;
+
+    return `${Math.floor(Math.round(duration) / 60)}:${secondsValue}`;
+  }
+
+  startPlay(index, countOfSons, trackInfo) {
+    const { title, artist, albumName, genre } = trackInfo;
     const { songId } = this.props;
-    this.props.dispatch({ type: 'SET_PLAY_TRACK_INFO', i: index, songs: countOfSons, songPrivacy: 'user' });
+    const timeline = document.getElementById('userTimeline');
+    this.props.dispatch({
+      type: 'SET_PLAY_TRACK_INFO',
+      i: index,
+      songs: countOfSons,
+      songPrivacy: 'default',
+      title: title,
+      artist: artist.artist,
+      genre: genre,
+      album: albumName
+    });
 
     if (songId && songId !== index) {
-      const oldAudio = `userAudio${songId}`;
       const oldPlayIcon = `userPlayIcon${songId}`;
       const oldStopIcon = `userStopIcon${songId}`;
 
-      document.getElementById(oldAudio).pause();
+      this.stopPlay(songId);
       document.getElementById(oldStopIcon).style.display = 'none';
       document.getElementById(oldPlayIcon).style.display = 'inline-block';
     }
 
+    document.getElementById(index).classList.toggle('audio__active');
+
     const track = document.getElementById('userAudio' + index);
-    const timeline = document.getElementById('userTimeline');
-    const playhead = document.getElementById('userPlayhead');
-    const duration = track.duration;
-
-    let timelineWidth = timeline.offsetWidth - playhead.offsetWidth;
-
-    function timeUpdate() {
-      const playPercent = timelineWidth * (track.currentTime / duration);
-      playhead.style.width = playPercent + 'px';
-    }
 
     document.getElementById('userPlayIcon' + index).style.display = 'none';
     document.getElementById('userStopIcon' + index).style.display = 'inline-block';
@@ -36,28 +50,24 @@ export default class UserSongsList extends Component {
     document.getElementById('panelPause').style.display = 'inline-block';
 
     track.play();
-    track.addEventListener('timeupdate', timeUpdate, false);
+    this.trackDuration = GetTrackTime(track);
+    getCurrentPlayTime(track, this.props);
+
+    TrackTimeLine(track);
+
+    timeline.addEventListener('click', (event) => {
+      ChangePlayTime(this.props, event)
+    }, false);
+
     track.addEventListener('ended', () => {
       track.currentTime = 0;
       this.stopPlay(index);
-      this.playNext(index);
     });
-
-    return null;
-  };
-
-  playNext(index) {
-    const { songId, songsCount } = this.props;
-
-    if(index === songsCount) {
-      return this.stopPlay(index);
-    }
-    else {
-      return this.startPlay(songId + 1, songsCount);
-    }
   };
 
   stopPlay (index) {
+    document.getElementById(index).classList.toggle('audio__active');
+
     const track = document.getElementById('userAudio' + index);
     document.getElementById('userPlayIcon' + index).style.display = 'inline-block';
     document.getElementById('userStopIcon' + index).style.display = 'none';
@@ -83,8 +93,31 @@ export default class UserSongsList extends Component {
               <img className="track-info__image" src={require('../../images/image-sample.png')} alt="" />
             </div>
 
+            <div className="track-info__name">
+              <span className="track__name">{ this.props.title || 'No track selected' }</span>
+              <span className="track__artist">{ this.props.artist || 'No track selected' }</span>
+            </div>
+
+            <div className="track-info__favourite">
+              <img src={require('../../images/icon_fav.png')} alt=""/>
+            </div>
+
             <div id="userTimeline" className="timeline">
               <div id="userPlayhead" className="playhead"></div>
+            </div>
+
+            <div className="track-info__duration">
+              <span className="track__start">{ this.props.currentPlayTime || '0:00' }</span>
+              <span className="track__end">{ this.trackDuration }</span>
+            </div>
+
+            <div className="track-info__album-genre">
+                <span className="track__album">Album:
+                  <span className="track__album-value">{ this.props.album || 'No track selected' }</span>
+                </span>
+              <span className="track__genre">Genres:
+                  <span className="track__genre-value">{ this.props.genre || 'No track selected' }</span>
+                </span>
             </div>
           </div>
 
@@ -96,16 +129,20 @@ export default class UserSongsList extends Component {
                 return(
                   <React.Fragment>
                     <div className="audio">
+                      <audio id={'userAudio' + (i + 1)} src={item.url}></audio>
                         <span className="player-button">
                           <img id={'userPlayIcon' + (i + 1)} className="player-icon"
-                               onClick={(e) => this.startPlay(i + 1, this.props.defaultSongs.length, e)}
+                               onClick={() => this.startPlay(
+                                 i + 1,
+                                 this.props.defaultSongs.length,
+                                 item)}
                                src={require('../../images/iconfinder-playlist-play-icon_5172493.png')}
                                alt=""/>
                         </span>
                       <span className="player-button">
                           <img id={'userStopIcon' + (i + 1)} className="player-icon-stop"
                                onClick={(e) => this.stopPlay(i + 1, e)}
-                               src={require('../../images/iconfinder-playlist-pause-icon_2270301.png')}
+                               src={require('../../images/icon_pause_glowy.png')}
                                alt=""/>
                         </span>
 
@@ -113,9 +150,11 @@ export default class UserSongsList extends Component {
                         <h3 className="title">{item.artist.artist}</h3>
                         <h3 className="title">{item.title}</h3>
                       </div>
-                    </div>
 
-                    <audio id={'userAudio' + (i + 1)} src={item.url}></audio>
+                      <div className="audio__duration">
+                        {this.getNonPlayedTrackDuration(item.duration)}
+                      </div>
+                    </div>
                   </React.Fragment>
                 )
               })
