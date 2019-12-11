@@ -9,14 +9,11 @@ import {
 export default class DefaultSongsList extends React.Component {
   trackDuration = '0:00';
 
-  getNonPlayedTrackDuration(index) {
-    const track = document.getElementById('audio' + index);
+  getNonPlayedTrackDuration(duration) {
+    const seconds = `${Math.round(duration) % 60}`;
+    const secondsValue = seconds.length === 1 ? '0' + seconds : seconds;
 
-    if(track) {
-      const { duration } = track;
-
-      return `${Math.floor(Math.round(duration) / 60)}:${Math.round(duration) % 60}`;
-    }
+    return `${Math.floor(Math.round(duration) / 60)}:${secondsValue}`;
   }
 
   startPlay(index, countOfSons, trackInfo) {
@@ -155,7 +152,7 @@ export default class DefaultSongsList extends React.Component {
                         </div>
 
                         <div className="audio__duration">
-                          {this.getNonPlayedTrackDuration(i + 1)}
+                          {this.getNonPlayedTrackDuration(item.duration)}
                         </div>
                       </div>
                     </React.Fragment>

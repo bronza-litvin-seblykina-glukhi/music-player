@@ -49,7 +49,7 @@ export class LayerService {
   public async getDefaultSongsData(): Promise<any> {
     return await this.songEntity
       .find({
-        select: ['title', 'albumName', 'url', 'genre', 'isNew', 'uploaded', 'countOfListening'],
+        select: ['title', 'albumName', 'url', 'genre', 'isNew', 'uploaded', 'countOfListening', 'duration'],
         where: { addedBy: null },
         join: {
           alias: 'artists',
@@ -68,7 +68,7 @@ export class LayerService {
 
     return await this.songEntity
       .find({
-        select: ['title', 'albumName', 'url', 'genre', 'isNew', 'uploaded', 'countOfListening'],
+        select: ['title', 'albumName', 'url', 'genre', 'isNew', 'uploaded', 'countOfListening', 'duration'],
         where: { addedBy: user },
         join: {
           alias: 'artists',

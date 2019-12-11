@@ -253,6 +253,8 @@
 
   &__duration {
     color: grey;
+    margin-top: 23px;
+    margin-right: 20px;
   }
 
   @include transition(.3s);
