@@ -40,7 +40,6 @@ function getPosition(el) {
   return el.getBoundingClientRect().left;
 }
 
-
 export function GetTrackTime(track) {
   const { duration } = track;
 

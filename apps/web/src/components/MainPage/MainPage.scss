@@ -195,15 +195,22 @@
 
 .panels {
   display: grid;
-  grid-template-columns: 300px 1fr;
-  grid-gap: 2em;
+  grid-template-columns: 300px 2px 1fr;
+  grid-gap: 1em;
   vertical-align: center;
 
   &-left {
+    position: relative;
     text-align: center;
   }
 
+  &-center {
+    position: relative;
+    background-color: #248424;
+  }
+
   &-right {
+    position: relative;
     text-align: center;
     max-height: 450px;
     overflow-y: scroll;
@@ -242,6 +249,10 @@
     display: grid;
     text-align: left;
     grid-template-rows: 20px 20px;
+  }
+
+  &__duration {
+    color: grey;
   }
 
   @include transition(.3s);
@@ -332,11 +343,9 @@
 
     &-stop {
       @extend .player-icon;
-      margin-left: 35px;
-      margin-right: 47px;
-      padding-top: 5px;
-      padding-bottom: 5px;
-      width: 18px;
+      margin-left: 27px;
+      margin-right: 33px;
+      filter: drop-shadow(0 0 1px limegreen);
       display: none;
     }
 

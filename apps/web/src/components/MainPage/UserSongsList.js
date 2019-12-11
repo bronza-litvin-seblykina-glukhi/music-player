@@ -88,6 +88,8 @@ export default class UserSongsList extends Component {
             </div>
           </div>
 
+          <div className="panels-center"></div>
+
           <div className="panels-right">
             {
               this.props.defaultSongs.map((item, i) => {

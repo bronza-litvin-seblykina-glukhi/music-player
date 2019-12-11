@@ -9,6 +9,16 @@ import {
 export default class DefaultSongsList extends React.Component {
   trackDuration = '0:00';
 
+  getNonPlayedTrackDuration(index) {
+    const track = document.getElementById('audio' + index);
+
+    if(track) {
+      const { duration } = track;
+
+      return `${Math.floor(Math.round(duration) / 60)}:${Math.round(duration) % 60}`;
+    }
+  }
+
   startPlay(index, countOfSons, trackInfo) {
     const { title, artist, albumName, genre } = trackInfo;
     const { songId } = this.props;
@@ -112,11 +122,14 @@ export default class DefaultSongsList extends React.Component {
               </div>
             </div>
 
+            <div className="panels-center"></div>
+
             <div className="panels-right">
               {
                 this.props.defaultSongs.map((item, i) => {
                   return(
                     <React.Fragment>
+                      <audio id={'audio' + (i + 1)} src={item.url}></audio>
                       <div className="audio" id={i + 1}>
                         <span className="player-button">
                           <img id={'playIcon' + (i + 1)} className="player-icon"
@@ -132,7 +145,7 @@ export default class DefaultSongsList extends React.Component {
                         <span className="player-button">
                           <img id={'stopIcon' + (i + 1)} className="player-icon-stop"
                                onClick={(e) => this.stopPlay(i + 1, e)}
-                               src={require('../../images/iconfinder-playlist-pause-icon_2270301.png')}
+                               src={require('../../images/icon_pause_glowy.png')}
                                alt=""/>
                         </span>
 
@@ -140,9 +153,11 @@ export default class DefaultSongsList extends React.Component {
                           <h3 className="title">{item.artist.artist}</h3>
                           <h3 className="title">{item.title}</h3>
                         </div>
-                      </div>
 
-                      <audio id={'audio' + (i + 1)} src={item.url}></audio>
+                        <div className="audio__duration">
+                          {this.getNonPlayedTrackDuration(i + 1)}
+                        </div>
+                      </div>
                     </React.Fragment>
                   )
                 })
