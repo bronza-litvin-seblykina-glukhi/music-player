@@ -100,6 +100,10 @@ export default class DefaultSongsList extends React.Component {
                 <span className="track__artist">{ this.props.artist || 'No track selected' }</span>
               </div>
 
+              <div className="track-info__favourite">
+                <img src={require('../../images/icon_fav.png')} alt=""/>
+              </div>
+
               <div id="timeline" className="timeline">
                 <div id="playhead" className="playhead"></div>
               </div>

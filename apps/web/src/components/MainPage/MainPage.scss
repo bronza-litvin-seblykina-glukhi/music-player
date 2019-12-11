@@ -441,6 +441,7 @@ h2, h3 {
 }
 
 .track-info {
+  position: relative;
   &__image {
     width: 250px;
   }
@@ -461,6 +462,16 @@ h2, h3 {
     display: flex;
     flex-direction: column;
     margin-top: 10px;
+  }
+
+  &__favourite {
+    position: absolute;
+    top: 270px;
+    right: 0;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 
