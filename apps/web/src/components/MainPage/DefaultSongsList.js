@@ -53,24 +53,26 @@ export default class DefaultSongsList extends React.Component {
     document.getElementById('panelPlay').style.display = 'none';
     document.getElementById('panelPause').style.display = 'inline-block';
 
-    track.play();
-    this.trackDuration = GetTrackTime(duration);
-    getCurrentPlayTime(track, this.props);
+    track.play()
+      .then(() => {
+        this.trackDuration = GetTrackTime(duration);
+        getCurrentPlayTime(track, this.props);
 
-    TrackTimeLine(track);
+        TrackTimeLine(track);
 
-    timeline.addEventListener('click', (event) => {
-      ChangePlayTime(this.props, event)
-    }, false);
+        timeline.addEventListener('click', (event) => {
+          ChangePlayTime(this.props, event)
+        }, false);
 
-    track.addEventListener('ended', () => {
-      track.currentTime = 0;
-      this.stopPlay(index);
-    });
+        track.addEventListener('ended', () => {
+          track.currentTime = 0;
+          this.stopPlay(index);
+        });
 
-    document.getElementById('tr-artist' + index).classList.toggle('title__is-playing');
-    document.getElementById('tr-title' + index).classList.toggle('title__is-playing');
-    document.getElementById(index).classList.toggle('audio__active');
+        document.getElementById('tr-artist' + index).classList.toggle('title__is-playing');
+        document.getElementById('tr-title' + index).classList.toggle('title__is-playing');
+        document.getElementById(index).classList.toggle('audio__active');
+      });
   };
 
   stopPlay(index) {
