@@ -17,7 +17,13 @@ export default class UserSongsList extends Component {
   }
 
   startPlay(index, countOfSons, trackInfo) {
-    const { title, artist, albumName, genre } = trackInfo;
+    const {
+      title,
+      artist,
+      albumName,
+      genre,
+      duration
+    } = trackInfo;
     const { songId } = this.props;
     const timeline = document.getElementById('userTimeline');
     this.props.dispatch({
@@ -50,7 +56,7 @@ export default class UserSongsList extends Component {
     document.getElementById('panelPause').style.display = 'inline-block';
 
     track.play();
-    this.trackDuration = GetTrackTime(track);
+    this.trackDuration = GetTrackTime(duration);
     getCurrentPlayTime(track, this.props);
 
     TrackTimeLine(track);
