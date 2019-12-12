@@ -243,7 +243,7 @@
   flex-direction: row;
 
   &-artist-title {
-    margin-top: -10px;
+    margin-top: 8px;
     width: 100%;
     height: 35px;
     display: grid;
@@ -569,5 +569,16 @@ h2, h3 {
         background: #2ea82e;
       }
     }
+  }
+}
+
+.title {
+  font-size: 20px;
+  font-family: 'Cabin', 'sans-serif';
+  color: #b4b4b4;
+  @include transition(.3s);
+
+  &__is-playing {
+    color: white;
   }
 }

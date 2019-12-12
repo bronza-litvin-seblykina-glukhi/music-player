@@ -64,10 +64,15 @@ export default class DefaultSongsList extends React.Component {
       track.currentTime = 0;
       this.stopPlay(index);
     });
+
+    document.getElementById('tr-artist' + index).classList.toggle('title__is-playing');
+    document.getElementById('tr-title' + index).classList.toggle('title__is-playing');
   };
 
   stopPlay(index) {
       document.getElementById(index).classList.toggle('audio__active');
+      document.getElementById('tr-artist' + index).classList.toggle('title__is-playing');
+      document.getElementById('tr-title' + index).classList.toggle('title__is-playing');
 
       const track = document.getElementById('audio' + index);
 
@@ -151,8 +156,8 @@ export default class DefaultSongsList extends React.Component {
                         </span>
 
                         <div className="audio-artist-title">
-                          <h3 className="title">{item.artist.artist}</h3>
-                          <h3 className="title">{item.title}</h3>
+                          <span className="title" id={'tr-artist' + (i + 1)}>{item.artist.artist}</span>
+                          <span className="title" id={'tr-title' + (i + 1)}>{item.title}</span>
                         </div>
 
                         <div className="audio__duration">
