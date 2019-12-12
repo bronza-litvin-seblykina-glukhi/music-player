@@ -17,7 +17,13 @@ export default class DefaultSongsList extends React.Component {
   }
 
   startPlay(index, countOfSons, trackInfo) {
-    const { title, artist, albumName, genre } = trackInfo;
+    const {
+      title,
+      artist,
+      albumName,
+      genre,
+      duration
+    } = trackInfo;
     const { songId } = this.props;
     const timeline = document.getElementById('timeline');
     this.props.dispatch({
@@ -32,7 +38,6 @@ export default class DefaultSongsList extends React.Component {
     });
 
     if (songId && songId !== index) {
-      const oldAudio = `audio${songId}`;
       const oldPlayIcon = `playIcon${songId}`;
       const oldStopIcon = `stopIcon${songId}`;
 
@@ -49,7 +54,7 @@ export default class DefaultSongsList extends React.Component {
     document.getElementById('panelPause').style.display = 'inline-block';
 
     track.play();
-    this.trackDuration = GetTrackTime(track);
+    this.trackDuration = GetTrackTime(duration);
     getCurrentPlayTime(track, this.props);
 
     TrackTimeLine(track);
