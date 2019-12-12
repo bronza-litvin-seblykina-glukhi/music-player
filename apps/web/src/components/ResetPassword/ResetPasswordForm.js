@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
 import {reduxForm} from 'redux-form';
 import FormInput from '../../shared/FormInput/FormInput';
-import {login as loginAction} from '../../redux/modules/auth';
-import {IS_LOGIN_PAGE} from '../../redux/modules/view';
+import {validateResetPassword} from "../../redux/modules/auth";
+import history from '../../redux/history';
 
-const validateFormFields = ['password', 'login'];
+const validateFormFields = ['login', 'email'];
 
 const validate = (values, props) => {
     const errors = {};
 
-    const {login, password} = values;
+    const {login, email} = values;
 
     const commonValidate = (field, regexp, errMsg) => {
         let error;
@@ -20,17 +20,11 @@ const validate = (values, props) => {
     };
 
     switch (true) {
-        case !password:
-            errors.password = 'Password is required';
+        case !email:
+            errors.email = 'Email is required';
             break;
-        case commonValidate(password, /^.{8,}$/, true):
-            errors.password = 'Password must be more than 8 characters';
-            break;
-        case commonValidate(password, /[0-9]/, true):
-            errors.password = 'Password must contain at least 1 digit';
-            break;
-        case commonValidate(password, /[A-Za-z]/, true):
-            errors.password = 'Password must contain at least 1 letter';
+        case (!commonValidate(email, /[@]/, true) && commonValidate(email, /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, true)):
+            errors.email = 'Incorrect email address';
             break;
         default:
             break;
@@ -61,30 +55,25 @@ const validate = (values, props) => {
     return errors;
 };
 
-
 @reduxForm({
-    form: 'loginSimple',
+    form: 'resetPassword',
     fields: validateFormFields,
     validate,
     touchOnChange: true
 })
-export default class LoginForm extends Component {
+export default class ResetPasswordForm extends Component {
     onSubmit = (values) => {
-        this.props.dispatch(loginAction(values.login, values.password));
-        this.props.dispatch({type: 'LOGIN', username: values.login, password: values.password})
+        this.props.dispatch({type: 'RESET_CHECK', login: values.login, email: values.email});
     };
-
-    componentDidMount() {
-        this.props.dispatch({type: IS_LOGIN_PAGE})
-    }
 
     render() {
         const login = this.props.fields.login;
-        const password = this.props.fields.password;
+        const email = this.props.fields.email;
 
         return (
             <div>
                 <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
+                    <div className="reset-header">Please enter your login and email to regain access to your account.</div>
                     <FormInput
                         className="login-field"
                         field={login}
@@ -92,23 +81,19 @@ export default class LoginForm extends Component {
                         placeholder="Login"
                     />
                     <FormInput
-                        className="password-field"
-                        field={password}
-                        type="password"
-                        placeholder="Password"
+                        className="email-field"
+                        field={email}
+                        type="text"
+                        placeholder="E-mail"
                     />
                     <button
-                        className="login-button"
+                        className="reset-button"
                         type="submit"
                     >
-                        Sign In
+                        Reset Lost Password
                     </button>
+                    <div className="server-error">{(this.props.auth.getIn(['resetError']))?'Incorrect data':''}</div>
                 </form>
-                <div className="server-error">{(typeof (this.props.auth.getIn(['loginError'])) !== 'undefined' &&
-                    this.props.auth.getIn(['loginError']) !== null) ?
-                    'Your Login or Password is incorrect, please try again' : ''}</div>
-                <a href="/resetPassword" className="forget-password-button">{'> Forget your password?'}</a>
-                <a href="/registration" className="create-account-button">{'> Create account'}</a>
             </div>
         );
     }

@@ -7,18 +7,26 @@ export default class Panel extends Component {
   userMusicList = new UserSongsList(this.props);
 
   panelStartPlay = () => {
-    const { songId, songCount, songPrivacy } = this.props;
+    const {
+      songId,
+      songCount,
+      songPrivacy,
+      title,
+      defaultSongs,
+      userSongs
+    } = this.props;
 
     if(!songId) {
       alert('Please, start listen music in menu');
     } else {
-
       if (songPrivacy === 'default') {
-        this.defaultMusicList.startPlay(songId, songCount, songPrivacy);
+        const track = defaultSongs.find(item => item.title === title);
+        this.defaultMusicList.startPlay(songId, songCount, track);
       }
 
       if (songPrivacy === 'user') {
-        this.userMusicList.startPlay(songId, songCount, songPrivacy);
+        const track = userSongs.find(item => item.title === title);
+        this.userMusicList.startPlay(songId, songCount, track);
       }
     }
   };

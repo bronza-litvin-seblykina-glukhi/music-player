@@ -12,10 +12,16 @@ export const LOGOUT = 'auth/LOGOUT';
 export const LOGOUT_SUCCESS = 'auth/LOGOUT_SUCCESS';
 const LOGOUT_FAIL = 'auth/LOGOUT_FAIL';
 const REGISTRATION = 'auth/REGISTRATION';
+const REGISTRATION_FAIL = 'auth/REGISTRATION_FAIL';
+const VALIDATE_RESET_PASSWORD = 'auth/VALIDATE_RESET_PASSWORD';
+const VALIDATE_SUBMIT_RESET_PASSWORD = 'auth/VALIDATE_SUBMIT_RESET_PASSWORD';
+const RESET_FAIL = 'auth/RESET_FAIL';
+const SUBMIT_RESET_FAIL = 'auth/SUBMIT_RESET_FAIL';
 
 const initialState = fromJS({
     loaded: false,
-    oauth: getOauth()
+    resetError: false,
+    isSubmitResetFail: false
 });
 
 export default function authReducer(state = initialState, action = {}) {
@@ -50,11 +56,15 @@ export default function authReducer(state = initialState, action = {}) {
                 loginError: fromJS(action.error)
             });
         case LOGOUT:
-            return state.setIn(['oauth', 'logouting'], true);
-        case LOGOUT_SUCCESS:
             return state.clear();
-        case LOGOUT_FAIL:
-            return initialState;
+        case REGISTRATION_FAIL:
+            return state.merge({
+                registrationError: action.error.message
+            });
+        case RESET_FAIL:
+            return state.set('resetError', true);
+        case SUBMIT_RESET_FAIL:
+            return state.set('isSubmitResetFail',true);
         default:
             return state;
     }
@@ -68,13 +78,22 @@ export function login(username, password) {
     };
 }
 
-export function registration(username, email, password, rePassword) {
+export function registration(firstName, lastName, username, email, password, rePassword) {
     return {
         type: REGISTRATION,
+        firstName,
+        lastName,
         username,
         email,
         password,
         rePassword
+    };
+}
+
+export function registrationFail(error) {
+    return {
+        type: REGISTRATION_FAIL,
+        error
     };
 }
 
@@ -92,6 +111,36 @@ export function loginSuccess(token) {
 export function loginFail(error) {
     return {
         type: LOGIN_FAIL,
+        error
+    };
+}
+
+export function validateResetPassword(login, email) {
+    return {
+        type: VALIDATE_RESET_PASSWORD,
+        login,
+        email
+    };
+}
+
+export function validateSubmitResetPassword(password, rePassword) {
+    return {
+        type: VALIDATE_SUBMIT_RESET_PASSWORD,
+        password,
+        rePassword
+    };
+}
+
+export function resetPasswordFail(error) {
+    return {
+        type: RESET_FAIL,
+        error
+    };
+}
+
+export function submitResetPasswordFail(error) {
+    return {
+        type: SUBMIT_RESET_FAIL,
         error
     };
 }

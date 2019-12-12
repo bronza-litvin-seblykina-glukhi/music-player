@@ -16,3 +16,37 @@ export function getToken() {
     }
     return null;
 }
+
+export function setUsername(username) {
+    try {
+        sessionStorage.setItem('username', username);
+    } catch (e) {
+        console.warn(e);
+    }
+}
+
+export function getUsername() {
+    try {
+        return sessionStorage.getItem('username');
+    } catch (e) {
+        console.warn(e);
+    }
+    return null;
+}
+
+export function setTemporaryToken(token) {
+    try {
+        sessionStorage.setItem('tokenTmp', token);
+    } catch (e) {
+        console.warn(e);
+    }
+}
+
+export function getTemporaryToken() {
+    try {
+        return sessionStorage.getItem('tokenTmp');
+    } catch (e) {
+        console.warn(e);
+    }
+    return null;
+}

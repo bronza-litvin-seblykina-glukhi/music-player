@@ -41,8 +41,6 @@ export default class DefaultSongsList extends React.Component {
       document.getElementById(oldPlayIcon).style.display = 'inline-block';
     }
 
-    document.getElementById(index).classList.toggle('audio__active');
-
     const track = document.getElementById('audio' + index);
 
     document.getElementById('playIcon' + index).style.display = 'none';
@@ -67,14 +65,18 @@ export default class DefaultSongsList extends React.Component {
 
     document.getElementById('tr-artist' + index).classList.toggle('title__is-playing');
     document.getElementById('tr-title' + index).classList.toggle('title__is-playing');
+    document.getElementById(index).classList.toggle('audio__active');
   };
 
   stopPlay(index) {
-      document.getElementById(index).classList.toggle('audio__active');
+      const track = document.getElementById('audio' + index);
+
+      if(track.paused) {
+        return;
+      }
+
       document.getElementById('tr-artist' + index).classList.toggle('title__is-playing');
       document.getElementById('tr-title' + index).classList.toggle('title__is-playing');
-
-      const track = document.getElementById('audio' + index);
 
       document.getElementById('playIcon' + index).style.display = 'inline-block';
       document.getElementById('stopIcon' + index).style.display = 'none';
@@ -82,6 +84,7 @@ export default class DefaultSongsList extends React.Component {
       document.getElementById('panelPlay').style.display = 'inline-block';
 
       track.pause();
+      document.getElementById(index).classList.toggle('audio__active');
     };
 
     componentDidMount() {
@@ -150,7 +153,7 @@ export default class DefaultSongsList extends React.Component {
                         </span>
                         <span className="player-button">
                           <img id={'stopIcon' + (i + 1)} className="player-icon-stop"
-                               onClick={(e) => this.stopPlay(i + 1, e)}
+                               onClick={() => this.stopPlay(i + 1)}
                                src={require('../../images/icon_pause_glowy.png')}
                                alt=""/>
                         </span>

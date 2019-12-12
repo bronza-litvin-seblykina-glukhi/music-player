@@ -1,4 +1,6 @@
 export const LOGIN_ROUTE = '/login';
 export const AUTH_ROUTE = '/registration';
-export const RESTORE_PASSWORD = '/restorePassword';
+export const RESET_PASSWORD = '/resetPassword';
+export const SUBMIT_RESET_PASSWORD = '/submitReset';
+export const LOGOUT = '/logout';
 export const MAIN_PAGE = '/';

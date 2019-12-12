@@ -68,6 +68,9 @@ export default class MainPage extends Component {
                songId={this.props.songId}
                songsCount={this.props.songsCount}
                songPrivacy={this.props.songPrivacy}
+               title={this.props.title}
+               defaultSongs={this.props.defaultSongs}
+               userSongs={this.props.userSongs}
         />
         <div className="lists">
            <span className="navigation">
