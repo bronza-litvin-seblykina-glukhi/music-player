@@ -65,6 +65,12 @@ export class SongEntity {
   })
   countOfListening: number;
 
+  @Column({
+    type: 'int',
+    nullable: false
+  })
+  duration: number;
+
   @ManyToOne(() => ArtistEntity, data => data.song)
   @JoinColumn()
   artist: ArtistEntity;

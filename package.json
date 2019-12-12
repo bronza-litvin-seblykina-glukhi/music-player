@@ -7,6 +7,7 @@
   "scripts": {
     "start": "webpack-dev-server --mode development --open --hot",
     "build": "webpack --mode production",
+    "build:watch": "webpack --mode production --watch",
     "format": "node_modules/.bin/prettier --write \\\"apps/server/src/modules/**/**/*.ts\\\"",
     "build:server": "node_modules/.bin/tsc -p apps/server/tsconfig.build.json",
     "start:server": "npm run build:server && node dist/server/main.js",
@@ -63,6 +64,7 @@
     "react-scripts": "0.9.5",
     "read-directory": "3.0.2",
     "redux": "^4.0.4",
+    "redux-devtools-extension": "2.13.8",
     "redux-form": "~5.3.6",
     "redux-logger": "^3.0.6",
     "redux-promise": "^0.6.0",
