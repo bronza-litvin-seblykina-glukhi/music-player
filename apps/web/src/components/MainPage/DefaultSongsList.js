@@ -67,6 +67,9 @@ export default class DefaultSongsList extends React.Component {
         track.addEventListener('ended', () => {
           track.currentTime = 0;
           this.stopPlay(index);
+          document.getElementById(index).classList.toggle('audio__active');
+          document.getElementById('tr-artist' + index).classList.toggle('title__is-playing');
+          document.getElementById('tr-title' + index).classList.toggle('title__is-playing');
         });
 
         document.getElementById('tr-artist' + index).classList.toggle('title__is-playing');
@@ -78,20 +81,19 @@ export default class DefaultSongsList extends React.Component {
   stopPlay(index) {
       const track = document.getElementById('audio' + index);
 
-      if(track.paused) {
-        return;
-      }
-
-      document.getElementById('tr-artist' + index).classList.toggle('title__is-playing');
-      document.getElementById('tr-title' + index).classList.toggle('title__is-playing');
-
       document.getElementById('playIcon' + index).style.display = 'inline-block';
       document.getElementById('stopIcon' + index).style.display = 'none';
       document.getElementById('panelPause').style.display = 'none';
       document.getElementById('panelPlay').style.display = 'inline-block';
 
+      if(track.paused) {
+        return;
+      }
+
       track.pause();
       document.getElementById(index).classList.toggle('audio__active');
+      document.getElementById('tr-artist' + index).classList.toggle('title__is-playing');
+      document.getElementById('tr-title' + index).classList.toggle('title__is-playing');
     };
 
     componentDidMount() {
