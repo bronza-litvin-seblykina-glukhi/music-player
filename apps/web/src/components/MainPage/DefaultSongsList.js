@@ -53,6 +53,7 @@ export default class DefaultSongsList extends React.Component {
     document.getElementById('panelPlay').style.display = 'none';
     document.getElementById('panelPause').style.display = 'inline-block';
 
+    this.scrollTo(index);
     track.play()
       .then(() => {
         this.trackDuration = GetTrackTime(duration);
@@ -92,95 +93,137 @@ export default class DefaultSongsList extends React.Component {
 
       track.pause();
       document.getElementById(index).classList.toggle('audio__active');
-    };
+  };
 
-    componentDidMount() {
-        this.props.dispatch({type: 'LOAD_LIST'});
+  playNext(props) {
+    const { songId, songsCount, defaultSongs } = props;
+    const newSongId = songId + 1;
+
+    this.stopPlay(songId);
+
+    if (newSongId > songsCount) {
+      const track = defaultSongs[0];
+      this.startPlay(1, songsCount, track);
     }
+    else {
+      const track = defaultSongs[newSongId - 1];
+      this.startPlay(newSongId, songsCount, track);
+    }
+  }
 
-    render() {
-      return (
-        <div className="music-panel">
-          <div className="music-panel__header">
-            <span className="header-text">Default songs</span>
-          </div>
-          <div className="panels">
-            <div className="panels-left">
-              <div className="track-info">
-                <img className="track-info__image" src={require('../../images/image-sample.png')} alt="" />
-              </div>
+  playPrevious(props) {
+    const { songId, songsCount, defaultSongs } = props;
+    const newSongId = songId - 1;
 
-              <div className="track-info__name">
-                <span className="track__name">{ this.props.title || 'No track selected' }</span>
-                <span className="track__artist">{ this.props.artist || 'No track selected' }</span>
-              </div>
+    this.stopPlay(songId);
 
-              <div className="track-info__favourite">
-                <img src={require('../../images/icon_fav.png')} alt=""/>
-              </div>
+    if (newSongId === 0) {
+      const track = defaultSongs[songsCount - 1];
+      this.startPlay(10, songsCount, track)
+    }
+    else {
+      const track = defaultSongs[newSongId - 1];
+      this.startPlay(newSongId, songsCount, track);
+    }
+  }
 
-              <div id="timeline" className="timeline">
-                <div id="playhead" className="playhead"></div>
-              </div>
+  scrollTo(trackId) {
+    const doc = document.getElementById('menuRight');
+    const track = document.getElementById(trackId);
 
-              <div className="track-info__duration">
-                <span className="track__start">{ this.props.currentPlayTime || '0:00' }</span>
-                <span className="track__end">{ this.trackDuration }</span>
-              </div>
+    doc.scrollTo({
+      top: track.offsetTop,
+      behavior: 'smooth'
+    })
+  }
 
-              <div className="track-info__album-genre">
-                <span className="track__album">Album:
-                  <span className="track__album-value">{ this.props.album || 'No track selected' }</span>
-                </span>
-                <span className="track__genre">Genres:
-                  <span className="track__genre-value">{ this.props.genre || 'No track selected' }</span>
-                </span>
-              </div>
+  componentDidMount() {
+    this.props.dispatch({type: 'LOAD_LIST'});
+  }
+
+  render() {
+    return (
+      <div className="music-panel">
+        <div className="music-panel__header">
+          <span className="header-text">Default songs</span>
+        </div>
+        <div className="panels">
+          <div className="panels-left">
+            <div className="track-info">
+              <img className="track-info__image" src={require('../../images/image-sample.png')} alt="" />
             </div>
 
-            <div className="panels-center"></div>
+            <div className="track-info__name">
+              <span className="track__name">{ this.props.title || 'No track selected' }</span>
+              <span className="track__artist">{ this.props.artist || 'No track selected' }</span>
+            </div>
 
-            <div className="panels-right">
-              {
-                this.props.defaultSongs.map((item, i) => {
-                  return(
-                    <React.Fragment>
-                      <audio id={'audio' + (i + 1)} src={item.url}></audio>
-                      <div className="audio" id={i + 1}>
-                        <span className="player-button">
-                          <img id={'playIcon' + (i + 1)} className="player-icon"
-                               onClick={
-                                 () => this.startPlay(
+            <div className="track-info__favourite">
+              <img src={require('../../images/icon_fav.png')} alt=""/>
+            </div>
+
+            <div id="timeline" className="timeline">
+              <div id="playhead" className="playhead"></div>
+            </div>
+
+            <div className="track-info__duration">
+              <span className="track__start">{ this.props.currentPlayTime || '0:00' }</span>
+              <span className="track__end">{ this.trackDuration }</span>
+            </div>
+
+            <div className="track-info__album-genre">
+              <span className="track__album">Album:
+                <span className="track__album-value">{ this.props.album || 'No track selected' }</span>
+              </span>
+              <span className="track__genre">Genres:
+                <span className="track__genre-value">{ this.props.genre || 'No track selected' }</span>
+              </span>
+            </div>
+          </div>
+
+          <div className="panels-center"></div>
+
+          <div className="panels-right" id="menuRight">
+            {
+              this.props.defaultSongs.map((item, i) => {
+                return(
+                  <React.Fragment>
+                    <audio id={'audio' + (i + 1)} src={item.url}></audio>
+                    <div className="audio" id={i + 1}>
+                      <span className="player-button">
+                        <img id={'playIcon' + (i + 1)} className="player-icon"
+                             onClick={
+                               () => this.startPlay(
                                  i + 1,
                                  this.props.defaultSongs.length,
                                  item
                                )}
-                               src={require('../../images/iconfinder-playlist-play-icon_5172493.png')}
-                               alt=""/>
-                        </span>
-                        <span className="player-button">
-                          <img id={'stopIcon' + (i + 1)} className="player-icon-stop"
-                               onClick={() => this.stopPlay(i + 1)}
-                               src={require('../../images/icon_pause_glowy.png')}
-                               alt=""/>
-                        </span>
+                             src={require('../../images/iconfinder-playlist-play-icon_5172493.png')}
+                             alt=""/>
+                      </span>
+                      <span className="player-button">
+                        <img id={'stopIcon' + (i + 1)} className="player-icon-stop"
+                             onClick={() => this.stopPlay(i + 1)}
+                             src={require('../../images/icon_pause_glowy.png')}
+                             alt=""/>
+                      </span>
 
-                        <div className="audio-artist-title">
-                          <span className="title" id={'tr-artist' + (i + 1)}>{item.artist.artist}</span>
-                          <span className="title" id={'tr-title' + (i + 1)}>{item.title}</span>
-                        </div>
-
-                        <div className="audio__duration">
-                          {this.getNonPlayedTrackDuration(item.duration)}
-                        </div>
+                      <div className="audio-artist-title">
+                        <span className="title" id={'tr-artist' + (i + 1)}>{item.artist.artist}</span>
+                        <span className="title" id={'tr-title' + (i + 1)}>{item.title}</span>
                       </div>
-                    </React.Fragment>
-                  )
-                })
-              }
-            </div>
+
+                      <div className="audio__duration">
+                        {this.getNonPlayedTrackDuration(item.duration)}
+                      </div>
+                    </div>
+                  </React.Fragment>
+                )
+              })
+            }
           </div>
         </div>
-      )
-    }
+      </div>
+    )
+  }
 }
