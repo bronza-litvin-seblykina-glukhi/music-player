@@ -31,6 +31,31 @@ export default class Panel extends Component {
     }
   };
 
+  panelPlayNext() {
+    const { songPrivacy } = this.props;
+
+    if (!songPrivacy) {
+      alert('Error(play next)');
+      return;
+    }
+
+    if (songPrivacy === 'default') {
+      this.defaultMusicList.playNext(this.props);
+    }
+  }
+
+  panelPlayPrevious() {
+    const { songPrivacy } = this.props;
+
+    if (!songPrivacy) {
+      alert('Error(play previous)')
+    }
+
+    if (songPrivacy === 'default') {
+      this.defaultMusicList.playPrevious(this.props);
+    }
+  }
+
   panelPausePlay = () => {
     const { songId, songPrivacy } = this.props;
 
@@ -52,7 +77,7 @@ export default class Panel extends Component {
             </span>
 
           <span className="icon">
-              <img src={require('../../images/iconfinder_icon-ios7-skipforward_211822.png')} className="img-shadow" alt="/" />
+              <img src={require('../../images/iconfinder_icon-ios7-skipforward_211822.png')} onClick={() => this.panelPlayNext()} className="img-shadow" alt="/" />
             </span>
 
 
@@ -62,7 +87,7 @@ export default class Panel extends Component {
             </span>
 
           <span className="icon">
-              <img src={require('../../images/iconfinder_icon-ios7-skipbackward_211820.png')} className="img-shadow" alt="" />
+              <img src={require('../../images/iconfinder_icon-ios7-skipbackward_211820.png')} onClick={() => this.panelPlayPrevious()} className="img-shadow" alt="" />
             </span>
 
           <span className="icon">
