@@ -9,7 +9,8 @@ export function* loadTrack(action) {
     title,
     artist,
     album,
-    genre
+    genre,
+    duration
   } = action;
 
   yield put(loadTrackInfo({
@@ -19,6 +20,7 @@ export function* loadTrack(action) {
     title: title,
     artist: artist,
     album: album,
-    genre: genre
+    genre: genre,
+    duration: duration
   }))
 }

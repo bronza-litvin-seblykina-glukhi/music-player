@@ -34,7 +34,8 @@ export default class DefaultSongsList extends React.Component {
       title: title,
       artist: artist.artist,
       genre: genre,
-      album: albumName
+      album: albumName,
+      duration: this.getNonPlayedTrackDuration(duration)
     });
 
     if (songId && songId !== index) {
@@ -62,7 +63,7 @@ export default class DefaultSongsList extends React.Component {
         TrackTimeLine(track);
 
         timeline.addEventListener('click', (event) => {
-          ChangePlayTime(this.props, event)
+          ChangePlayTime(index, 'default', event)
         }, false);
 
         track.addEventListener('ended', () => {
@@ -143,6 +144,10 @@ export default class DefaultSongsList extends React.Component {
     this.props.dispatch({type: 'LOAD_LIST'});
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    return this.props;
+  }
+
   render() {
     return (
       <div className="music-panel">
@@ -170,7 +175,7 @@ export default class DefaultSongsList extends React.Component {
 
             <div className="track-info__duration">
               <span className="track__start">{ this.props.currentPlayTime || '0:00' }</span>
-              <span className="track__end">{ this.trackDuration }</span>
+              <span className="track__end">{ this.props.duration || '0:00' }</span>
             </div>
 
             <div className="track-info__album-genre">

@@ -17,7 +17,8 @@ import { connect } from "react-redux";
           genre: state.songsReducer.genre,
           defaultSongs: state.songslist.defaultSongs,
           userSongs: state.songslist.userSongs,
-          currentPlayTime: state.currentTrackTimeReducer.currentTime
+          currentPlayTime: state.currentTrackTimeReducer.currentTime,
+          duration: state.songsReducer.duration
         });
     },
     dispatch => ({
@@ -71,6 +72,7 @@ export default class MainPage extends Component {
                title={this.props.title}
                defaultSongs={this.props.defaultSongs}
                userSongs={this.props.userSongs}
+               duration={this.props.duration}
         />
         <div className="lists">
            <span className="navigation">
@@ -93,6 +95,7 @@ export default class MainPage extends Component {
                               genre={this.props.genre}
                               songPrivacy={this.props.songPrivacy}
                               currentPlayTime={this.props.currentPlayTime}
+                              duration={this.props.duration}
             />
           </span>
 
@@ -108,6 +111,7 @@ export default class MainPage extends Component {
                            genre={this.props.genre}
                            songPrivacy={this.props.songPrivacy}
                            currentPlayTime={this.props.currentPlayTime}
+                           duration={this.props.duration}
             />
           </span>
         </div>
