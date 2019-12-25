@@ -68,6 +68,10 @@ export default class Panel extends Component {
     }
   };
 
+  // componentDidUpdate(prevProps, prevState, snapshot) {
+  //   return this.props;
+  // }
+
   render() {
     return(
       <div className="menu" id="panel">

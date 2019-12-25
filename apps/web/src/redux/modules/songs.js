@@ -9,7 +9,8 @@ const initialState = fromJS({
   title: null,
   artist: null,
   genre: null,
-  album: null
+  album: null,
+  duration: null
 });
 
 export default function songsReducer(state = initialState, action = {}) {

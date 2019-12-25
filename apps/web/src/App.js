@@ -16,7 +16,7 @@ import MainPage from './components/MainPage/MainPage';
 function App() {
     return (
         <div>
-            <Provider store={configureStore()}>}>
+            <Provider store={configureStore()}>
                 <Header/>
                 <Router history={history}>
                     <Route path={LOGIN_ROUTE} exact component={Login}/>

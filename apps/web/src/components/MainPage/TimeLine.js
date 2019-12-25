@@ -14,10 +14,7 @@ export function TrackTimeLine(track) {
   }, false);
 }
 
-export function ChangePlayTime(props, event) {
-  const { songId } = props;
-  const { songPrivacy } = props;
-
+export function ChangePlayTime(songId, songPrivacy, event) {
   if (!songId) {
     alert('Please, start listen the music in playlist');
     return;
