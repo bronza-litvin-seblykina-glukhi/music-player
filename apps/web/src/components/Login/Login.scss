@@ -1,0 +1,101 @@
+@import '../../scss/transition';
+@import '../../scss/variables';
+
+.login-page {
+  color: $color-white;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .card {
+    display: flex;
+    min-width: 435px;
+    min-height: 250px;
+    box-shadow: 0 61px 45px -50px $color-black-rgba;
+    border-radius: 2px;
+
+    .login-form {
+      opacity: 0.8;
+      padding: 35px 32px 20px;
+      width: 435px;
+      background-color: $color-light-black;
+      caret-color: $color-orange;
+      border: 1px solid $color-green;
+      color: $color-red;
+
+      .server-error {
+        text-align: center;
+        font-weight: bold;
+        margin-top: -4%;
+      }
+
+      .field-value{
+        height: 48px;
+        input {
+          width: 50%;
+          margin: 0 25% 0 25%;
+          align-content: center;
+          height: 30px;
+          background-color: $color-light-goldenrod-yellow;
+          border: 0;
+          border-radius: 15px;
+          outline: none;
+          padding: 0 10px;
+
+          @include transition(.3s);
+
+          &::placeholder {
+            @include transition(.3s);
+            color: black;
+          }
+
+          &:focus {
+            background-color: $color-white;
+            &::placeholder {
+              color: transparent;
+            }
+          }
+        }
+
+        div {
+          text-align: center;
+        }
+      }
+      .login-button {
+        font-size: 80%;
+        width: 30%;
+        border-radius: 15px;
+        margin: 0 35% 20px 35%;
+        height: 30px;
+        background-color: #101010;
+        border: 3px solid #1d5f07;
+        color: white;
+
+        @include transition(.3s);
+
+        &:hover {
+          border: 3px solid $color-green;
+          background-color: $color-black;
+          cursor: pointer;
+        }
+      }
+    }
+    .forget-password-button {
+      text-align: center;
+      display: block;
+      width: fit-content;
+      margin-left: 30%;
+      color: $color-grey;
+      text-decoration: none;
+    }
+    .create-account-button {
+      display: block;
+      text-align: center;
+      margin: 5px 0 0 42.6%;
+      width: fit-content;
+      color: $color-grey;
+      text-decoration: none;
+    }
+  }
+}

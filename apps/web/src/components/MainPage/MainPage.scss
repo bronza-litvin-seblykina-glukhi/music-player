@@ -1,0 +1,584 @@
+@import '../../scss/transition';
+
+.body {
+  display: flex;
+  flex-direction: row;
+}
+
+.menu {
+  margin-top: 130px;
+  transform: translateX(-380px);
+  @include transition(.3s);
+
+  &.show {
+    @include transition(.3s);
+    transform: translateX(-380px);
+  }
+}
+
+.round {
+  &-external {
+    position: relative;
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    border: 130px solid rgba(0, 0, 0, 0.83);
+    background-color: transparent;
+    box-shadow: 0 0 17px 15px limegreen;
+  }
+
+  &-internal {
+    @extend .round-external;
+    border: 0;
+    box-shadow: inset 0 0 17px 15px limegreen;
+  }
+}
+
+.icon {
+  position: absolute;
+
+  &:nth-child(1) {
+    top: -87px;
+    right: 115px;
+
+    &:after {
+      position: absolute;
+      content: '';
+      display: inline-block;
+      width: 132px;
+      height: 7px;
+      bottom: 0;
+      left: 40px;
+      background-color: limegreen;
+      transform: rotate(-58deg);
+    }
+
+    &:hover {
+      cursor: pointer;
+      .img-shadow {
+        filter: drop-shadow(0 0 7px limegreen);
+      }
+    }
+  }
+
+  &:nth-child(2) {
+    top: 10px;
+    right: -33px;
+
+    &:after {
+      position: absolute;
+      content: '';
+      display: inline-block;
+      width: 132px;
+      height: 7px;
+      bottom: -40px;
+      left: 8px;
+      background-color: limegreen;
+      transform: rotate(-22deg);
+    }
+
+    &:hover {
+      cursor: pointer;
+      .img-shadow {
+        filter: drop-shadow(0 0 7px limegreen);
+      }
+    }
+  }
+
+  &:nth-child(3) {
+    top: 190px;
+    right: -100px;
+
+    &:after {
+      position: absolute;
+      content: '';
+      display: inline-block;
+      width: 131px;
+      height: 7px;
+      bottom: -75px;
+      right: -11px;
+      background-color: limegreen;
+      transform: rotate(21deg);
+    }
+
+    &:hover {
+      cursor: pointer;
+      .img-shadow {
+        filter: drop-shadow(0 0 7px limegreen);
+      }
+    }
+  }
+
+  &:nth-child(4) {
+    top: 380px;
+    right: -30px;
+
+    &:after {
+      position: absolute;
+      content: '';
+      display: inline-block;
+      width: 132px;
+      height: 7px;
+      bottom: -19px;
+      right: 24px;
+      background-color: limegreen;
+      transform: rotate(58deg);
+    }
+
+    &:hover {
+      cursor: pointer;
+      .img-shadow {
+        filter: drop-shadow(0 0 7px limegreen);
+      }
+    }
+  }
+
+  &:nth-child(5) {
+    top: 470px;
+    right: 105px;
+
+    &:hover {
+      cursor: pointer;
+      .img-shadow {
+        filter: drop-shadow(0 0 7px limegreen);
+      }
+    }
+  }
+}
+
+.img-shadow {
+  @include transition(.3s);
+  filter: drop-shadow(0 0 4px limegreen);
+}
+
+.pause {
+  display: none;
+}
+
+.music-panel {
+  width: 800px;
+  height: 500px;
+  padding: 40px;
+  margin-top: 170px;
+  margin-right: 150px;
+  background-color: rgba(0, 0, 0, 0.43);
+
+  &-play {
+    display: inline-block;
+  }
+
+  &-pause {
+    display: none;
+  }
+
+  &__header {
+    position: relative;
+    width: 100%;
+    height: 35px;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    align-items: center;
+
+    &:after {
+
+    }
+  }
+}
+
+.header-text {
+  font-family: 'Cabin', 'sans-serif';
+  color: white;
+  font-size: 25px;
+  font-weight: 100;
+}
+
+.panels {
+  display: grid;
+  grid-template-columns: 300px 2px 1fr;
+  grid-gap: 1em;
+  vertical-align: center;
+
+  &-left {
+    position: relative;
+    text-align: center;
+  }
+
+  &-center {
+    position: relative;
+    background-color: #248424;
+  }
+
+  &-right {
+    position: relative;
+    text-align: center;
+    max-height: 450px;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #248424;
+      border-radius: 5px;
+      @include transition(.3s);
+
+      &:hover {
+        @include transition(.3s);
+        background: #2ea82e;
+      }
+    }
+  }
+}
+
+.audio {
+  position: relative;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+
+  &-artist-title {
+    margin-top: 8px;
+    width: 100%;
+    height: 35px;
+    display: grid;
+    text-align: left;
+    grid-template-rows: 20px 20px;
+  }
+
+  &__duration {
+    color: grey;
+    margin-top: 23px;
+    margin-right: 20px;
+  }
+
+  @include transition(.3s);
+
+  &::after {
+    position: absolute;
+    display: inline-block;
+    background-color: rgba(105, 105, 105, 0.77);
+    border-radius: 2px;
+    content: '';
+    height: 1px;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+  }
+
+    &::before {
+      position: absolute;
+      display: inline-block;
+      background-color: rgba(105, 105, 105, 0.77);
+      border-radius: 2px;
+      content: '';
+      height: 1px;
+      width: 100%;
+      right: 0;
+      top: 0;
+    }
+
+  &:first-child {
+    &:before {
+      height: 2px;
+    }
+  }
+
+  &:last-child {
+    &:after {
+      height: 2px;
+    }
+  }
+
+  &__active {
+    @include transition(.3s);
+
+      &::before {
+        position: absolute;
+        display: inline-block;
+        background-color: #e5fccd;
+        box-shadow: 0 0 5px 1px #7CFC00;
+        border-radius: 2px;
+        content: '';
+        height: 2px;
+        width: 100%;
+        right: 0;
+        top: 0;
+      }
+
+    &::after {
+      position: absolute;
+      display: inline-block;
+      background-color: #e5fccd;
+      box-shadow: 0 0 5px 1px #7CFC00;
+      border-radius: 2px;
+      content: '';
+      height: 2px;
+      width: 100%;
+      left: 0;
+      bottom: 0;
+    }
+  }
+}
+
+.player {
+  &-button {
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+  }
+
+  &-icon {
+    margin-left: 30px;
+    margin-right: 30px;
+    display: inline-block;
+    margin-top: 10px;
+    width: 40px;
+    background-color: transparent;
+    color: grey;
+    filter: grayscale(100%);
+
+    &-stop {
+      @extend .player-icon;
+      margin-left: 27px;
+      margin-right: 33px;
+      filter: drop-shadow(0 0 1px limegreen);
+      display: none;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+h2, h3 {
+  font-family: 'Cabin', 'sans-serif';
+  color: white;
+}
+
+.music-list {
+  &-default {
+    display: inline-block;
+
+    .disable-default {
+      display: none;
+    }
+  }
+
+  &-user {
+    display: none;
+
+    .disable-user {
+      display: inline-block;
+    }
+  }
+}
+
+.lists {
+  position: relative;
+}
+
+.navigation {
+  position: absolute;
+  top: 205px;
+  right: 190px;
+
+  &-button {
+    outline: 0;
+    border: 0;
+    background-color: grey;
+    height: 25px;
+    width: 100px;
+
+    &:first-child {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+
+    &:last-child {
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.active {
+  background-color: #1d5f07;
+
+  @include transition(.3s);
+
+  &:hover {
+    background-color: limegreen;
+  }
+}
+
+.non-active {
+  background-color: grey;
+}
+
+.btn-text {
+  padding: 5px;
+  color: white;
+  font-family: 'Cabin', 'sans-serif';
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.player-menu-icon {
+  width: 100px;
+}
+
+.track-info {
+  position: relative;
+  &__image {
+    width: 250px;
+  }
+
+  &__name {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+  }
+
+  &__duration {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 5px;
+  }
+
+  &__album-genre {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+  }
+
+  &__favourite {
+    position: absolute;
+    top: 270px;
+    right: 0;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.timeline {
+  margin-top: 30px;
+  width: 100%;
+  height: 3px;
+  border-radius: 1px;
+  background: grey;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.playhead {
+  width: 0.1px;
+  height: 3px;
+  border-radius: 1px;
+  margin-top: 1px;
+  background: #e5fccd;
+  box-shadow: 0 0 5px 3px #7CFC00;
+
+  @include transition(.3s);
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.track {
+  &__name {
+    text-align: left;
+    color: white;
+    font-size: 23px;
+  }
+
+  &__artist {
+    text-align: left;
+    color: grey;
+    font-size: 17px;
+  }
+
+  &__start {
+    text-align: left;
+    color: grey;
+  }
+
+  &__end {
+    text-align: right;
+    color: grey;
+  }
+
+  &__album {
+    text-align: left;
+    font-size: 15px;
+    color: grey;
+
+    &-value {
+      color: white;
+      margin-left: 8px;
+    }
+  }
+
+  &__genre {
+    position: relative;
+    text-align: left;
+    font-size: 15px;
+    color: grey;
+    height: 37px;
+    overflow-y: scroll;
+    text-overflow: ellipsis;
+    margin-top: 8px;
+
+    &-value {
+      color: white;
+      margin-left: 8px;
+    }
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #248424;
+      border-radius: 5px;
+      @include transition(.3s);
+
+      &:hover {
+        @include transition(.3s);
+        background: #2ea82e;
+      }
+    }
+  }
+}
+
+.title {
+  font-size: 20px;
+  font-family: 'Cabin', 'sans-serif';
+  color: #b4b4b4;
+  @include transition(.3s);
+
+  &__is-playing {
+    color: white;
+  }
+}

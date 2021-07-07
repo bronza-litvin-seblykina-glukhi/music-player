@@ -1,0 +1,139 @@
+@import '../../scss/transition';
+@import '../../scss/variables';
+
+@mixin formField {
+  margin: 10px 10% 20px 8%;
+  align-content: center;
+  height: 30px;
+  background-color: rgb(218, 255, 194);
+  border: 0;
+  border-radius: 15px;
+  outline: none;
+  font-size: 90%;
+  padding-left: 5%;
+  width: 200px;
+  @include transition(.3s);
+
+  &::placeholder {
+    @include transition(.3s);
+    color: $color-black;
+  }
+
+  &:focus {
+    background-color: $color-white;
+
+    &::placeholder {
+      color: transparent;
+    }
+  }
+}
+
+.navbar {
+  width: 100%;
+  position: absolute;
+
+  .search-input {
+    @include formField()
+  }
+
+  .search-section {
+    float: left;
+    margin-left: 12%;
+  }
+
+  .headlines {
+    margin-right: 30%;
+  }
+
+  .log-in {
+    margin-right: 3%;
+  }
+
+  .reg-tab {
+    margin-right: 3%;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .user-icon {
+    padding: 9px 0 0 0;
+  }
+
+  .user-name {
+    color: $color-white;
+    padding: 14px 16px;
+    margin-right: 2%;
+  }
+
+  .logout {
+    color: $color-white;
+    //padding: 14px 16px;
+    margin-right: 2%;
+    display: none;
+  }
+
+  .status {
+    @include transition(.5s);
+  }
+
+  .status:hover {
+
+    .logout {
+      display: inherit;
+    }
+
+    .user-icon {
+      display: none;
+      cursor: none;
+    }
+
+    .user-name {
+      display: none;
+      cursor: pointer;
+    }
+  }
+
+  li {
+    float: right;
+
+    & a {
+      position: relative;
+      display: block;
+      color: $color-white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+
+      &::after {
+        position: absolute;
+        content: '';
+        bottom: 0;
+        left: 0;
+        display: inline-block;
+        height: 3px;
+        width: 100%;
+        background-color: transparent;
+
+        @include transition(.3s);
+      }
+
+      &:hover {
+        &::after {
+          position: absolute;
+          content: '';
+          bottom: 0;
+          left: 0;
+          display: inline-block;
+          height: 3px;
+          width: 100%;
+          background-color: $color-green;
+        }
+      }
+    }
+  }
+}
